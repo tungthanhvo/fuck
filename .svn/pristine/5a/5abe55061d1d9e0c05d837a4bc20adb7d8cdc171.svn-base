@@ -1,0 +1,254 @@
+<!-- personal information tab -->
+<div id="employeeProfileTab" class="tab-pane fade in active">
+    <div class="row">
+        <div class="col-md-3 " id="panel-left">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <a href="#/view">
+                                <img src="images/noimage.png" class="img-circle col-md-12" alt="no images available">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-10 second-color">
+                            {{editEmpCtrl.userInfo.first_name}} {{editEmpCtrl.userInfo.last_name}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-10 fisrt-color">
+                            <div ng-if="editEmpCtrl.userInfo.married_status == '1'" class="second-color">Married</div>
+                            <div ng-if="editEmpCtrl.userInfo.married_status == '0'" class="second-color">Single</div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-10 fisrt-color">
+                            {{editEmpCtrl.userInfo.company_email}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </div>
+                        <div class="col-md-10 fisrt-color">
+                            Staff code: {{editEmpCtrl.userInfo.staff_code}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--main-- tab-->
+        <div class="col-md-7" id="panel-main">
+            <br/>
+            <div class="row">
+                <div class="col-md-2 common">
+                    Background
+                </div>
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-2">
+                    <button ng-click="editEmpCtrl.switchMode()" type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        {{editEmpCtrl.btnViewOrEditMode}}
+                    </button>
+                </div>
+            </div>
+            <hr/>
+            <div>
+                <personal-information></personal-information>
+                <company-information></company-information>
+                <technical-skill></technical-skill>
+                <education-section></education-section>
+                <course-section></course-section>
+                <employee-history-section></employee-history-section>
+                <addition-information-section></addition-information-section>
+            </div>
+
+        </div>
+        <!--SHOCURT-->
+        <div class="col-md-2" id="panel-right">
+            <br/>
+            <h5 class="">Recommended for you</h5>
+            <hr/>
+            <!-- personalInfo shorcut -->
+            <div class="panel panel-default">
+                <div class="panel-heading my-cursor">
+                    <h4 class="panel-title">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="images/noimage.png" width="30px" height="30px"/>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutViewMode">
+                                <div class="header-title" data-toggle="collapse" href="#persionalInfoView">
+                                    Personal Information
+                                </div>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutEditMode">
+                                <div class="header-title" data-toggle="collapse" href="#persionalInfoEdit">
+                                    Personal Information
+                                </div>
+                            </div>
+                        </div>
+                    </h4>
+                </div>
+            </div>
+            <!-- /personalInfo shorcut -->
+
+            <!-- companyInfo shorcut -->
+            <div class="panel panel-default">
+                <div class="panel-heading my-cursor">
+                    <h4 class="panel-title">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="images/noimage.png" width="30px" height="30px"/>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutViewMode">
+                                <div class="header-title" data-toggle="collapse" href="#companyInfoView">Company
+                                    Information
+                                </div>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutEditMode">
+                                <div class="header-title" data-toggle="collapse" href="#companyInfoEdit">Company
+                                    Information
+                                </div>
+                            </div>
+                        </div>
+                    </h4>
+                </div>
+            </div>
+            <!-- /companyInfo shorcut -->
+
+            <!-- technicalSkill shorcut -->
+            <div class="panel panel-default">
+                <div class="panel-heading my-cursor">
+                    <h4 class="panel-title">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="images/noimage.png" width="30px" height="30px"/>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutViewMode">
+                                <div class="header-title" data-toggle="collapse" href="#technicalSkillView">
+                                    Technical Skill
+                                </div>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutEditMode">
+                                <div class="header-title" data-toggle="collapse" href="#technicalSkillInfoEdit">
+                                    Technical Skill
+                                </div>
+                            </div>
+                        </div>
+                    </h4>
+                </div>
+            </div>
+            <!-- /technicalSkill shorcut -->
+
+            <!-- education shorcut -->
+            <div class="panel panel-default">
+                <div class="panel-heading my-cursor">
+                    <h4 class="panel-title">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="images/noimage.png" width="30px" height="30px"/>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutViewMode">
+                                <div class="header-title" data-toggle="collapse"
+                                     href="#education-qualification-achievement-view">
+                                    Educations
+                                </div>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutEditMode">
+                                <div class="header-title" data-toggle="collapse"
+                                     href="#education-qualification-achievement-edit">
+                                    Educations
+                                </div>
+                            </div>
+                        </div>
+                    </h4>
+                </div>
+            </div>
+            <!-- /education shorcut -->
+
+            <!-- course shorcut -->
+            <div class="panel panel-default">
+                <div class="panel-heading my-cursor">
+                    <h4 class="panel-title">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="images/noimage.png" width="30px" height="30px"/>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutViewMode">
+                                <div class="header-title" data-toggle="collapse" href="#course-certificate-view">
+                                    Courses/ Certifications
+                                </div>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutEditMode">
+                                <div class="header-title" data-toggle="collapse" href="#course-certificate-edit">
+                                    Courses/ Certifications
+                                </div>
+                            </div>
+                        </div>
+                    </h4>
+                </div>
+            </div>
+            <!-- /course shorcut -->
+
+            <!-- employee history shorcut -->
+            <div class="panel panel-default">
+                <div class="panel-heading my-cursor">
+                    <h4 class="panel-title">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="images/noimage.png" width="30px" height="30px"/>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutViewMode">
+                                <div class="header-title" data-toggle="collapse" href="#employee-history-view">
+                                    Employee History
+                                </div>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutEditMode">
+                                <div class="header-title" data-toggle="collapse" href="#employee-history-edit">
+                                    Employee History
+                                </div>
+                            </div>
+                        </div>
+                    </h4>
+                </div>
+            </div>
+            <!-- /employee history shorcut -->
+            <!-- addition information shorcut -->
+            <div class="panel panel-default">
+                <div class="panel-heading my-cursor">
+                    <h4 class="panel-title">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="images/noimage.png" width="30px" height="30px"/>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutViewMode">
+                                <div class="header-title" data-toggle="collapse" href="#additional-info-view">
+                                    Addition Information
+                                </div>
+                            </div>
+                            <div class="col-md-10" ng-if="editEmpCtrl.isShortcutEditMode">
+                                <div class="header-title" data-toggle="collapse" href="#additional-info-edit">
+                                    Addition Information
+                                </div>
+                            </div>
+                        </div>
+                    </h4>
+                </div>
+            </div>
+            <!-- /addition information shorcut -->
+
+        </div>
+    </div>
+</div>

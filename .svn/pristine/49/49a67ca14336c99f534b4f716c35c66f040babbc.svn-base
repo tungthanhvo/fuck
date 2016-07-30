@@ -1,0 +1,662 @@
+<link rel="stylesheet" type="text/css" href="../../css/search.css">
+<div class="row" id="search-body">
+    <div id="search-panel">
+        <div class="panel panel-default col-xs-12 pull-right">
+            <div class="panel-body">
+                <form>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label>Search Type</label>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-xs-8">
+                            <select select-type class="form-control dropbox-search-type" id="dropbox-search-type" ng-model="vm.searchType" ng-change="vm.changeType()">
+                                <option>Employee</option>
+                                <option>Project</option>
+                            </select>
+                        </div>
+
+                        <div class="btn-group col-xs-4" id="search-btn-group">
+                            <button class="btn btn-default glyphicon glyphicon-search" onclick="this.blur();" ng-click="vm.search(true, true)"></button>
+                            <div class="btn-group" id="myDropdown">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" onclick="this.blur()">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul ng-click="$event.stopPropagation()" class="dropdown-menu" ng-show="vm.searchType === 'Employee'">
+                                    <li>
+                                        <a ng-click="vm.showEmployeeItem('job_title')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.employee.job_title"></span>
+                                            </div>
+                                            <span>Job Title</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showEmployeeItem('project_id')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.employee.project_id"></span>
+                                            </div>
+                                            Member of Project
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showEmployeeItem('course')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.employee.course"></span>
+                                            </div>
+                                            Courses/Certificates
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showEmployeeItem('technical_skill')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.employee.technical_skill"></span>
+                                            </div>
+                                            Technical Skill
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showEmployeeItem('skill_metric')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.employee.skill_metric"></span>
+                                            </div>
+                                            Skill Metrics
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showEmployeeItem('expertise_level')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.employee.expertise_level"></span>
+                                            </div>
+                                            Expertise Level
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- / dropdown list for employee form -->
+
+                                <ul ng-click="$event.stopPropagation()" class="dropdown-menu" ng-show="vm.searchType === 'Project'">
+                                    <li>
+                                        <a ng-click="vm.showProjectItem('location')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.project.location"></span>
+                                            </div>
+                                            <span>Location</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showProjectItem('project_type')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.project.project_type"></span>
+                                            </div>
+                                            <span>Project Type</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showProjectItem('project_manager')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.project.project_manager"></span>
+                                            </div>
+                                            <span>Project Manager</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showProjectItem('program_manager')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.project.program_manager"></span>
+                                            </div>
+                                            <span>Delivery/ Program Manager</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showProjectItem('engagement_manager')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.project.engagement_manager"></span>
+                                            </div>
+                                            <span>Engagement Manager</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showProjectItem('project_status')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.project.project_status"></span>
+                                            </div>
+                                            <span>Project Status</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showProjectItem('project_description')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.project.project_description"></span>
+                                            </div>
+                                            <span>Project Description</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showProjectItem('client_name')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.project.client_name"></span>
+                                            </div>
+                                            <span>Client Name</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showProjectItem('technologies')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.project.technologies"></span>
+                                            </div>
+                                            <span>Technologies</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="vm.showProjectItem('sector')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="vm.show.project.sector"></span>
+                                            </div>
+                                            <span>Client Industry/ Sector</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!-- /dropdown list for project form -->
+                            </div>
+                        </div>
+                        <!-- /search button and dropdown list for form elements -->
+                    </div>
+                    <!-- /search type, search button and dropdown list for form element -->
+
+                    <div id="search-controll">
+                        <div class="search-form-group" ng-show="vm.searchType === 'Employee'">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label>First Name</label>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-xs-10">
+                                    <input maxlength="50" id="first-name" type="text" class="form-control" ng-model="vm.form.employee.first_name" ng-blur="vm.quickSearch()">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label>Last Name</label>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-xs-10">
+                                    <input maxlength="50" type="text" class="form-control" ng-model="vm.form.employee.last_name" ng-blur="vm.quickSearch()">
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.employee.job_title">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Job Title</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">                                    
+                                        <select select-search class="form-control select-search" ng-model="vm.form.employee.job_title" ng-options="item.id as item.name for item in vm.metadata.job_titles">
+                                            <option value="">All</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showEmployeeItem('job_title')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.employee.project_id">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Member Of Project</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <select select-search class="form-control select-search" ng-model="vm.form.employee.project_id" ng-options="item.id as item.name for item in vm.metadata.projects">
+                                            <option value="">All</option>                                            
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showEmployeeItem('project_id')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.employee.course">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Courses/Certificates</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <input maxlength="50" type="text" class="form-control" ng-model="vm.form.employee.course">
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showEmployeeItem('course')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.employee.technical_skill">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Technical Skill</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <input maxlength="50" type="text" class="form-control" ng-model="vm.form.employee.technical_skill">
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showEmployeeItem('technical_skill')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.employee.skill_metric">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Skill Metrics</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <select select-search class="form-control select-search" ng-model="vm.form.employee.skill_metric" ng-options="item.id as item.name for item in vm.metadata.skills">
+                                            <option value="">All</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showEmployeeItem('skill_metric')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="expertise-level" class="form-item" ng-show="vm.show.employee.expertise_level">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Expertise Level</label>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <div class="col-xs-6 expertise-select-from">
+                                            From
+                                            <select class="form-control pull-right" ng-model="vm.form.employee.expertise_level_from" ng-change="vm.checkForm()">
+                                                <option selected value="">All</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-6 expertise-select-to">
+                                            To
+                                            <select class="form-control pull-right" ng-model="vm.form.employee.expertise_level_to" ng-change="vm.checkForm()">
+                                                <option selected value="">All</option>
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showEmployeeItem('expertise_level')"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <p class="text-danger" id="invalid-form-text" ng-show="vm.showMsg2">
+                                        {{ vm.msg.msg2 }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /form itmes for employee -->
+
+                        <div class="search-form-group" ng-show="vm.searchType === 'Project'">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label>Project Name</label>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-xs-10">
+                                    <input maxlength="100" id="project-name" type="text" class="form-control" ng-model="vm.form.project.project_name" ng-blur="vm.quickSearch()">
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.project.location">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Location</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <select select-search class="form-control select-search" ng-model="vm.form.project.location" ng-options="item.id as item.name for item in vm.metadata.locations">
+                                            <option value="">All</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showProjectItem('location')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.project.project_type">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Project Type</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <select select-normal class="form-control select-normal" ng-model="vm.form.project.project_type" ng-options="item.id as item.name for item in vm.metadata.project_types">
+                                            <option value="">All</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showProjectItem('project_type')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.project.project_manager">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Project Manager</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <input maxlength="50" id="project-manager" type="text" class="form-control" ng-model="vm.form.project.project_manager">
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showProjectItem('project_manager')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.project.program_manager">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Delivery/ Program Manager</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <input maxlength="50" id="programe-manager" type="text" class="form-control" ng-model="vm.form.project.program_manager">
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showProjectItem('program_manager')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.project.engagement_manager">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Engagement Manager</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <input maxlength="50" id="engagement-manager" type="text" class="form-control" ng-model="vm.form.project.engagement_manager">
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showProjectItem('engagement_manager')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.project.project_status">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Project Status</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <select select-normal class="form-control select-normal" ng-model="vm.form.project.project_status" ng-options="item.id as item.name for item in vm.metadata.project_statuses">
+                                            <option value="">All</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showProjectItem('project_status')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.project.project_description">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Project Description</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <input maxlength="100" id="project-description" type="text" class="form-control" ng-model="vm.form.project.project_description">
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showProjectItem('project_description')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.project.client_name">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Client Name</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <input maxlength="100" id="client-name" type="text" class="form-control" ng-model="vm.form.project.client_name">
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showProjectItem('client_name')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.project.technologies">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Technologies</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <input maxlength="100" id="technologies" type="text" class="form-control" ng-model="vm.form.project.technologies">
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showProjectItem('technologies')"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-item" ng-show="vm.show.project.sector">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <label>Client Industry/ Sector</label>
+                                    </div>
+                                </div>
+
+                                <div class="row form-group">
+                                    <div class="col-xs-10">
+                                        <select select-normal class="form-control select-normal" ng-model="vm.form.project.sector" ng-options="item.id as item.name for item in vm.metadata.client_industries">
+                                            <option value="">All</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2 search-remove">
+                                        <span class="glyphicon glyphicon-remove" ng-click="vm.showProjectItem('sector')"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /form items for project -->
+                    </div>
+                    <!-- /form items -->
+
+                    <div class="row">
+                        <div class='col-xs-12'>
+                            <a ng-click="vm.resetFields()" id="btn-reset">Reset</a>
+                        </div>
+                    </div>
+                    <!-- /reset form -->
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- /search-panel -->
+    <div id="result-panel">
+        <div class="panel panel-default col-xs-12">
+            <div class="panel-body">            
+                <div id="message-box" class="panel panel-default ng-hide" ng-show="vm.showMsg">
+                    <div class="panel-body">
+                        <!-- <i class="fa fa-info" aria-hidden="true" id="no-result-icon"></i> -->
+                        <span class="glyphicon glyphicon-exclamation-sign" id="no-result-icon"></span>
+                        <p id="no-result-text" ng-show="vm.showMsg1">
+                            <b>{{ vm.msg.msg1.msg1_1 }}</b>
+                            <br> {{ vm.msg.msg1.msg1_2 }}
+                        </p>
+                    </div>
+                </div>
+                <!-- /message-box -->
+                <div id="result-content">
+                    <div class="row">
+                        <div class="col-xs-3" ng-show="vm.showSearchResult">
+                            <h4>Total Results: {{ vm.totalItem }}</h4>
+                        </div>
+                        <div class="col-xs-9" id="page-controll" ng-show="vm.showSearchResult">
+                            <ul ng-if="vm.pager.pages.length" class="pagination pagination-sm pull-right" id="search-pager">
+                                <li class="page-item" ng-class="{disabled: vm.pager.isFirst}">
+                                    <a class="page-link" ng-click="vm.pager.isFirst || vm.search(false, true, 1)">First</a>
+                                </li>
+                                <li class="page-item" ng-class="{disabled: vm.pager.isFirst}">
+                                    <a class="page-link" ng-click="vm.pager.isFirst || vm.search(false, true, vm.pager.currentPage - 1)">Previous</a>
+                                </li>
+                                <li class="page-item" ng-repeat="page in vm.pager.pages" ng-class="{active:vm.pager.currentPage === page}">
+                                    <a class="page-link" ng-click="vm.search(false, true, page)">{{page}}</a>
+                                </li>
+                                <li class="page-item" ng-class="{disabled: vm.pager.isLast}">
+                                    <a class="page-link" ng-click="vm.pager.isLast || vm.search(false, true, vm.pager.currentPage + 1)">Next</a>
+                                </li>
+                                <li class="page-item" ng-class="{disabled: vm.pager.isLast}">
+                                    <a class="page-link" ng-click="vm.pager.isLast || vm.search(false, true, vm.pager.totalPages)">Last</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /page-controll -->
+                    <div id="search-result" ng-show="vm.showSearchResult">
+                        <table class="table table-hover" id="employee-table" ng-show="vm.showEmployeeTable">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-3">Full Name</th>
+                                    <th class="col-xs-3">Job Title</th>
+                                    <th class="col-xs-3">Current Project(s)</th>
+                                    <th class="col-xs-3">Company Join Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in vm.employees">
+                                    <td>
+                                        <a href="#/employees/{{ user.id }}">
+                                            {{ user.first_name }} {{ user.last_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ user.job_title }}
+                                    </td>
+                                    <td>                                    
+                                        <p ng-repeat="item in user.project track by $index">- {{ item }}</p>
+                                    </td>
+                                    <td>
+                                        {{ user.company_join_date | date: "dd-MMM-yyyy"}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- /result table for employee -->
+
+                        <table class="table table-hover" id="project-table" ng-show="vm.showProjectTable">
+                            <thead>
+                                <tr>
+                                    <th class="col-xs-2">Project Name</th>
+                                    <th class="col-xs-2">Client Name</th>
+                                    <th class="col-xs-2">Project Type</th>
+                                    <th class="col-xs-2">Project Status</th>
+                                    <th class="col-xs-2">Project Manager</th>
+                                    <th class="col-xs-2">Location</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="project in vm.projects">
+                                    <td>
+                                        <a href="#/projects/{{ project.id }}">
+                                            {{ project.name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        {{ project.client_name }}
+                                    </td>
+                                    <td>
+                                        {{ project.type }}
+                                    </td>
+                                    <td>
+                                        {{ project.status }}
+                                    </td>
+                                    <td>
+                                        {{ project.project_manager }}
+                                    </td>
+                                    <td>
+                                        {{ project.location }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- /restul table for project -->
+                        <nav>
+                            <ul class="pager">
+                                <li ng-hide="vm.pager.isFirst"><a ng-click="vm.search(false, true, vm.pager.currentPage - 1)">Previous</a></li>
+                                <li ng-hide="vm.pager.isLast"><a ng-click="vm.search(false, true, vm.pager.currentPage + 1)">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- / result table -->
+                </div>
+                <!-- /result-content -->
+            </div>
+        </div>
+    </div>
+    <!-- /result-panel -->
+</div>
+
+<script>
+    $(document).on('click', '#myDropdown li', function(e) {
+        e.stopPropagation();
+    });
+</script>

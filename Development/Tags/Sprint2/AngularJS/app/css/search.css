@@ -1,0 +1,262 @@
+a[ng-click]{
+    cursor: pointer;
+}
+
+#search-body {
+    padding: 20px 0px 20px 0px;
+    margin: 0px auto;
+    width: 1300px !important;
+    display: flex;
+}
+
+
+#search-panel {    
+    margin-left: 29px;
+    margin-right: 20px;
+    width: 24%;
+    background-color: rgb(253,253,253);    
+}
+
+#result-panel {
+    margin: 0px auto;
+    width: 70%;
+    text-align: center;
+    background-color: rgb(253,253,253);
+    display: flex;
+}
+
+#search-body #search-panel > div {
+    padding: 5px 15px;
+}
+
+#search-body #result-panel > div {    
+    min-height: 499px;    
+}
+
+#search-panel #search-controll .col-xs-10 {
+    padding-right: 2px;
+}
+
+#search-panel #search-controll .col-xs-2 {
+    padding-left: 19px;
+}
+
+#search-panel .form-item {
+    transition: all 0.2s;   
+    height: 75px;
+    overflow: hidden;
+}
+
+#search-panel .form-item.ng-hide {    
+    height: 0;    
+    opacity: 0;
+}
+
+#search-panel #search-btn-group {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#search-panel .search-remove {
+    line-height: 34px;
+}
+
+#search-panel #reset {
+    margin-left: -10px;
+}
+
+#search-panel a {
+    cursor: pointer;
+}
+
+#search-panel li {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#search-panel li a{
+    padding-left: 6px;
+}
+
+#search-panel .search-remove span {
+    cursor: pointer;;
+}
+
+#search-panel .item-check {
+    width: 20px;
+    display: inline-block;
+}
+
+#search-panel #expertise-level .form-group {
+    line-height: 40px;   
+}
+
+#search-panel #expertise-level .expertise-label-from {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#search-panel #expertise-level .expertise-label-to {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#search-panel #expertise-level .expertise-select-from {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+#search-panel #expertise-level .expertise-select-to {
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 21px;
+    padding-right: 0px;
+}
+
+#search-panel #expertise-level select {
+    width: 50px;
+    padding: 5px;
+}
+
+#search-panel .form-group .col-md-1 {
+    padding: 0px;
+}
+
+#search-panel .form-group .col-md-11 {
+    padding-right: 26px;
+    margin-right: -5px;
+}
+
+#search-panel #btn-reset {
+    padding-left: 0px;
+}
+
+#result-content {
+    text-align: left;
+}
+
+button.glyphicon {
+    margin-top: -1px;
+}
+
+#search-pager {
+    margin-top: 5px;
+}
+
+#message-box {
+    margin: 140px 0px;
+    text-align: left;
+    display:inline-block;
+}
+
+#message-box.ng-hide-remove {
+    transition: opacity 0.5s;     
+}
+
+#message-box.ng-hide  {     
+    opacity: 0;
+}
+
+#message-box .panel-body {
+    background-color: rgb(248,248,248);
+}
+
+#message-box #no-result-icon {
+    float: left;
+    margin-right: 10px;
+    margin-top: 4px;
+}
+
+#message-box #no-result-text {
+    display: inline-block;
+    line-height: 25px;
+    margin-bottom: 0px;
+}
+
+#message-box #invalid-form-text {    
+    display: inline-block;
+    line-height: 25px;
+    margin-bottom: 0px;
+    width: 310px;
+}
+
+#invalid-form-text.ng-hide-remove {
+    transition: opacity 0.5s;    
+}
+
+#search-result.ng-hide-remove {
+    transition: opacity 0.2s;    
+}
+
+#search-result.ng-hide {
+    opacity: 0;
+}
+
+#search-result tr.ng-enter {
+    transition: 0.5s;
+    opacity: 0;
+}
+
+#search-result tr.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+.search-form-group {
+       
+}
+
+.search-form-group.ng-hide-remove {
+    transition: 0.6s;
+    opacity: 0;
+}
+
+.search-form-group.ng-hide-remove-active {
+    opacity: 1;
+}
+
+.search-form-group.ng-enter {
+    transition: 0.3s;
+    opacity: 0;
+    transform: translateX(-20px);    
+}
+
+.search-form-group.ng-enter-active {
+    opacity: 1;
+    transform: translateX(0);    
+}
+
+#search-panel #expertise-level.form-item {
+    height:100px;
+    transition: all 0.2s;   
+    overflow: hidden;
+}
+
+#search-panel #expertise-level.ng-hide {       
+    height: 0;    
+    opacity: 0;    
+}
+
+#search-panel #expertise-level.form-item p{
+    font-size: 12px;
+    margin-left: 15px;
+    transition: 0.1s;
+    opacity:1;
+}
+
+#search-panel #expertise-level.form-item p.ng-hide-remove{
+    opacity: 0;    
+}
+
+#search-panel #expertise-level.form-item .row.form-group {
+    margin-bottom: 5px;
+}
+
+#dropbox-search-type {
+    width: 156px;
+}

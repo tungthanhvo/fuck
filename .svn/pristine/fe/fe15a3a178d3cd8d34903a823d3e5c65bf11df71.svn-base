@@ -1,0 +1,8 @@
+apps:
+  - name: TMS Fresher 4 NodeJS 1 QC Fork
+    script : ./bin/www
+    instances : 1
+    exec_mode: fork
+    env    :
+      NODE_ENV: test
+      PORT: 3001

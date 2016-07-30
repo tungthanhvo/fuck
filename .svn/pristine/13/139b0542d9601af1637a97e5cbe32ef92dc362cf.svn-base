@@ -1,0 +1,121 @@
+//- p TEST
+//- p Firstname: #{user.first_name}
+//- p Lastname: #{user.last_name}
+
+html
+  head
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+    link(rel='stylesheet', href='/stylesheets/cv.css')
+    
+  .container
+    .row
+      img.logo(src="/images/logo.png")
+    .row
+      .col-md-6
+        label
+          h3.personal-padding PROJECT INFORMATION
+    .row.project
+      .col-xs-12
+        table.table.fixed.page-break
+          tbody
+            col(width="25%")
+            tr
+              td Project Name
+              td 
+                p #{projectInfo.name}
+             tr
+              td Project Type
+              td 
+                p #{projectInfo.type.name}
+            tr
+              td Project Status
+              td 
+                p #{projectInfo.status.name}
+            tr
+              td Start Date
+              td 
+                p #{projectInfo.start_date}
+            tr
+              td End Date
+              td
+                if projectInfo.end_date == 'Invalid date'
+                    p Ongoing
+                else 
+                    p #{projectInfo.end_date}
+            tr
+              td Size(days)
+              td 
+                p #{projectInfo.size}
+            tr
+              td Location
+              td 
+                p #{projectInfo.location.name}
+            tr
+              td Client Name
+              td 
+                p #{projectInfo.client_name}
+             tr
+              td Industry
+              td 
+                if projectInfo.client_industry
+                    p #{projectInfo.client_industry.name}
+    table.table.table-bordered.page-break
+        thead
+            th Name
+            th Role
+            th Description
+        tbody
+            each val in projectInfo.project_users
+                tr
+                    td #{val.user.first_name + ' ' + val.user.last_name}
+                    td #{val.project_role.name}
+                    td #{val.description}
+    .row
+      .col-md-3
+        label Short Description
+    .panel.panel-default
+      .panel-body
+        p #{projectInfo.short_description}
+    .row
+      .col-md-3
+        label Long Description
+    .panel.panel-default
+      .panel-body
+        p #{projectInfo.long_description}
+    .row
+      .col-md-3
+        label Technologies
+    .panel.panel-default
+      .panel-body
+        p #{projectInfo.technology}
+    .row
+      .col-md-3
+        label Client Description
+    .panel.panel-default
+      .panel-body
+        p #{projectInfo.client_description}
+    //- .row
+    //-   .col-md-6
+    //-     label
+    //-       h3.personal-padding PROJECT ROLE
+    
+    //- .row
+    //-   .col-md-6
+    //-     label
+    //-       h3.personal-padding PROJECT MEMBER
+    //- table.table.table-bordered.page-break
+    //-   thead
+    //-     tr
+    //-       th Full Name
+    //-       th Joined Date
+    //-       th Release Date
+    //-       th Role Title
+    //-   tbody
+    //-     each val in user.skill_metrics
+    //-         tr
+    //-             td #{val.skill.name}
+    //-             td #{val.last_year_used}
+    //-             td #{val.expertise.level}
+    //-             td #{val.experience.level}

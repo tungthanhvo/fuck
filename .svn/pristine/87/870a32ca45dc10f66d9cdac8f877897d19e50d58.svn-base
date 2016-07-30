@@ -1,0 +1,22 @@
+{
+    "version": "0.2.0",
+    "configurations": [{
+        "name": "TMS",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceRoot}/bin/www",
+        "cwd": "${workspaceRoot}",
+        "preLaunchTask": null,
+        "runtimeExecutable": null,
+        "args": [
+
+        ],
+        "stopOnEntry": false,
+        "sourceMaps": true,
+        "env": {
+            "NODE_ENV": "development"
+        },
+        "externalConsole": false,
+        "outDir": null
+    }]
+}

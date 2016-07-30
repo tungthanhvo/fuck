@@ -1,0 +1,12 @@
+.field-required {
+    color: red;
+}
+
+.align-right {
+    text-align: left;
+    font-weight: bold;
+}
+
+.text-bold {
+    font-weight: bold;
+}

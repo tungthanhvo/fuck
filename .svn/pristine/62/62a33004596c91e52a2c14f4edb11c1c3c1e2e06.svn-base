@@ -1,0 +1,276 @@
+/* app css stylesheet */
+
+#main-content {
+    min-height: 520px;
+}
+
+.menu {
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
+}
+
+.menu:before {
+    content: "[";
+}
+
+.menu:after {
+    content: "]";
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+    content: "";
+    padding: 0;
+}
+
+.navbar {
+    border-radius: 0px;
+    margin-bottom: 0px;
+    border: none;
+}
+
+#logo a {
+    text-decoration: none;
+}
+
+#navigation-bar > ul:first-child {
+    margin-left: 40px;
+}
+
+#navigation-bar form.navbar-right {
+    margin-right: 15px;
+}
+
+#navigation-bar .navbar-right {
+    margin-right: 0px
+}
+
+.menu-hover:hover {
+    cursor: pointer;
+}
+
+.navbar-left {
+    margin-left: 45px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#footer {
+    background-color: #222;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    color: white;
+}
+
+body {
+    margin: auto;
+    font-family: Arial;
+    width: 1349px !important;
+    min-height: 640px;
+}
+
+body.modal-open {
+    width: 1366px !important;
+}
+
+#info {
+    background-color: #F0F0F0;
+}
+
+.container {
+    width: auto;
+    padding-left: 45px;
+    padding-right: 70px;
+}
+
+textarea {
+    width: 350px;
+    resize: none;
+}
+
+.required::after {
+    content: ' *';
+    color: red;
+}
+
+.error {
+    color: red;
+}
+
+.right-float-btn {
+    float: right;
+    margin: 5px 7px;
+}
+
+.alert {
+    position: absolute;
+    right: 0px;
+}
+
+@-webkit-keyframes shake {
+    from,
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+    }
+}
+
+@keyframes shake {
+    from,
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+    }
+}
+
+.shake {
+    -webkit-animation-name: shake;
+    animation-name: shake;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    width: 500px;
+}
+
+#panel-left {
+    margin-top: 10px;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+.breadcrumb {
+    margin-bottom: 0px;
+    background-color: transparent;
+    border-radius: 0px;
+}
+
+.breadcrumb p {
+    line-height: 50px;
+    font-size: 27px;
+    margin-bottom: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 1000px;
+    white-space: nowrap;
+}
+
+.breadcrumb p.ng-hide-remove {
+    transition: 0.3s;
+    opacity: 0;
+}
+
+.breadcrumb p.ng-hide-remove-active {
+    opacity: 1;
+}
+
+#breadcrumb ol {
+    height: 80px;
+}
+
+.view.ng-enter {
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.view.ng-enter.ng-enter-active {
+    opacity: 1;
+}
+
+#scroll-top {
+    margin-top: 5px;
+}
+
+#headerSearch ul {
+    max-height: 150px;
+    overflow: auto;
+}
+
+.word-wrap {
+    word-break: break-all;
+}
+
+.button-text {
+    padding-left: 15px;
+}
+
+.label-total {
+    padding-top: 15px;
+}
+
+.message-no-available {
+    text-align: center;
+}
+
+.role-text-add {
+    padding-top: 5px;
+    padding-left: 20px;
+    text-align: right;
+}
+
+.nav-profile {
+    margin: 5px 0px;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container--bootstrap .select2-results__option {
+    padding: 6px 12px;
+}
+
+tr.ng-hide-remove {
+    transition: 0.5s;
+    opacity: 0;
+}
+
+tr.ng-hide-remove.ng-hide-remove-active {
+    opacity: 1;
+}

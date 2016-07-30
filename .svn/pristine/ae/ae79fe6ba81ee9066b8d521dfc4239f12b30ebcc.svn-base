@@ -1,0 +1,156 @@
+<!-- courses-certificates collapse - view mode -->
+<div class="panel-group" ng-show="editEmpCtrl.isViewMode">
+    <div class="panel panel-default">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="images/noimage.png" width="50px" height="50px"/>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="header-title" data-toggle="collapse" href="#course-certificate-view">
+                            Courses/ Certifications
+                        </div>
+                    </div>
+                </div>
+            </h4>
+        </div>
+        <div id="course-certificate-view" class="panel-collapse collapse">
+            <table ng-table="courseCtrl.tableCourse" class="table table-hover table-bordered ">
+                <colgroup>
+                    <col width="5% " />
+                    <col width="20% " />
+                    <col width="25% " />
+                    <col width="25% " />
+                    <col width="20% " />
+                </colgroup>
+                <tr class="text-center">
+                    <th>#</th>
+                    <th class="required ">Duration</th>
+                    <th class="required ">Course Name</th>
+                    <th>Course Description</th>
+                    <th>Achievement</th>
+                </tr>
+                <tr ng-if="courseCtrl.courses.length == 0" class="text-center ">
+                    <td colspan="5">
+                        No course available!
+                    </td>
+                </tr>
+                <tr ng-repeat="course in $data track by $index " ng-if="courseCtrl.courses.length > 0">
+                    <td>
+                        <span class="text-center ">{{$index + 1}}</span>
+                    </td>
+                    <td>
+                        <span class="text-center " ng-if="!course.config.isedit ">{{course.data.from_year + ' - ' + course.data.to_year}}</span>
+                    </td>
+                    <td>
+                        <span class="text-center " ng-if="!course.config.isedit ">{{course.data.course_name}}</span>
+                    </td>
+                    <td>
+                        <span class="text-center " ng-if="!course.config.isedit ">{{course.data.course_description}}</span>
+                    </td>
+                    <td>
+                        <span class="text-center " ng-if="!course.config.isedit ">{{course.data.achievement}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- /courses-certificates collapse - view mode-->
+
+<!-- courses-certifications collapse - edit mode -->
+<div class="panel-group" ng-hide="editEmpCtrl.isViewMode">
+    <div class="row">
+        <div class="col-md-2">
+            <img src="images/noimage.png" width="50px" height="50px" />
+        </div>
+        <div class="col-md-10 header-title">
+            <label>Courses/ Certifications</label>
+        </div>
+    </div>
+    <br/>
+    <div class="panel panel-default border-edit">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row" data-toggle="collapse" href="#course-certificate-edit">
+                    <p class="common-edit">+ Edit Courses/ Certifications</p>
+                </div>
+            </h4>
+        </div>
+        <div id="course-certificate-edit" class="panel-collapse collapse">
+            <div id="course-content">
+                <uib-alert class="alert shake" type="{{courseCtrl.alert.type}}" dismiss-on-timeout="2000" close="courseCtrl.closeAlert()" ng-if="courseCtrl.isshowalert">
+                    {{courseCtrl.alert.msg}}
+                </uib-alert>
+                <button ng-disabled="courseCtrl.isUpdateGridView" class="btn btn-primary btn-sm right-float-btn" ng-click="courseCtrl.open()"><span class="glyphicon glyphicon-plus"></span>Add more</button>
+                <table class="table table-hover table-bordered ">
+                    <colgroup>
+                        <col width="5% " />
+                        <col width="35% " />
+                        <col width="20% " />
+                        <col width="20% " />
+                        <col width="10% " />
+                        <col width="10% " />
+                    </colgroup>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th class="required ">Duration</th>
+                        <th class="required ">Course Name</th>
+                        <th>Course Description</th>
+                        <th>Achievement</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr ng-if="courseCtrl.courses.length == 0" class="text-center ">
+                        <td colspan="5">
+                            No course available!
+                        </td>
+                    </tr>
+                    <tr ng-repeat="course in courseCtrl.courses track by $index " ng-if="courseCtrl.courses.length > 0">
+                        <td>
+                            <span class="text-center ">{{$index + 1}}</span>
+                        </td>
+                        <td>
+                            <span class="text-center " ng-if="!course.config.isedit ">{{course.data.from_year + ' - ' + course.data.to_year}}</span>
+                            <div ng-if="course.config.isedit ">
+                                <select-year fromyear="course.data.from_year" toyear="course.data.to_year"></select-year>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="text-center " ng-if="!course.config.isedit ">{{course.data.course_name}}</span>
+                            <div class="controls " ng-if="course.config.isedit ">
+                                <label for="course_name ">&nbsp</label>
+                                <input ng-form="course_name " type="text " id="course_name " ng-model="course.data.course_name " class="editable-input form-control input-sm " required ng-maxlength="255" />
+                                <span class="error " ng-show="course_name.$error.required ">This field is required.</span>
+                                <span class="error" ng-show="course_name.$error.maxlength">The length must be less than 255 characters.</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="text-center " ng-if="!course.config.isedit ">{{course.data.course_description}}</span>
+                            <div class="controls " ng-if="course.config.isedit ">
+                                <label for="course_description ">&nbsp</label>
+                                <textarea rows="2" ng-form="course_description " id="course_description " type="text " ng-model="course.data.course_description " class="editable-input form-control input-sm " ng-maxlength="255"></textarea>
+                                <span class="error" ng-show="course_description.$error.maxlength">The length must be less than 255 characters.</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="text-center " ng-if="!course.config.isedit ">{{course.data.achievement}}</span>
+                            <div class="controls " ng-if="course.config.isedit ">
+                                <label for="achievement ">&nbsp</label>
+                                <input ng-form="achievement " id="achievement " type="text " ng-model="course.data.achievement " class="editable-input form-control input-sm " ng-maxlength="255" />
+                                <span class="error" ng-show="achievement.$error.maxlength">The length must be less than 255 characters.</span>
+                            </div>
+                        </td>
+                        <td class="text-center ">
+                            <button ng-disabled="!course.config.issave" class="btn btn-success btn-sm " ng-click="courseCtrl.save(course) " ng-if="course.config.isedit "><span class="glyphicon glyphicon-ok "></span></button>
+                            <button class="btn btn-warning btn-sm " ng-click="courseCtrl.cancel(course) " ng-if="course.config.isedit "><span class="glyphicon glyphicon-remove "></span></button>
+                            <button ng-disabled="course.config.isdisable " class="btn btn-default btn-sm " ng-click="courseCtrl.edit(course) " ng-if="!course.config.isedit "><span class="glyphicon glyphicon-pencil "></span></button>
+                            <button ng-disabled="course.config.isdisable " class="btn btn-danger btn-sm " ng-click="courseCtrl.del(course) " ng-if="!course.config.isedit "><span class="glyphicon glyphicon-trash "></span></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /courses-certifications collapse - edit mode -->

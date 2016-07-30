@@ -1,0 +1,172 @@
+/* app css stylesheet */
+
+.menu {
+    list-style: none;
+    border-bottom: 0.1em solid black;
+    margin-bottom: 2em;
+    padding: 0 0 0.5em;
+}
+
+.menu:before {
+    content: "[";
+}
+
+.menu:after {
+    content: "]";
+}
+
+.menu > li {
+    display: inline;
+}
+
+.menu > li:before {
+    content: "|";
+    padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+    content: "";
+    padding: 0;
+}
+
+.navbar {
+    border-radius: 0px;
+    margin-bottom: 0px;
+}
+
+#logo a {
+    text-decoration: none;
+}
+
+#header-bar,
+.navbar-inverse {
+    margin-right: 0;
+    background-color: black;
+    border: none;
+}
+
+#navigation-bar ul:first-child > li:last-child {
+    margin-left: 20px;
+}
+
+.menu-hover:hover {
+    cursor: pointer;
+}
+
+.navbar-left {
+    margin-left: 50px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#ft {
+    background-color: #F0F0F0;
+    padding-bottom: 80px;
+    padding-top: 15px;
+}
+
+body {
+    font-family: Arial;
+}
+
+#info {
+    background-color: #F0F0F0;
+}
+
+.container {
+    width: auto;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+textarea {
+    width: 350px;
+    resize: none;
+}
+
+.required::after {
+    content: ' *';
+    color: red;
+}
+
+.error {
+    color: red;
+}
+
+.right-float-btn {
+    float: right;
+    margin: 5px 0px;
+}
+
+
+/*#education-content table {
+    width: 800px;
+}*/
+
+.alert {
+    position: absolute;
+    right: 0px;
+}
+
+@-webkit-keyframes shake {
+    from,
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+    }
+}
+
+@keyframes shake {
+    from,
+    to {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+        -webkit-transform: translate3d(-10px, 0, 0);
+        transform: translate3d(-10px, 0, 0);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+        -webkit-transform: translate3d(10px, 0, 0);
+        transform: translate3d(10px, 0, 0);
+    }
+}
+
+.shake {
+    -webkit-animation-name: shake;
+    animation-name: shake;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    width: 500px;
+}
+
+#panel-left {
+    margin-top: 10px;
+}

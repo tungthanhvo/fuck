@@ -1,0 +1,121 @@
+<!-- addtional-info collapse - view mode -->
+<div class="panel-group" ng-show="editEmpCtrl.isViewMode">
+    <div class="panel panel-default">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="images/noimage.png" width="50px" height="50px"/>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="header-title" data-toggle="collapse" href="#additional-info-view">
+                            Additional Information
+                        </div>
+                    </div>
+                </div>
+            </h4>
+        </div>
+        <div id="additional-info-view" class="panel-collapse collapse">
+            <div class="form-group row ">
+                <label class="control-label col-lg-3 col-sm-offset-1 " for="personal_email ">Personal Email:</label>
+                <div class="col-lg-7 ">
+                    <span>{{ additionInforCtrl.addition_information.personal_email != null && additionInforCtrl.addition_information.personal_email.length ?
+                        additionInforCtrl.addition_information.personal_email :
+                        "......................................................"}}</span>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <label class="control-label col-lg-3 col-sm-offset-1 " for="personal_quote ">Personal Quote:</label>
+                <div class="col-lg-7 ">
+                    <span>{{ additionInforCtrl.addition_information.personal_quote != null && additionInforCtrl.addition_information.personal_quote.length ?
+                        additionInforCtrl.addition_information.personal_quote :
+                        "......................................................"}}</span>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <label class="control-label col-lg-3 col-sm-offset-1 " for="hobby ">Hobby:</label>
+                <div class="col-lg-7 ">
+                    <span>{{ additionInforCtrl.addition_information.hobby != null && additionInforCtrl.addition_information.hobby.length ?
+                        additionInforCtrl.addition_information.hobby :
+                        "......................................................"}}</span>
+                </div>
+            </div>
+            <div class="form-group row ">
+                <label class="control-label col-lg-3 col-sm-offset-1 " for="personal_statement ">Personal Statement:</label>
+                <div class="col-lg-7 ">
+                    <span>{{ additionInforCtrl.addition_information.personal_statement != null && additionInforCtrl.addition_information.personal_statement.length ?
+                        additionInforCtrl.addition_information.personal_statement :
+                        "......................................................"}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /addtional-info collapse - view mode -->
+
+<!-- addtional-info collapse - edit mode -->
+<div class="panel-group" ng-hide="editEmpCtrl.isViewMode">
+    <uib-alert class="alert shake" type="{{additionInforCtrl.alert.type}}" dismiss-on-timeout="2000" close="additionInforCtrl.closeAlert()" ng-if="additionInforCtrl.isshowalert">
+        {{additionInforCtrl.alert.msg}}
+    </uib-alert>
+    <div class="row">
+        <div class="col-md-2">
+            <img src="images/noimage.png" width="50px" height="50px" />
+        </div>
+        <div class="col-md-10 header-title">
+            <label>Additional Information</label>
+        </div>
+    </div>
+    <br/>
+    <div class="panel panel-default border-edit">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row" data-toggle="collapse" href="#additional-info-edit">
+                    <p class="common-edit">+ Edit Additional Information</p>
+                </div>
+            </h4>
+        </div>
+
+        <div id="additional-info-edit" class="panel-collapse collapse">
+            <form role="form " name="additionInforForm" novalidate>
+                <div class="form-group row ">
+                    <label class="control-label col-lg-3 col-sm-offset-1 " for="personal_email ">Personal Email:</label>
+                    <div class="col-lg-7 ">
+                        <input type="email" name="personal_email " ng-model="additionInforCtrl.addition_information.personal_email " class="form-control " id="personal_email " placeholder="Enter your personal email " ng-maxlength="50" />
+                        <span class="error" ng-show="additionInforForm.personal_email.$error.email">Invalid email format.</span>
+                        <span class="error" ng-show="additionInforForm.personal_email.$error.maxlength">The length must be less than 50 characters.</span>
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <label class="control-label col-lg-3 col-sm-offset-1 " for="personal_quote ">Personal Quote:</label>
+                    <div class="col-lg-7 ">
+                        <textarea cols="3" name="personal_quote " ng-model="additionInforCtrl.addition_information.personal_quote " class="form-control " id="personal_quote " placeholder="Enter your personal quote " ng-maxlength="1000" />
+                        <span class="error" ng-show="additionInforForm.personal_quote.$error.maxlength">The length must be less than 1000 characters.</span>
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <label class="control-label col-lg-3 col-sm-offset-1 " for="hobby ">Hobby:</label>
+                    <div class="col-lg-7 ">
+                        <textarea cols="3" name="hobby " ng-model="additionInforCtrl.addition_information.hobby " class="form-control " id="hobby " placeholder="Enter your hobby " ng-maxlength="1000" />
+                        <span class="error" ng-show="additionInforForm.hobby.$error.maxlength">The length must be less than 1000 characters.</span>
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <label class="control-label col-lg-3 col-sm-offset-1 " for="personal_statement ">Personal Statement:</label>
+                    <div class="col-lg-7 ">
+                        <textarea cols="3" name="personal_statement " ng-model="additionInforCtrl.addition_information.personal_statement " class="form-control " id="personal_statement " placeholder="Enter your personal statement " ng-maxlength="1000" />
+                        <span class="error" ng-show="additionInforForm.personal_statement.$error.maxlength">The length must be less than 1000 characters.</span>
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <div class="col-sm-offset-4 col-lg-7 ">
+                        <button class="btn btn-success btn-sm " ng-click="additionInforCtrl.save() ">Save</button>
+                        <button class="btn btn-warning btn-sm " ng-click="additionInforCtrl.cancel() ">Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<!-- /addtional-info collapse - edit mode -->

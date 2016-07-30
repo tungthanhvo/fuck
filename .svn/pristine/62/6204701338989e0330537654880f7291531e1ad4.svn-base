@@ -1,0 +1,265 @@
+<!-- companyInformation collapse - view mode-->
+<div class="panel-group" ng-show="editEmpCtrl.isViewMode">
+    <div class="panel panel-default">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="images/noimage.png" width="50px" height="50px"/>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="header-title" data-toggle="collapse" href="#companyInfoView">
+                            Company
+                            Information
+                        </div>
+                    </div>
+                </div>
+
+            </h4>
+        </div>
+        <div id="companyInfoView" class="panel-collapse collapse">
+
+            <div class="row">
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-8">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <td class="fisrt-color">Company-join Date</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color">{{editEmpCtrl.userInfo.company_join_date | date : "fullDate" }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Job Title</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color">{{editEmpCtrl.job_title_name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Line Manager</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color">{{editEmpCtrl.line_manager_name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Company Email</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color">{{editEmpCtrl.userInfo.company_email}}</td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Sky ID</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color">{{editEmpCtrl.userInfo.skype_id}}</td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Competence</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color">{{editEmpCtrl.competence_name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Department</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color">{{editEmpCtrl.department_name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Level</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color">{{editEmpCtrl.userInfo.level}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    <input type="button" class="form-control btn-danger" id="companyInfoViewClose"
+                           value="Close" data-toggle="collapse" href="#companyInfoView"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /companyInformation collapse - view mode-->
+
+<!-- companyInformation collapse - edit mode -->
+<div class="panel-group" ng-hide="editEmpCtrl.isViewMode">
+
+    <div class="row">
+        <div class="col-md-2">
+            <img src="images/noimage.png" width="50px" height="50px"/>
+        </div>
+        <div class="col-md-10 header-title">
+            <label>Company Information</label>
+        </div>
+
+    </div>
+
+    <br/>
+    <div class="panel panel-default border-edit">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row" data-toggle="collapse" href="#companyInfoEdit">
+                    <p class="common-edit">+ Edit Company Information</p>
+                </div>
+            </h4>
+        </div>
+        <!-- ng-submit="comInfoCtrl.companyInfoSubmit()" -->
+        <form name="companyInfoForm" ng-submit="comInfoCtrl.companyInfoSubmit()">
+            <div id="companyInfoEdit" class="panel-collapse collapse">
+
+                <!-- personal deatils  -->
+                <br/>
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-8">
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Company-join Date</td>
+                                <td></td>
+                                <td></td>
+                                <td><input class="form-control second-color" type="date"
+                                           name="companyJoinDate"
+                                           ng-model="comInfoCtrl.company_join_date"/>
+                                </td>
+                                <td class="label-align-left">
+                                    <div class="errorMsg"
+                                         ng-hide="comInfoCtrl.isCompanyJoinDateValid">This field is
+                                        required.
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Department</td>
+                                <td></td>
+                                <td></td>
+                                <td><select class="form-control second-color" name="comInfoCtrl.department"
+                                            ng-model="editEmpCtrl.department"
+                                            ng-change="editEmpCtrl.departmentChange()">
+                                    <option ng-repeat="d in editEmpCtrl.departments" value="{{d.id}}">{{d.name}}
+                                    </option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Competence</td>
+                                <td></td>
+                                <td></td>
+                                <td><select class="form-control second-color" name="competence"
+                                            ng-model="editEmpCtrl.competence"
+                                            ng-change="editEmpCtrl.competenceChange()">
+                                    <option ng-repeat="c in editEmpCtrl.competences" value="{{c.id}}">{{c.name}}
+                                    </option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Job Title</td>
+                                <td></td>
+                                <td></td>
+                                <td><select class="form-control second-color" name="jobTitle"
+                                            ng-model="comInfoCtrl.jobTitle">
+                                    <option ng-repeat="j in editEmpCtrl.job_titles" value="{{j.job_title.id}}">
+                                        {{j.job_title.name}}
+                                    </option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Line Manager</td>
+                                <td></td>
+                                <td></td>
+                                <td><select class="form-control second-color" name="lineManager"
+                                            ng-model="comInfoCtrl.lineManager">
+                                    <option ng-repeat="u in editEmpCtrl.lineManagers" value="{{u.id}}">{{u.first_name}}
+                                        {{u.last_name}}
+                                    </option>
+                                </select></td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Company Email</td>
+                                <td></td>
+                                <td></td>
+                                <td><input class="form-control second-color" type="text" ng-model="comInfoCtrl.email"
+                                           size="20"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Sky ID</td>
+                                <td></td>
+                                <td></td>
+                                <td><input class="form-control second-color" type="text" size="20"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Level</td>
+                                <td></td>
+                                <td></td>
+                                <td><input class="form-control second-color" name="level" ng-model="comInfoCtrl.level" type="text" size="20" required />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left"></td>
+                                <td></td>
+                                <td></td>
+                                <td><div class="has-error">
+                                    <span class="help-block" ng-if="companyInfoForm.level.$touched && companyInfoForm.level.$error.required">This is a required field.</span>
+                                </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-8">
+                        <uib-alert class="alert shake" type="{{comInfoCtrl.alert.type}}" dismiss-on-timeout="2000" close="comInfoCtrl.closeAlert()" ng-if="comInfoCtrl.isshowalert">
+                            {{comInfoCtrl.alert.msg}}
+                        </uib-alert>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <input type="submit" class="form-control btn-info" id="companyInfoSave"
+                               value="Save"/>
+                    </div>
+                    <div class="col-md-8">
+
+                    </div>
+                    <div class="col-md-2">
+                        <input type="button" class="form-control btn-info" id="companyInfoCancel" value="Cancel"
+                               data-toggle="collapse" href="#companyInfoEdit"/>
+                    </div>
+                </div>
+                <!-- /personal details -->
+
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /companyInformation collapse - edit mode -->

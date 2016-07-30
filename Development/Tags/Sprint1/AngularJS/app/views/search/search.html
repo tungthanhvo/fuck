@@ -1,0 +1,343 @@
+<link rel="stylesheet" type="text/css" href="../../css/search.css">
+<div class="row" id="search-body"> 
+    <div class="col-md-3 col-md-offset-1">
+        <div class="panel panel-default" id="search-panel">
+            <div class="panel-body">
+                <form>  
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label> Type</label>                        
+                        </div>  
+                    </div>                  
+                    <div class="row form-group">
+                        <div class="col-md-8">
+                            <select class="form-control" id="el1" >
+                                <option>Employee</option>
+                                <option>Project</option>
+                            </select>
+                        </div>
+                        
+                        <div class="btn-group col-md-4" id='search-btn-group'>
+                            <button class="btn btn-default glyphicon glyphicon-search" ng-click="searchCtrl.sendData()"></button>
+                            <div class="btn-group" id="myDropdown">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a ng-click="searchCtrl.showItem('job_title')">
+                                            <div class="item-check">                                                
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="searchCtrl.show.job_title"></span>
+                                            </div>
+                                            <span>Job Title</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="searchCtrl.showItem('project')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="searchCtrl.show.project"></span>
+                                            </div>  
+                                            Member of Project
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="searchCtrl.showItem('course')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="searchCtrl.show.course"></span>
+                                            </div>  
+                                            Courses/Certification
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="searchCtrl.showItem('technical_skill')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="searchCtrl.show.technical_skill"></span>
+                                            </div>  
+                                            Technical Skill
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="searchCtrl.showItem('skill_metric')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="searchCtrl.show.skill_metric"></span>
+                                            </div>  
+                                            Skill Metrics
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="searchCtrl.showItem('expertise_level_from')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="searchCtrl.show.expertise_level_from"></span>
+                                            </div>  
+                                            Expertise Level From
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a ng-click="searchCtrl.showItem('expertise_level_to')">
+                                            <div class="item-check">
+                                                <span class="glyphicon glyphicon glyphicon-ok" ng-show="searchCtrl.show.expertise_level_to"></span>
+                                            </div>  
+                                            Expertise Level To
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>First Name</label>                        
+                        </div>  
+                    </div>    
+
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <input id="first-name" type="text" class="form-control" ng-model="searchCtrl.form.first_name">    
+                        </div>                          
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Last Name</label>                        
+                        </div>  
+                    </div>    
+
+                    <div class="row form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" ng-model="searchCtrl.form.last_name">    
+                        </div>
+                    </div>
+
+                    <div ng-show="searchCtrl.show.job_title">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Job Title</label>
+                            </div>  
+                        </div>   
+
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <select class="form-control" ng-model="searchCtrl.form.job_title">
+                                    <option selected="selected">All</option>
+                                    <option ng-repeat="title in homeCtrl.metaData.job_titles" >
+                                        {{ title }}
+                                    </option>                                    
+                                </select>
+                            </div>                     
+                            <div class="col-md-2 search-remove">   
+                                <span class="glyphicon glyphicon-remove" ng-click="searchCtrl.showItem('job_title')"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="searchCtrl.show.project">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Member Of Project</label>                        
+                            </div>  
+                        </div>   
+
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <select class="form-control">
+                                    <option>TMS</option>
+                                    <option>TMS</option>
+                                    <option selected="seleted">SE</option>
+                                    <option>TA</option>
+                                </select>
+                            </div>                     
+                            <div class="col-md-2 search-remove">   
+                                <span class="glyphicon glyphicon-remove" ng-click="searchCtrl.showItem('project')"></span>
+                            </div>
+                        </div>     
+                    </div>               
+                    
+                    <div ng-show="searchCtrl.show.course">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Course/Certificate</label>
+                            </div>  
+                        </div>    
+
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" ng-model="searchCtrl.form.course">    
+                            </div>                     
+                            <div class="col-md-2 search-remove">   
+                                <span class="glyphicon glyphicon-remove" ng-click="searchCtrl.showItem('course')"></span>
+                            </div>
+                        </div>
+                    </div>  
+
+                    <div ng-show="searchCtrl.show.technical_skill">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Technical Skills</label>
+                            </div>  
+                        </div>    
+
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" ng-model="searchCtrl.form.technical_skill">
+                            </div>                     
+                            <div class="col-md-2 search-remove">   
+                                <span class="glyphicon glyphicon-remove" ng-click="searchCtrl.showItem('technical_skill')"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div ng-show="searchCtrl.show.skill_metric">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Skill Metrics</label>
+                            </div>  
+                        </div>   
+
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <select class="form-control" ng-model="searchCtrl.form.skill_metric">
+                                    <option>All</option>
+                                    <option ng-repeat="skill in homeCtrl.metaData.skills">
+                                        {{ skill.name }}
+                                    </option>                                    
+                                </select>
+                            </div>                     
+                            <div class="col-md-2 search-remove">   
+                                <span class="glyphicon glyphicon-remove" ng-click="searchCtrl.showItem('skill_metric')"></span>
+                            </div>
+                        </div>     
+                    </div>
+
+                    <div ng-show="searchCtrl.show.expertise_level_from">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Expertise Level From</label>                        
+                            </div>  
+                        </div>   
+
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <select class="form-control" ng-model="searchCtrl.form.expertise_level_from">
+                                    <option>All</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>                     
+                            <div class="col-md-2 search-remove">   
+                                <span class="glyphicon glyphicon-remove" ng-click="searchCtrl.showItem('expertise_level_from')"></span>
+                            </div>
+                        </div>   
+                    </div>
+
+                    <div ng-show="searchCtrl.show.expertise_level_to">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Expertise Level To</label>                        
+                            </div>  
+                        </div>   
+
+                        <div class="row form-group">
+                            <div class="col-md-10">
+                                <select class="form-control" ng-model="searchCtrl.form.expertise_level_to">
+                                    <option>All</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>                     
+                            <div class="col-md-2 search-remove">   
+                                <span class="glyphicon glyphicon-remove" ng-click="searchCtrl.showItem('expertise_level_to')"></span>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="row">                     
+                        <div class='col-md-12'>
+                            <button type="reset" class="btn btn-link btn-md" id="reset" ng-click="searchCtrl.resetFields()">Reset</button>
+                        </div>
+                    </div>          
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7" >
+        <div class="panel panel-default" id="result">
+            <div class="panel-body" >
+                <div class="row"> 
+                    <div class="col-md-3">
+                        <h4>Total Results: {{ searchCtrl.totalItem || 0}}</h4>                        
+                    </div>                   
+                    <div class="col-md-9" id="page-controll" ng-hide="searchCtrl.totalItem == 0"> 
+                        <ul ng-if="searchCtrl.pager.pages.length" class="pagination pagination-sm pull-right" id="search-pager">
+                            <li class="page-item" ng-class="{disabled: searchCtrl.pager.isFirst}">
+                                <a class="page-link" ng-click="searchCtrl.pager.isFirst || searchCtrl.sendData(1)">First</a>
+                            </li>
+                            <li class="page-item" ng-class="{disabled: searchCtrl.pager.isFirst}">
+                                <a class="page-link" ng-click="searchCtrl.pager.isFirst || searchCtrl.sendData(searchCtrl.pager.currentPage - 1)">Previous</a>
+                            </li>
+                            <li class="page-item" ng-repeat="page in searchCtrl.pager.pages" ng-class="{active:searchCtrl.pager.currentPage === page}">
+                                <a class="page-link" ng-click="searchCtrl.sendData(page)">{{page}}</a>
+                            </li>               
+                            <li class="page-item" ng-class="{disabled: searchCtrl.pager.isLast}">
+                                <a class="page-link" ng-click="searchCtrl.pager.isLast || searchCtrl.sendData(searchCtrl.pager.currentPage + 1)">Next</a>
+                            </li>
+                            <li class="page-item" ng-class="{disabled: searchCtrl.pager.isLast}">
+                                <a class="page-link" ng-click="searchCtrl.pager.isLast || searchCtrl.sendData(searchCtrl.pager.totalPages)">Last</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="search-result" ng-hide="searchCtrl.totalItem == 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-md-3">Full Name</th>
+                                <th class="col-md-2">Job Title</th>
+                                <th class="col-md-4">Curent Project(s)</th>
+                                <th class="col-md-3">Company Join Date</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="user in searchCtrl.users">
+                            <tr>
+                                <td>
+                                    <a href="#/employee/{{ user.id }}">
+                                        {{ user.first_name }} {{ user.last_name }}
+                                    </a>
+                                </td>
+                                <td>
+                                    {{ user.competence_job_title.job_title.name }}
+                                </td>
+                                <td>
+                                    {{  }}
+                                </td>
+                                <td>
+                                    {{ user.company_join_date | date: "dd-MMM-yyyy"}}
+                                </td>
+                            </tr>                        
+                        </tbody>
+                    </table>
+                    <nav ng-show="searchCtrl.users">
+                        <ul class="pager">
+                            <li ng-hide="searchCtrl.pager.isFirst"><a ng-click="searchCtrl.sendData(searchCtrl.pager.currentPage - 1)">Previous</a></li>
+                            <li ng-hide="searchCtrl.pager.isLast"><a ng-click="searchCtrl.sendData(searchCtrl.pager.currentPage + 1)">Next</a></li>
+                        </ul>
+                    </nav>  
+                </div>
+            </div>        
+        </div>
+    </div>
+</div>
+
+<script>
+    
+    $(document).on('click', '#myDropdown li', function (e) {
+      e.stopPropagation();
+    });
+
+</script>
+

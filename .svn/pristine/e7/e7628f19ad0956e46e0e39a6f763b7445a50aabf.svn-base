@@ -1,0 +1,448 @@
+<!-- companyInformation collapse - view mode-->
+<div class="panel-group" ng-show="empProfileCtrl.isViewMode" id="companySmoothScrollView">
+    <div class="panel panel-default">
+        <div class="panel-heading my-cursor" data-toggle="collapse" href="#companyInfoView"
+             ng-click="editEmpCtrl.changeCompanyCollapse()">
+            <h4 class="panel-title">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <img src="images/update-cv/company-information.png" width="50px" height="50px"/>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="header-title">
+                            Company
+                            Information
+                        </div>
+                    </div>
+                    <div class="col-xs-1" ng-show="editEmpCtrl.isCompanyCollapse" style="margin-top: 10px">
+                        <img ng-src="images/arrow-down.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                    <div class="col-xs-1" ng-show="!editEmpCtrl.isCompanyCollapse" style="margin-top: 10px">
+                        <img ng-src="images/arrow-up.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                </div>
+
+            </h4>
+        </div>
+        <div id="companyInfoView" class="panel-collapse collapse">
+            <br/>
+            <div class="row">
+                <div class="col-xs-2">
+
+                </div>
+                <div class="col-xs-8">
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="second-color">Company Join Date</div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="word-wrap">{{comInfoCtrl.userInfo.company_join_date | date : "dd-MMM-yyyy" }}
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="second-color">Department</div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="word-wrap">{{comInfoCtrl.department_name}}</div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="second-color">Competence</div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="word-wrap">{{comInfoCtrl.competence_name}}</div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="second-color">Job Title</div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="word-wrap">{{comInfoCtrl.job_title_name}}</div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="second-color">Line Manager</div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="word-wrap">{{comInfoCtrl.line_manager_name}}</div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="second-color">Company Email</div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="word-wrap">
+                                {{comInfoCtrl.userInfo.company_email}}{{comInfoCtrl.userInfo.suffix_company_email}}
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="second-color">Skype ID</div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="word-wrap">{{comInfoCtrl.userInfo.skype_id}}</div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="second-color">Level</div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="word-wrap">{{comInfoCtrl.userInfo.level}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-10"></div>
+                <div class="col-xs-2">
+                    <a href="#companyInfoView" ng-click="editEmpCtrl.changeCompanyCollapse()" data-toggle="collapse"
+                       class="btn-cls">Collapse</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- /companyInformation collapse - view mode-->
+
+<!-- companyInformation collapse - edit mode -->
+<div class="panel-group" ng-hide="empProfileCtrl.isViewMode" id="companySmoothScrollEdit">
+
+    <div class="row">
+        <img src="images/update-cv/company-information.png" width="50px" height="50px"/>
+        <label class="header-title-edit">Company Information</label>
+    </div>
+    <br/>
+    <div class="panel panel-default border-edit">
+        <div class="panel-heading my-cursor" data-toggle="collapse" href="#companyInfoEdit"
+             ng-click="editEmpCtrl.changeCompanyCollapseEdit()">
+            <h4 class="panel-title">
+                <div class="row">
+                    <uib-alert class="alert shake" type="{{comInfoCtrl.alert.type}}" dismiss-on-timeout="2000"
+                               close="comInfoCtrl.closeAlert()" ng-if="comInfoCtrl.isShowalert">
+                        {{comInfoCtrl.alert.msg}}
+                    </uib-alert>
+                    <br/>
+                    <div class="col-xs-1">
+
+                    </div>
+                    <div class="col-xs-10">
+                        <p class="common-edit">+ Edit Company Information</p>
+                    </div>
+                    <div class="col-xs-1" ng-show="editEmpCtrl.isCompanyCollapseEdit"
+                    >
+                        <img ng-src="images/arrow-down.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                    <div class="col-xs-1" ng-show="!editEmpCtrl.isCompanyCollapseEdit"
+                    >
+                        <img ng-src="images/arrow-up.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                </div>
+            </h4>
+        </div>
+        <!-- ng-submit="comInfoCtrl.companyInfoSubmit()" -->
+        <form name="companyInfoForm" ng-submit="comInfoCtrl.companyInfoSubmit()" novalidate>
+            <div id="companyInfoEdit" class="panel-collapse collapse">
+
+                <!-- personal deatils  -->
+                <br/>
+                <div class="row">
+                    <div class="col-xs-1">
+
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="second-color required">Company Join Date
+                                </div>
+                            </div>
+                            <div class="col-xs-8">
+                                <p class="input-group">
+                                    <input id="joindate" style="cursor:default" type="text" class="form-control"
+                                           uib-datepicker-popup="dd-MMM-yyyy"
+                                           ng-model="comInfoCtrl.userInfoUpdate.company_join_date"
+                                           is-open="comInfoCtrl.popup1.opened"
+                                           datepicker-options="comInfoCtrl.dateOptions1" ng-required="true"
+                                           close-text="Close" alt-input-formats="comInfoCtrl.altInputFormats"
+                                           show-button-bar="false" ng-change="comInfoCtrl.company_join_date_change()"
+                                           name="dateofbirth"/>
+                                    <span class="input-group-btn">
+                                <button id="joinDateButton" type="button" class="btn btn-default"
+                                        ng-click="comInfoCtrl.open1()"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div></div>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="errorMsg" ng-show="comInfoCtrl.isCompanyJoinDateInvalidWithCurrent">
+                                    This field is not greater than current.
+                                </div>
+                                <div class="errorMsg"
+                                     ng-show="comInfoCtrl.isCompanyJoinDateInvalidWithDOB && !comInfoCtrl.isCompanyJoinDateInvalidWithCurrent">
+                                    The company join date must be after birthday
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="second-color required">Department</div>
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="comInfoCtrl.department"
+                                        ng-model="comInfoCtrl.userInfoUpdate.department_id"
+                                        ng-change="comInfoCtrl.departmentChange()">
+                                    <option ng-repeat="d in comInfoCtrl.departments" value="{{d.id}}">{{d.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="second-color required">Competence</div>
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="competence"
+                                        ng-model="comInfoCtrl.userInfoUpdate.competence_id"
+                                        ng-change="comInfoCtrl.competenceChange()" required>
+                                    <option value="default">Please select employee’s competence</option>
+                                    <option ng-repeat="c in comInfoCtrl.competences" value="{{c.id}}">{{c.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div></div>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="errorMsg" ng-show="companyInfoForm.competence.$error.required">This field is
+                                    required.
+                                </div>
+                                <div class="errorMsg" ng-show="comInfoCtrl.isCompetenceNotChoose">This field is
+                                    required.
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="second-color required">Job Title</div>
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="jobTitle" required
+                                        ng-model="comInfoCtrl.userInfoUpdate.job_title_id"
+                                        ng-change="comInfoCtrl.job_title_change()">
+                                    <option value="default">Please select employee’s job title</option>
+                                    <option ng-repeat="j in comInfoCtrl.job_titles" value="{{j.job_title.id}}">
+                                        {{j.job_title.name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div></div>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="errorMsg" ng-show="companyInfoForm.jobTitle.$error.required">This field is
+                                    required.
+                                </div>
+                                <div class="errorMsg" ng-show="comInfoCtrl.isJobtitleNotChoose">This field is required.
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="second-color required">Line Manager</div>
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="line_manager"
+                                        ng-model="comInfoCtrl.userInfoUpdate.line_manager_id">
+                                    <option ng-repeat="l in comInfoCtrl.lineManagers" value="{{l.id}}">{{l.first_name}}
+                                        {{l.last_name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="second-color required">Company Email</div>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <div class="col-xs-6 no-padding-right">
+                                        <input class="form-control" name="company_email" type="text"
+                                               ng-pattern="/^[A-Za-z0-9]+(\.[A-Za-z0-9]+|\_[A-Za-z0-9]+)*$/"
+                                               ng-trim="false" ng-model="comInfoCtrl.userInfoUpdate.company_email"
+                                               maxlength="{{comInfoCtrl.company_email_max_length}}" size="20"
+                                               required/>
+                                    </div>
+                                    <div class="col-xs-6 no-padding">
+                                        <select class="form-control" ng-change="comInfoCtrl.suffix_email_change()"
+                                                ng-model="comInfoCtrl.userInfoUpdate.suffix_company_email">
+                                            <option value="@harveynash.vn">@harveynash.vn</option>
+                                            <option value="@nashtechglobal.com">@nashtechglobal.com</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div></div>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="errorMsg"
+                                     ng-show="companyInfoForm.company_email.$dirty && companyInfoForm.company_email.$error.required">
+                                    This filed is required.
+                                </div>
+                                <div class="errorMsg" ng-show="companyInfoForm.company_email.$error.pattern">Email
+                                    doesn't has special characters
+                                </div>
+                                <div class="errorMsg"
+                                     ng-show="comInfoCtrl.isCompanyEmailContainSpace && !companyInfoForm.company_email.$error.required && !companyInfoForm.company_email.$error.pattern">
+                                    Invalid email format.
+                                </div>
+                                <div class="errorMsg"
+                                     ng-show="comInfoCtrl.isCompanyEmailExist && !comInfoCtrl.isCompanyEmailContainSpace && !companyInfoForm.company_email.$error.required && !companyInfoForm.company_email.$error.pattern">
+                                    Company email has already existed.
+                                </div>
+                                <div class="errorMsg"
+                                     ng-show="comInfoCtrl.isCompanyEmailInvalid && !comInfoCtrl.isCompanyEmailExist && !comInfoCtrl.isCompanyEmailContainSpace && !companyInfoForm.company_email.$error.required && !companyInfoForm.company_email.$error.pattern">
+                                    Company email length does not exceed 50 characters.
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="second-color">Skype ID</div>
+                            </div>
+                            <div class="col-xs-8">
+                                <input class="form-control" name="skype" ng-model="comInfoCtrl.userInfoUpdate.skype_id"
+                                       ng-trim="false"
+                                       type="text"
+                                       ng-pattern="/^[A-Za-z0-9]+(\.[A-Za-z0-9]+|\_[A-Za-z0-9]+|\-[A-Za-z0-9]+)*$/"
+                                       placeholder="Enter your skype ID" size="20" minlength="1" maxlength="50"/>
+                                <div class="errorMsg" ng-show="companyInfoForm.skype.$error.pattern">Skype doesn't has
+                                    special characters
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div class="second-color required">Level</div>
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="level" ng-model="comInfoCtrl.userInfoUpdate.level"
+                                        required>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <div></div>
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="errorMsg"
+                                     ng-show="companyInfoForm.level.$touched && companyInfoForm.level.$error.required">
+                                    This field is required.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+
+                    </div>
+                </div>
+
+                <br/><br/>
+                <div class="row align-row">
+                    <div class="col-xs-4">
+
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <input type="submit" ng-disabled="!companyInfoForm.$dirty || companyInfoForm.$invalid"
+                                       class="btn btn-primary" id="companyInfoSave"
+                                       value="&thinsp;&thinsp;&thinsp;&thinsp;Save&thinsp;&thinsp;&thinsp;&thinsp;"/>
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="button" class="form-control btn-warning" id="companyInfoCancel"
+                                       value="Cancel" ng-click="comInfoCtrl.companyInfoCancel()" data-toggle="collapse"
+                                       href="#companyInfoEdit"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+
+                    </div>
+                </div>
+                <br/>
+                <!-- /personal details -->
+
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /companyInformation collapse - edit mode -->
+<script>
+    $('#dob').focus(function (e) {
+        $('#dob').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#joindate').focus(function (e) {
+        $('#joindate').blur();
+        e.preventDefault();
+        return false;
+    });
+
+    $('#joindate').click(function (e) {
+        $('#joinDateButton').click();
+    });
+
+    $('#dob').click(function (e) {
+        $('#dobButton').click();
+    })
+</script>

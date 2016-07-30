@@ -1,0 +1,21 @@
+<div class="container" style="width:500px ; padding-top:70px ; padding-bottom:70px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well login-box">
+                <form name="NotFoundForm" novalidate>
+                    <legend class="text-center">404 - We are sorry! </legend>
+                    <div>
+                        <strong>Page Not Found </strong>
+                        <p> Sorry, that page couldn't be found. Is there a typo in the url?
+                        </p>
+                        <hr>
+                        <p class="clearfix">
+                            <a href="javascript:history.back()">← Back to previous page</a>
+                            <a href="#/search" style="padding-left:40px">Go to home page</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

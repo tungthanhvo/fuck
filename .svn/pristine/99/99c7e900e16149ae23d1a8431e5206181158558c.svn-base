@@ -1,0 +1,83 @@
+<!-- assignment tab -->
+<br/>
+<!-- recent assignments -->
+<h3>Recent Assignments</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Project Name</th>
+            <th>Duration</th>
+            <th>Size(days)</th>
+            <th>Role Title</th>
+            <th>Approve Status</th>
+            <th>Approver</th>
+            <th>Included in CV</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a>chelsea</a></td>
+            <td>03-June-2014 - Current</td>
+            <td>200</td>
+            <td>DEV</td>
+            <td><span class="label label-success">APRROVED</span></td>
+            <td>Tung Vo Thanh</td>
+            <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+            <td><a>arsenal</a></td>
+            <td>04-Jul-2015 - Current</td>
+            <td>300</td>
+            <td>BA</td>
+            <td><span class="label label-success">APRROVED</span></td>
+            <td>Tung Vo Thanh</td>
+            <td><input type="checkbox" /></td>
+        </tr>
+    </tbody>
+</table>
+<!-- /recent assignments -->
+
+<!-- historic assignments -->
+<h3>Historic Assignments</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Project Name</th>
+            <th>Duration</th>
+            <th>Size(days)</th>
+            <th>Role Title</th>
+            <th>Included in CV</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a>liverpool</a></td>
+            <td>30-May-2015 - Current</td>
+            <td>2000</td>
+            <td>QC</td>
+            <td><input type="checkbox" /></td>
+            <td><input type="checkbox" /></td>
+        </tr>
+        <tr>
+            <td><a>manchester</a></td>
+            <td>01-Jan-2016 - 05-May-2016</td>
+            <td>1000</td>
+            <td>QA</td>
+            <td><input type="checkbox" /></td>
+            <td><input type="checkbox" /></td>
+        </tr>
+    </tbody>
+</table>
+<!-- historic assignments -->
+<div class="row">
+    <div class="col-md-4 my-cursor">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add more
+    </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-2 my-cursor">
+        <span style="margin-left: 50px" class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+    </div>
+</div>
+
+<!-- /assignment tab -->

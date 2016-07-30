@@ -1,0 +1,310 @@
+<!-- tectnical skill collapse - view mode -->
+<div class="panel-group" ng-show="empProfileCtrl.isViewMode" id="technicalSkillSmoothScrollView">
+    <div class="panel panel-default">
+        <div class="panel-heading my-cursor" data-toggle="collapse" href="#technicalSkillView" ng-click="editEmpCtrl.changeTechnicalCollapse()">
+            <h4 class="panel-title">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <img src="images/update-cv/technicalskill.png" width="50px" height="50px"/>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="header-title">
+                            Technical Skills
+                        </div>
+                    </div>
+                    <div class="col-xs-1" ng-show="editEmpCtrl.isTechnicalCollapse" style="margin-top: 10px">
+                        <img ng-src="images/arrow-down.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                    <div class="col-xs-1" ng-show="!editEmpCtrl.isTechnicalCollapse" style="margin-top: 10px">
+                        <img ng-src="images/arrow-up.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                </div>
+
+            </h4>
+        </div>
+        <div id="technicalSkillView" class="panel-collapse collapse">
+            <br/>
+            <div class="row">
+                <div class="col-xs-1 align-technical-skill">
+
+                </div>
+                <div class="col-xs-8">
+                    <div class="col-xs-6">
+                        <div class="second-color">OS</div>
+                    </div>
+                    <div class="col-xs-6">
+                        <p class="technical-skill-text word-wrap">{{techSkillCtrl.techSkillsInfo.OS}}</p>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-1 align-technical-skill">
+
+                </div>
+                <div class="col-xs-8">
+                    <div class="col-xs-6">
+                        <div class="second-color">Databases</div>
+                    </div>
+                    <div class="col-xs-6">
+                        <p class="technical-skill-text word-wrap"> {{techSkillCtrl.techSkillsInfo.DATABASES}}</p>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-1 align-technical-skill">
+
+                </div>
+                <div class="col-xs-8">
+                    <div class="col-xs-6">
+                        <div class="second-color">Languages</div>
+                    </div>
+                    <div class="col-xs-6">
+                        <p class="technical-skill-text word-wrap">{{techSkillCtrl.techSkillsInfo.LANGUAGES}}</p>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-1 align-technical-skill">
+
+                </div>
+                <div class="col-xs-8">
+                    <div class="col-xs-6">
+                        <div class="second-color">Comms and Networks</div>
+                    </div>
+                    <div class="col-xs-6">
+                        <p class="technical-skill-text word-wrap">{{techSkillCtrl.techSkillsInfo.COMMSANDNETWORKS}}</p>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-1 align-technical-skill">
+
+                </div>
+                <div class="col-xs-8">
+                    <div class="col-xs-6">
+                        <div class="second-color">Packages</div>
+                    </div>
+                    <div class="col-xs-6">
+                        <p class="technical-skill-text word-wrap">{{techSkillCtrl.techSkillsInfo.PACKAGES}}</p>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-1 align-technical-skill">
+
+                </div>
+                <div class="col-xs-8">
+                    <div class="col-xs-6">
+                        <div class="second-color">Methodologies</div>
+                    </div>
+                    <div class="col-xs-6">
+                        <p class="technical-skill-text word-wrap">{{techSkillCtrl.techSkillsInfo.METHODOLOGIES}}</p>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-10"></div>
+                <div class="col-xs-2">
+                    <a href="#technicalSkillView" ng-click="editEmpCtrl.changeTechnicalCollapse()" data-toggle="collapse" class="btn-cls">Collapse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /tectnical skill Collapse -->
+
+<!-- technical skill collapse - edit mode -->
+<div class="panel-group" ng-hide="empProfileCtrl.isViewMode" id="technicalSkillSmoothScrollEdit">
+
+    <div class="row">
+        <img src="images/update-cv/technicalskill.png" width="50px" height="50px" />
+        <label class="header-title-edit">Technical Skills</label>
+    </div>
+    <br/>
+    <div class="panel panel-default border-edit">
+        <div class="panel-heading my-cursor" data-toggle="collapse" href="#technicalSkillInfoEdit" ng-click="editEmpCtrl.changeTechnicalCollapseEdit()">
+            <h4 class="panel-title">
+                <div class="row">
+                    <uib-alert class="alert shake" type="{{techSkillCtrl.alert.type}}" dismiss-on-timeout="2000"
+                               close="techSkillCtrl.closeAlert()" ng-if="techSkillCtrl.isShowalert">
+                        {{techSkillCtrl.alert.msg}}
+                    </uib-alert>
+                    <br/>
+                    <div class="col-xs-1">
+
+                    </div>
+                    <div class="col-xs-10">
+                        <p class="common-edit">+ Edit Technical Skills</p>
+                    </div>
+                    <div class="col-xs-1" ng-show="editEmpCtrl.isTechnicalCollapseEdit"
+                         >
+                        <img ng-src="images/arrow-down.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                    <div class="col-xs-1" ng-show="!editEmpCtrl.isTechnicalCollapseEdit"
+                        >
+                        <img ng-src="images/arrow-up.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                </div>
+            </h4>
+        </div>
+        <form name="technicalSkillInfoForm" ng-submit="techSkillCtrl.technicalSkillInfoSubmit()" novalidate>
+            <div id="technicalSkillInfoEdit" class="panel-collapse collapse">
+
+                <!-- personal deatils  -->
+                <br/>
+                <div class="row">
+                    <div class="col-xs-1">
+
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="col-xs-4">
+                            <div class="second-color">OS
+                            </div>
+                        </div>
+                        <div class="col-xs-8">
+                            <div><input class="form-control" type="text" size="35" ng-model="techSkillCtrl.techSkillsInfoUpdate.OS" maxlength="1000" placeholder="Enter your os skill" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-1">
+
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="col-xs-4">
+                            <div class="second-color">Databases</div>
+                        </div>
+                        <div class="col-xs-8">
+                            <div><input class="form-control" type="text" size="35" ng-model="techSkillCtrl.techSkillsInfoUpdate.DATABASES" maxlength="1000" placeholder="Enter your databases skill" /></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-1">
+
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="col-xs-4">
+                            <div class="second-color">Languages</div>
+                        </div>
+                        <div class="col-xs-8">
+                            <div><input class="form-control" type="text" size="35" ng-model="techSkillCtrl.techSkillsInfoUpdate.LANGUAGES" maxlength="1000" placeholder="Enter your languages skill" /></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-1">
+
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="col-xs-4">
+                            <div class="second-color">Comms and Networks</div>
+                        </div>
+                        <div class="col-xs-8">
+                            <div><input class="form-control" type="text" size="35" ng-model="techSkillCtrl.techSkillsInfoUpdate.COMMSANDNETWORKS" maxlength="1000" placeholder="Enter your comms & networks skill" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-1">
+
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="col-xs-4">
+                            <div class="second-color">Packages</div>
+                        </div>
+                        <div class="col-xs-8">
+                            <div><input class="form-control" type="text" size="35" ng-model="techSkillCtrl.techSkillsInfoUpdate.PACKAGES" maxlength="1000" placeholder="Enter your packages skill" /></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-1">
+
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="col-xs-4">
+                            <div class="second-color">Methodologies</div>
+                        </div>
+                        <div class="col-xs-8">
+                            <div><input class="form-control" type="text" size="35" ng-model="techSkillCtrl.techSkillsInfoUpdate.METHODOLOGIES" maxlength="1000" placeholder="Enter your methodologies skill" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+
+                    </div>
+                </div>
+                <br/>
+                <div class="row" style="margin-left: 1px">
+                    <div class="col-xs-4">
+
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="col-xs-6">
+                            <input type="submit" ng-disabled="!technicalSkillInfoForm.$dirty" class="btn btn-primary" id="technicalSkillInfoSave" value="&emsp;Save&emsp;" />
+                        </div>
+                        <div class="col-xs-6">
+                            <input type="button" class="btn btn-warning" value="&thinsp;&thinsp;&thinsp;Cancel&thinsp;&thinsp;&thinsp;" id="technicalSkillInfoCancel" ng-click="techSkillCtrl.cancelUpdate()" data-toggle="collapse" href="#technicalSkillInfoEdit" />
+                        </div>
+
+                    </div>
+                    <div class="col-xs-4">
+
+                    </div>
+                </div>
+                <br/>
+
+                <!-- /personal details -->
+
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /technical skill collapse - edit mode -->

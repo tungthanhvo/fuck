@@ -1,0 +1,249 @@
+//- p TEST
+//- p Firstname: #{user.first_name}
+//- p Lastname: #{user.last_name}
+
+html
+  head
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+    link(rel='stylesheet', href='/stylesheets/cv.css')
+    
+  .container
+    .row
+      img.logo(src="/images/logo.png")
+    .row
+      .col-xs-6
+        label
+          h3.personal-padding PERSONAL INFORMATION
+    .row
+      .col-xs-7
+        table.table.fixed.page-break
+          tbody
+            col(width="25%")
+            tr
+              td Name
+              td 
+                p #{user.first_name + ' ' + user.last_name}
+            tr
+              td Job Title
+              td 
+                p #{user.competence_job_title.job_title.name}
+            tr
+              td Date of Birth
+              td 
+                p #{user.dob}
+            tr
+              td Gender
+              td 
+                if user.gender == 0
+                  p Female
+                else 
+                  p Male
+            tr
+              td Nationality
+              td 
+                p #{user.nationality_code}
+             tr
+              td Country/Region
+              td 
+                p #{user.country_code}
+          //- .col-xs-3
+          //-   p Name
+          //-   p Job Title
+          //-   p Date of Birth
+          //-   p Gender
+          //-   p Nationality
+          //-   p Country/Region
+          //- .col-xs-4
+          //-   p #{user.first_name + ' ' + user.last_name}
+          //-   p #{user.competence_job_title.job_title.name}
+          //-   p #{user.dob}
+          //-   if user.gender == 0
+          //-       p Female
+          //-   else
+          //-       p Male 
+          //-   p #{user.nationality_code}
+          //-   p #{user.country_code}
+      .col-xs-5
+        if user.avatar
+          img.pull-right(src='/images/#{"resized-" + user.avatar}')
+        else
+          img.pull-right(src='/images/resized-profile.png', style='position:relative; top: 20px;\
+          right: 0px; left:0px; width:200px')        
+    .row
+      .col-xs-3
+        label.statement-padding Personal Statement
+    .panel.panel-default
+      .panel-body
+        p #{user.personal_statement}
+    .row
+      .col-xs-3
+        label Technical Skills
+    table.table.table-bordered.page-break
+      thead
+        tr
+          th Skill Name
+          th Summary
+      tbody
+        each val in user.user_technical_skills
+            tr
+                td #{val.technical_skill.name}
+                td #{val.description}
+    .row
+      .col-xs-8
+        label Education, Qualifications & Special Achievements
+    table.table.table-bordered.page-break
+      thead
+        tr
+          th Duration
+          th University & College
+      tbody
+         each val in user.education
+            tr
+                td #{val.from_year + ' - ' + val.to_year}
+                td #{val.university_college_name}
+    .row
+      .col-xs-8
+        label Courses/Certificates
+    table.table.table-bordered.page-break
+      thead
+        tr
+          th Duration
+          th Course's Name
+          th Description
+          th Achievement
+      tbody
+        each val in user.courses
+            tr
+                td #{val.from_year + ' - ' + val.to_year}
+                td #{val.course_name}
+                td #{val.course_description}
+                td #{val.achievement}
+    .row
+      .col-xs-8
+        label Employment History
+    table.table.table-bordered.page-break
+      thead
+        tr
+          th Duration
+          th Company
+          th Position
+      tbody
+       each val in user.employee_histories
+            tr
+                td #{val.from_year + ' - ' + val.to_year}
+                td #{val.company_name}
+                td #{val.position}
+    .row
+      .col-xs-6
+        label
+          h3 ASSIGNMENTS
+    .row
+      .col-xs-8
+        label Recent Assignments
+    each val in user.recentAssignment
+      table.table.table-bordered.page-break
+        thead
+        tbody
+          tr
+            td(width="200px") Project Name
+            td(width="200px") #{val.project.name}
+          tr
+            td(width="200px") Duration
+            td(width="200px") #{val.project.start_date} - #{val.project.end_date}
+          tr
+            td(width="200px") Size (Days)
+            td(width="200px") #{val.project.size}
+          tr
+            td(width="200px") Role Title
+            td(width="200px") #{val.project_role.name}
+          tr
+            td(width="200px") Short Description
+            td(width="200px") #{val.project.short_description}
+          tr
+            td(width="200px") Long Description
+            td(width="200px") #{val.project.long_description}
+          tr
+            td(width="200px") My Responsibility
+            td(width="200px") #{val.my_responsibility}
+          tr
+            td(width="200px") Technology
+            td(width="200px") #{val.project.technology}
+    .row
+      .col-xs-8
+        label Working History
+    each val in user.project_histories
+      table.table.table-bordered.page-break
+        thead
+        tbody
+          tr
+            td(width="200px") Project Name
+            td(width="200px") #{val.name}
+          tr
+            td(width="200px") Duration
+            td(width="200px") #{val.start_date} - #{val.end_date}
+          tr
+            td(width="200px") Size (Days)
+            td(width="200px") #{val.size}
+          tr
+            td(width="200px") Role Title
+            td(width="200px") #{val.role_title}
+          tr
+            td(width="200px") Project Description
+            td(width="200px") #{val.description}
+          tr
+            td(width="200px") My Responsibility
+            td(width="200px") #{val.my_responsibility}
+          tr
+            td(width="200px") Technology
+            td(width="200px") #{val.technology}
+    .row
+      .col-xs-6
+        label
+          h3 SKILL METRICS
+    .row.page-break
+      .col-xs-6
+        .well
+          span
+            u Experience
+          ol(start='0')
+            li 0 month
+            li 1-6 months
+            li 6-12 months
+            li 1-2 years
+            li 2-5 years
+            li > 5 years
+      .col-xs-6
+        .well
+          span
+            u Expertise
+          ol
+            li Beginner
+            li Always have to use manuals
+            li Sometimes have to use manuals
+            li Can solve problems
+            li Expert
+            br
+    table.table.table-bordered.page-break
+      thead
+        tr
+          th Skill
+          th Last Year Used
+          th Expertise
+          th Experience
+      tbody
+        each val in user.skill_metrics
+          each val2 in user.parrent
+            tr
+              if val.skill.parent_id == val2.id
+                td(colspan="4") 
+                  b #{val2.name}
+                - break;
+          tr
+            td #{val.skill.name}
+            td #{val.last_year_used}   
+            td #{val.expertise.level}
+            td #{val.experience.level}
+                
+               

@@ -1,0 +1,221 @@
+<!-- tectnical skill collapse - view mode -->
+<div class="panel-group" ng-show="editEmpCtrl.isViewMode">
+    <div class="panel panel-default">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="images/noimage.png" width="50px" height="50px"/>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="header-title" data-toggle="collapse" href="#technicalSkillView">
+                            Technical Skill
+                        </div>
+                    </div>
+                </div>
+
+            </h4>
+        </div>
+        <div id="technicalSkillView" class="panel-collapse collapse">
+
+            <div class="row">
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-8">
+                    <table class="table table-hover" ng-hide="techSkillCtrl.isEmptyTechnicalSkills">
+                        <tbody>
+                        <tr ng-repeat="t in techSkillCtrl.technicalSkills">
+                            <td class="fisrt-color">{{t.technical_skill.name}}</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color">{{t.description}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-hover" ng-show="techSkillCtrl.isEmptyTechnicalSkills">
+                        <tbody>
+                        <tr>
+                            <td class="fisrt-color">OS</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color"></td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Languages</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color"></td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Databases</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color"></td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Comms And Networks</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color"></td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Packages</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color"></td>
+                        </tr>
+                        <tr>
+                            <td class="fisrt-color">Methodologies</td>
+                            <td></td>
+                            <td></td>
+                            <td class="second-color"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    <input type="button" class="form-control btn-danger"
+                           id="technicalSkillInfoViewClose" value="Close" data-toggle="collapse"
+                           href="#technicalSkillView"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /tectnical skill Collapse -->
+
+<!-- technical skill collapse - edit mode -->
+<div class="panel-group" ng-hide="editEmpCtrl.isViewMode">
+
+    <div class="row">
+        <div class="col-md-2">
+            <img src="images/noimage.png" width="50px" height="50px"/>
+        </div>
+        <div class="col-md-10 header-title">
+            <label>Techical Skill</label>
+        </div>
+
+    </div>
+
+    <br/>
+    <div class="panel panel-default border-edit">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row" data-toggle="collapse" href="#technicalSkillInfoEdit">
+                    <p class="common-edit">+ Edit Technical Skill Information</p>
+                </div>
+            </h4>
+        </div>
+        <form name="technicalSkillInfoForm" ng-submit="techSkillCtrl.technicalSkillInfoSubmit()">
+            <div id="technicalSkillInfoEdit" class="panel-collapse collapse">
+
+                <!-- personal deatils  -->
+                <br/>
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-8">
+                        <table class="table table-hover">
+                            <tbody>
+                            <tr>
+                                <td class="fisrt-color label-align-left">OS</td>
+                                <td></td>
+                                <td></td>
+                                <td><input class="form-control second-color" type="text" size="30"
+                                           ng-model="techSkillCtrl.os" placeholder="Your skill information"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Languages</td>
+                                <td></td>
+                                <td></td>
+                                <td><input class="form-control second-color" type="text" size="30"
+                                           ng-model="techSkillCtrl.languages" placeholder="Your skill information"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Databases</td>
+                                <td></td>
+                                <td></td>
+                                <td><input class="form-control second-color" type="text" size="30"
+                                           ng-model="techSkillCtrl.databases" placeholder="Your skill information"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Comms & Networks</td>
+                                <td></td>
+                                <td></td>
+                                <td><input class="form-control second-color" type="text" size="30"
+                                           ng-model="techSkillCtrl.commsAndNetworks"
+                                           placeholder="Your skill information"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Packages</td>
+                                <td></td>
+                                <td></td>
+                                <td><input class="form-control second-color" type="text" size="30"
+                                           ng-model="techSkillCtrl.packages" placeholder="Your skill information"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="fisrt-color label-align-left">Methodologies & Tools</td>
+                                <td></td>
+                                <td></td>
+                                <td><input class="form-control second-color" type="text" size="30"
+                                           ng-model="techSkillCtrl.methodologies" placeholder="Your skill information"/>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-8">
+                        <uib-alert class="alert shake" type="{{techSkillCtrl.alert.type}}" dismiss-on-timeout="2000" close="techSkillCtrl.closeAlert()" ng-if="techSkillCtrl.isshowalert">
+                            {{techSkillCtrl.alert.msg}}
+                        </uib-alert>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <input type="submit" class="form-control btn-info"
+                               id="technicalSkillInfoSave"
+                               value="Save"/>
+                    </div>
+                    <div class="col-md-8">
+
+                    </div>
+                    <div class="col-md-2">
+                        <input type="submit" class="form-control btn-info"
+                               id="technicalSkillInfoCancel"
+                               value="Cancel" data-toggle="collapse" href="#technicalSkillInfoEdit"/>
+                    </div>
+                </div>
+
+                <!-- /personal details -->
+
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /technical skill collapse - edit mode -->

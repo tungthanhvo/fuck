@@ -1,0 +1,95 @@
+define(['./module', 'config', 'ui-bootstrap'], function (controllers, config) {
+    'use strict';
+    controllers.controller("headerBarController", ['employeeService','$rootScope', '$uibModal', '$log', 'accountService', '$http', '$location', '$scope', 'searchService', 'stringService',
+        function (employeeService, $rootScope, $uibModal, $log, accountService, $http, $location, $scope, searchService, stringService) {
+            var vm = this;
+            vm.employees = [];
+            $rootScope.isLogin = accountService.isLogin();
+            $rootScope.user = accountService.getUser();
+            $rootScope.api_server = config.api_server;
+
+            vm.navigateEmployee = function (item) {
+                $location.path("/employees/" + item.id);
+            };
+
+            vm.search = function () {
+                if(vm.searchText) {
+                    $scope.$emit('search', { text: vm.searchText });
+                }
+            };
+
+            vm.getUsers = function (text) {
+                if (!text) {
+                    return;
+                }
+                var name = stringService.splitName(text);
+                var searchData = {
+                    first_name: name.first_name,
+                    last_name: name.last_name,
+                    pagenum:1
+                }
+                return searchService.searchEmployee(searchData)
+                    .then(function (response) {
+                        return response.data[1];
+                    });
+            };
+
+            vm.navigateSearch = function (type) {
+                if ($location.path() !== '/search') {
+                    $rootScope.searchType = type;
+                    $location.path('/');
+                } else {
+                    $scope.$emit('changeSearchType', { type: type });
+                }
+            };
+
+            vm.logOut = function () {
+                $rootScope.isLogin = false;
+                accountService.logout();
+            };
+
+            vm.open = function (size) {
+                $http.get('data/country.json').success(function (country) {
+                    $http.get('data/nationality.json').success(function (nationality) {
+                        var modalInstance = $uibModal.open({
+                            animation: true,
+                            backdrop: 'static',
+                            templateUrl: '../views/employee/popup_create_employee.html',
+                            controller: 'employeeInstanceController',
+                            controllerAs: 'emp',
+                            size: size,
+                            resolve: {
+                                country: function () {
+                                    return angular.copy({ country: country, nationality: nationality });
+                                }
+                            }
+                        });
+
+                        modalInstance.result.then(function (selectedItem) {
+                            vm.selected = selectedItem;
+                        }, function () {
+                            $log.info('Modal dismissed at: ' + new Date());
+                        });
+                    })
+                });
+
+            };
+
+            vm.open1 = function (size) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    animation: true,
+                    templateUrl: '../views/project/popup_create_project.html',
+                    controller: 'projectInstanceController',
+                    controllerAs: 'project',
+                    size: size,
+                });
+
+                modalInstance.result.then(function (selectedItem) {
+                    vm.selected = selectedItem;
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+        }]);
+})

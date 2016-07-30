@@ -1,0 +1,94 @@
+<form name="recent_assignmentForm">
+    <div class="modal-header">
+        <h4 class="modal-title">Detail of a Recent Assignment</h4>
+    </div>
+    <div class="modal-body row">
+        <div class="form-group col-xs-12">
+            <span class="col-xs-4 align-right">Project Name</span>
+            <div class="col-xs-8">
+                <div class="second-color word-wrap">
+                    {{recent_assignment.project.name}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <span class="col-xs-4 align-right">Duration</span>
+            <div class="col-xs-8">
+                <div class="second-color word-wrap">
+                    <span>{{ recent_assignment.project.start_date | date:"dd-MMM-yyyy"}}</span>
+                    <span ng-if="recent_assignment.project.end_date"> - {{ recent_assignment.project.end_date | date:"dd-MMM-yyyy"}}</span>
+                    <span ng-if="!recent_assignment.project.end_date"> - Current</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <span class="col-xs-4 align-right">Size (days)</span>
+            <div class="col-xs-8">
+                <div class="second-color word-wrap">
+                    {{recent_assignment.project.size}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <span class="col-xs-4 align-right">Role Title</span>
+            <div class="col-xs-8">
+                <div class="second-color word-wrap">
+                    {{recent_assignment.project_role.name}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <span class="col-xs-4 align-right">Short Description</span>
+            <div class="col-xs-8">
+                <div class="second-color word-wrap">
+                    {{recent_assignment.project.short_description}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <span class="col-xs-4 align-right">Long Description</span>
+            <div class="col-xs-8">
+                <div class="second-color word-wrap">
+                    {{recent_assignment.project.long_description}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <span class="col-xs-4 align-right">Approval Status</span>
+            <div class="col-xs-8">
+                <div class="second-color word-wrap">
+                    {{recent_assignment.approval_status.name}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <span class="col-xs-4 required align-right">My Responsibility</span>
+            <div class="col-xs-8">
+                <textarea ng-disabled="!isedit" rows="2" class="form-control" name="my_responsibility" placeholder="Enter your responsibility" ng-model="recent_assignment.my_responsibility" required maxlength="1000"></textarea>
+                <span class="error" ng-show="recent_assignmentForm.my_responsibility.$error.required && recent_assignmentForm.my_responsibility.$dirty">This field is required.</span>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <span class="col-xs-4 align-right">Technology</span>
+            <div class="col-xs-8">
+                <div class="second-color word-wrap">
+                    {{recent_assignment.project.technology}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <span class="col-xs-4 align-right">Comments</span>
+            <div class="col-xs-8">
+                <div class="second-color word-wrap">
+                    {{recent_assignment.comment}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="save();" ng-if="isedit" ng-disabled="!recent_assignmentForm.$valid">Save</button>
+        <button class="btn btn-primary" type="button" ng-click="saveAndSubmit();" ng-if="isedit" ng-disabled="!recent_assignmentForm.$valid">Save and Submit</button>
+        <button class="btn btn-primary" type="button" ng-click="edit();" ng-if="!isedit">Edit</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel();">Cancel</button>
+    </div>
+</form>

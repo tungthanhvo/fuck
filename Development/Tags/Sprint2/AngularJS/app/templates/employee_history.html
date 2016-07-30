@@ -1,0 +1,164 @@
+<!-- employee-history collapse - view mode -->
+<div class="panel-group" ng-show="empProfileCtrl.isViewMode" id="historySmoothScrollView">
+    <div class="panel panel-default">
+        <div class="panel-heading my-cursor" data-toggle="collapse" href="#employee-history-view" ng-click="editEmpCtrl.changeHistoryCollapse()">
+            <h4 class="panel-title">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <img src="images/update-cv/employee-history.png" width="50px" height="50px"/>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="header-title">Employments History
+                        </div>
+                    </div>
+                    <div class="col-xs-1" ng-show="editEmpCtrl.isHistoryCollapse" style="margin-top: 10px">
+                        <img ng-src="images/arrow-down.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                    <div class="col-xs-1" ng-show="!editEmpCtrl.isHistoryCollapse" style="margin-top: 10px">
+                        <img ng-src="images/arrow-up.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                </div>
+            </h4>
+        </div>
+        <div id="employee-history-view" class="panel-collapse collapse">
+            <table ng-table="empHistoryCtrl.tableEmployeeHistory" class="table table-hover table-bordered ">
+                <colgroup>
+                    <col width="5% " />
+                    <col width="20% " />
+                    <col width="35% " />
+                    <col width="35% " />
+                </colgroup>
+                <tr class="text-center">
+                    <th>#</th>
+                    <th>Duration</th>
+                    <th>Company Name</th>
+                    <th>Position</th>
+                </tr>
+                <tr ng-if="empHistoryCtrl.employee_histories.length == 0" class="text-center ">
+                    <td colspan="5">
+                        No Employments History available!
+                    </td>
+                </tr>
+                <tr ng-repeat="empHistory in empHistoryCtrl.employee_histories track by $index " ng-if="empHistoryCtrl.employee_histories.length > 0">
+                    <td>
+                        <span class="text-center ">{{$index + 1}}</span>
+                    </td>
+                    <td>
+                        <span class="text-center " ng-if="!empHistory.config.isedit ">{{empHistory.data.from_year + ' - ' + empHistory.data.to_year}}</span>
+                    </td>
+                    <td>
+                        <p class="text-center company-name-text" ng-if="!empHistory.config.isedit ">{{empHistory.data.company_name}}</p>
+
+                    </td>
+                    <td>
+                        <p class="text-center position-text" ng-if="!empHistory.config.isedit ">{{empHistory.data.position}}</p>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <div class="row">
+                <div class="col-xs-10"></div>
+                <div class="col-xs-2">
+                    <a href="#employee-history-view" ng-click="editEmpCtrl.changeHistoryCollapse()" data-toggle="collapse" class="btn-cls">Collapse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /employee-history collapse - view mode -->
+
+<!-- employee-history collapse - edit mode -->
+<div class="panel-group" ng-hide="empProfileCtrl.isViewMode" id="historySmoothScrollEdit">
+    <div class="row">
+        <img src="images/update-cv/employee-history.png" width="50px" height="50px" />
+        <label class="header-title-edit">Employments History</label>
+    </div>
+    <br/>
+    <div class="panel panel-default border-edit">
+        <div class="panel-heading my-cursor" data-toggle="collapse" href="#employee-history-edit" ng-click="editEmpCtrl.changeHistoryCollapseEdit()">
+            <h4 class="panel-title">
+                <div class="row">
+                    <br/>
+                    <div class="col-xs-1">
+&nbsp
+                    </div>
+                    <div class="col-xs-10">
+                        <p class="common-edit">+ Edit Employments History</p>
+                    </div>
+                    <div class="col-xs-1" ng-show="editEmpCtrl.isHistoryCollapseEdit"
+                         >
+                        <img ng-src="images/arrow-down.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                    <div class="col-xs-1" ng-show="!editEmpCtrl.isHistoryCollapseEdit"
+                         >
+                        <img ng-src="images/arrow-up.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                </div>
+            </h4>
+        </div>
+        <div id="employee-history-edit" class="panel-collapse collapse">
+            <div id="empHistory-content">
+                <button ng-disabled="empHistoryCtrl.isUpdateGridView" class="btn btn-primary btn-sm right-float-btn" ng-click="empHistoryCtrl.open()"><span class="glyphicon glyphicon-plus"></span>Add more
+                </button>
+                <table class="table table-hover table-bordered ">
+                    <colgroup>
+                        <col width="5% " />
+                        <col width="40% " />
+                        <col width="20% " />
+                        <col width="20% " />
+                        <col width="5% " />
+                    </colgroup>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th class="required ">Duration</th>
+                        <th class="required ">Company Name</th>
+                        <th>Position</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr ng-if="empHistoryCtrl.employee_histories_update.length == 0" class="text-center ">
+                        <td colspan="5">
+                            No Employee History available!
+                        </td>
+                    </tr>
+                    <tr ng-repeat="empHistory in empHistoryCtrl.employee_histories_update track by $index " ng-if="empHistoryCtrl.employee_histories_update.length > 0">
+                        <td>
+                            <span class="text-center ">{{$index + 1}}</span>
+                        </td>
+                        <td>
+                            <span class="text-center " ng-if="!empHistory.config.isedit ">{{empHistory.data.from_year + ' - ' + empHistory.data.to_year}}</span>
+                            <div ng-if="empHistory.config.isedit ">
+                                <select-year fromyear="empHistory.data.from_year" toyear="empHistory.data.to_year"></select-year>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="text-center company-name-text-edit" ng-if="!empHistory.config.isedit ">{{empHistory.data.company_name}}</p>
+                            <div class="controls " ng-if="empHistory.config.isedit ">
+                                <label for="company_name ">&nbsp</label>
+                                <input placeholder="Enter a company name" ng-form="company_name " type="text " id="company_name " ng-model="empHistory.data.company_name " class="editable-input form-control input-sm " required maxlength="255" />
+                                <span class="error " ng-show="company_name.$error.required ">This field is required.</span>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="text-center position-text-edit" ng-if="!empHistory.config.isedit ">{{empHistory.data.position}}</p>
+                            <div class="controls " ng-if="empHistory.config.isedit ">
+                                <label for="position ">&nbsp</label>
+                                <input placeholder="Enter your position" ng-form="position " id="position " type="text " ng-model="empHistory.data.position " class="editable-input form-control input-sm " required maxlength="255" />
+                            </div>
+                        </td>
+                        <td class="text-center ">
+                            <button ng-disabled="!empHistory.config.issave" class="btn btn-primary btn-sm " ng-click="empHistoryCtrl.save(empHistory) " ng-if="empHistory.config.isedit "><span
+                                    class="glyphicon glyphicon-ok "></span></button>
+                            <button class="btn btn-warning btn-sm " ng-click="empHistoryCtrl.cancel(empHistory) " ng-if="empHistory.config.isedit "><span class="glyphicon glyphicon-remove "></span>
+                            </button>
+                            <button ng-disabled="empHistory.config.isdisable " class="btn btn-default btn-sm " ng-click="empHistoryCtrl.edit(empHistory) " ng-if="!empHistory.config.isedit "><span
+                                    class="glyphicon glyphicon-pencil "></span></button>
+                            <button ng-disabled="empHistory.config.isdisable " class="btn btn-danger btn-sm " ng-click="empHistoryCtrl.del(empHistory) " ng-if="!empHistory.config.isedit "><span
+                                    class="glyphicon glyphicon-trash "></span></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /employee-history collapse - edit mode empHistoryCtrl-->

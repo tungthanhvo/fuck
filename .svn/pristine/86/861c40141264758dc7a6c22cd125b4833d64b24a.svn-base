@@ -1,0 +1,41 @@
+<div class="container" style="width:500px ; padding-top:70px ; padding-bottom:70px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well login-box">
+                <form name="LoginForm" novalidate>
+                    <legend class="text-center">Welcome to TMS</legend>
+                    <p class="text-danger" ng-show="accountCtrl.error">{{accountCtrl.error}}</p>
+
+                    <div class="form-group">
+                        <label style="font-weight:normal" for="username" class="required">Username</label>
+                        <input maxlength="50" id="username" ng-model="accountCtrl.user.username" name="username" required value="" placeholder="Enter Username" type="text" class="form-control" />
+                        <div class="has-error">
+                            <!--Show message required and maxlength error-->
+                            <span class="help-block" ng-if="LoginForm.username.$dirty && (LoginForm.username.$error.required) ">This field is required.</span>
+                            <span class="help-block" ng-if="(LoginForm.username.$error.maxlength)">This field must be less than or equal 50 characters.</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:normal" for="password" class="required">Password</label>
+                        <input maxlength="50" id="password" ng-model="accountCtrl.user.password" name="password" required value="" placeholder="Enter Password" type="password" class="form-control" />
+                        <div class="has-error">
+                            <!--Show message required and maxlength error-->
+                            <span class="help-block" ng-if="LoginForm.password.$dirty && (LoginForm.password.$error.required) ">This field is required.</span>
+                            <span class="help-block" ng-if="(LoginForm.password.$error.maxlength)">This field must be less than or equal 50 characters.</span>
+
+                        </div>
+                    </div>
+                    <p>
+                        <label class="checkbox-inline"><input type="checkbox" value="" ng-model="accountCtrl.user.remember">Remember my credentials</label>
+                    </p>
+                    <a href="#resetpassword">
+                        <p>Forget Password
+                        </p>
+                    </a>
+                    <input type="submit" class="btn btn-primary" value="Log In" ng-click="accountCtrl.submit()" />
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

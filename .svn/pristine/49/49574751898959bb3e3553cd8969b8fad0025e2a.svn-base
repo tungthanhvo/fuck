@@ -1,0 +1,121 @@
+var models = require('../models/index');
+var async = require('async');
+
+function CVExportService() {
+    var self = this;
+    self.getUserInfo = function (user_id, success, error) {
+        async.waterfall([
+            function (done) {
+                models.user.find({
+                    include: [{
+                            model: models.user_technical_skill,
+                            attributes: ['description'],
+                            required: false,
+                            include: [{
+                                model: models.technical_skill,
+                                attributes: ['name']
+                            }]
+                        }, {
+                            model: models.competence_job_title,
+                            required: false,
+                            include: [{
+                                model: models.competence,
+                                required: false,
+                                attributes: ['name']
+                            }, {
+                                    model: models.job_title,
+                                    required: false,
+                                    attributes: ['name']
+                                }]
+                        }, {
+                            model: models.employee_history,
+                            required: false,
+                            order: [
+                                ['from_year', 'DESC']
+                            ]
+                        }, {
+                            model: models.course,
+                            required: false,
+                            order: [
+                                ['from_year', 'DESC']
+                            ]
+                        }, {
+                            model: models.education,
+                            required: false,
+                            order: [
+                                ['from_year', 'DESC']
+                            ]
+                        }, {
+                            model: models.skill_metric,
+                            required: false,
+                            where: {
+                                is_verified: 1
+                            },
+                            include: [{
+                                model: models.skill,
+                                required: false,
+                                order: [
+                                    ['name', 'ASC']
+                                ]
+                            }, {
+                                    model: models.expertise,
+                                    required: false
+                                }, {
+                                    model: models.experience,
+                                    required: false
+                                }]
+                        }],
+                    where: {
+                        id: user_id //Authorization
+                    },
+                    attributes: {
+                        exclude: ['hash_password', 'username', 'nickname', 'line_manager_id', 'created_at', 'updated_at']
+                    },
+                }).then(success).catch(error);
+            }
+        ]);
+    };
+
+    self.getProjectHistory = function(user_id) {
+        return models.project_history.findAll({
+            where: {
+                is_included: true
+            },
+            include: [{
+                model: models.user,
+                where: {
+                    id: user_id
+                }
+            }]
+        });
+    };
+    self.retrieveRecentAssignmentAllByUser_Id = function (user_id) {
+        return models.project_user.findAll({
+            attributes: [
+                'id', 'comment', 'my_responsibility', 'is_included'
+            ],
+            where: {
+                user_id: user_id,
+                is_included: 1
+            },
+            include: [{
+                attributes: ['name', 'start_date', 'end_date', 'size', 'short_description', 'long_description', 'technology'],
+                model: models.project
+            }, {
+                    attributes: ['id', 'name'],
+                    model: models.approval_status,
+                }, {
+                    attributes: ['name'],
+                    model: models.project_role,
+                }, {
+                    attributes: ['first_name', 'last_name'],
+                    model: models.user
+                }],
+            order: [
+                [models.project, 'start_date', 'DESC'],
+            ]
+        });
+    };
+}
+
+module.exports = CVExportService;

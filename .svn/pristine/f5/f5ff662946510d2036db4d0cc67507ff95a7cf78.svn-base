@@ -1,0 +1,42 @@
+<br/>
+<!-- container -->
+<div class="container">
+
+    <div class="dropdown pull-right ">
+        <a class="btn btn-default dropdown-toggle" type="button" href="{{editProCtrl.url}}">
+            <span class="glyphicon glyphicon-download-alt"></span> Export
+        </a>
+    </div>
+    <!-- nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#projectInfomationTab">Project Information</a></li>
+        <li ng-show="editProCtrl.disableAnotherTab" class="disabled"><a data-toggle="tooltip"
+                                                                        title="You're now in edit mode.">Project
+            Role</a></li>
+        <li ng-show="editProCtrl.disableAnotherTab" class="disabled"><a data-toggle="tooltip"
+                                                                        title="You're now in edit mode.">Project
+            Member</a>
+        </li>
+        <li ng-show="!editProCtrl.disableAnotherTab"><a data-toggle="tab" href="#projectRoleTab">Project Role</a></li>
+        <li ng-show="!editProCtrl.disableAnotherTab"><a data-toggle="tab" href="#projectMemberTab">Project Member</a>
+        </li>
+    </ul>
+    <div class="container ">
+    </div>
+    <!-- tab contents -->
+    <div class="tab-content">
+        <div id="projectInfomationTab" class="tab-pane fade in active">
+            <project-information></project-information>
+        </div>
+        <div id="projectRoleTab" class="tab-pane fade in">
+            <project-role></project-role>
+        </div>
+        <div id="projectMemberTab" class="tab-pane fade in">
+            <project-member>
+                <project-member>
+        </div>
+    </div>
+    <!-- /tab contents -->
+
+</div>
+<!-- /container -->

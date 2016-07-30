@@ -1,0 +1,35 @@
+<div class="container" style="width:500px ; padding-top:70px ; padding-bottom:70px">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well login-box">
+                <form name="resetPasswordForm">
+                    <legend>Reset Password</legend>
+                    <p class="text-danger" ng-show="error">{{error}}</p>
+
+                    <div class="form-group">
+                        <label style="font-weight:normal" for="username" required ng-maxlength="50">Username</label><span style="color:red">*</span>
+                        <input id="username" name="username" ng-model="user.username" value="" placeholder="Enter Username" type="text" class="form-control" required ng-maxlength="50" />
+                        <!--Validate username-->
+                        <div class="has-error">
+                            <!--Show message required and maxlength error-->
+                            <span class="help-block" ng-if="resetPasswordForm.username.$dirty && (resetPasswordForm.username.$error.required || resetPasswordForm.username.$error.maxlength)">This field is required. Less than or equal 50 characters</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-weight:normal" for="email">Email</label><span style="color:red">*</span>
+                        <input type="email" class="form-control" ng-model="user.email" name="email" placeholder="e.g abc@gmail.com" required ng-maxlength="50" ng-pattern="mailRegex">
+                        <!--Validate personal email-->
+                        <div class="has-error">
+                            <!--Show message invalid format error-->
+                            <span class="help-block" ng-if="resetPasswordForm.email.$error.pattern">Invalid email format</span>
+                            <!--Show message max length email-->
+                            <span class="help-block" ng-if="resetPasswordForm.email.$dirty && (resetPasswordForm.email.$error.required  || resetPasswordForm.email.$error.maxlength)">This field is required. Less than or equal 50 characters</span>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Send" ng-click="submit()" />
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

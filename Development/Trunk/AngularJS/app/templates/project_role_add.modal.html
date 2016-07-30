@@ -1,0 +1,40 @@
+<div class="tab-content">
+    <form name="proAddRoleForm">
+        <div class="modal-header">
+            <h3 class="modal-title">Add Role to Project</h3>
+        </div>
+        <div class="modal-body row">
+            <!-- Role Name -->
+            <div class="form-group">
+                <label class="control-label col-xs-3 role-text-add required " for="country">Role Name</label>
+                <div class="col-xs-7">
+                    <select class="form-control" name="roleName" ng-model="role.roleId" ng-change="checkProjectRoleExist();" required>
+                                <option value="" disabled selected>Please select a role</option>
+                                <option ng-repeat="roleMe in metadata.projectRoles" value="{{roleMe.id}}">{{roleMe.name}}</option>
+                            </select>
+                    <!--Validate Role Name-->
+                    <div class="has-error">
+                        <!--Show message required error-->
+                        <p class="text-danger" ng-model="err">{{err}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--style="width:270px;"-->
+        <div class="modal-body row">
+            <!-- Role Description -->
+            <div class="form-group">
+                <label class="control-label col-xs-3 role-text-add" for="roleDescription">Role Description</label>
+                <div class="col-xs-7">
+                    <textarea class="form-control"  id="roleDescription" name="roleDescription"  rows="5" ng-model="role.roleDescription" placeholder="Role description." maxlength="500">
+                        {{role.roleDesciption}}
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="add();" ng-disabled="!isAdd">Add</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel();">Cancel</button>
+        </div>
+    </form>
+</div>

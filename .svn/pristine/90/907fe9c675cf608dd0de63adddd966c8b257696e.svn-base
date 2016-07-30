@@ -1,0 +1,556 @@
+<br/>
+<!-- projectInformation - view mode-->
+<div ng-show="proInfoCtrl.isViewMode">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Project Name
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.projectInfo.project_name}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Project Type
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.project_type_name}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Project Status
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.project_status_name}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Start Date
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.projectInfo.project_start_date | date: "dd-MMM-yyyy"}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            End Date
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.projectInfo.project_end_date| date: "dd-MMM-yyyy"}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Size&thinsp;(days)
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap word-wrap">
+                            {{proInfoCtrl.projectInfo.project_size_days}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Location
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.project_location_name}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Project Manager
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.project_pm_manager}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Delivery/Program Manager
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.project_program_manager}}
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+                <div class="col-xs-6">
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Engagement Manager
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.project_engagement_manager}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Short Description
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.projectInfo.project_short_description}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Long Description
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.projectInfo.project_long_description}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Technologies
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.projectInfo.project_technologies}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Client Name
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.projectInfo.project_client_name}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Industry
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.client_industry_name}}
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 align-right">
+                            Client Description
+                        </div>
+                        <div class="col-xs-8 text-bold word-wrap">
+                            {{proInfoCtrl.projectInfo.project_client_description}}
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-xs-5">
+        </div>
+        <div class="col-xs-2">
+            <div class="col-xs-6">
+                <input ng-show="proInfoCtrl.isViewMode" class="btn btn-primary" type="button"
+                       value="&thinsp;&thinsp;&thinsp;Edit&thinsp;&thinsp;&thinsp;"
+                       ng-click="proInfoCtrl.edit()"/> &ensp;
+            </div>
+            <div class="col-xs-6">
+                <input ng-show="proInfoCtrl.isViewMode" class="btn btn-danger" type="button" value="Delete"
+                       data-toggle="modal" data-target="#confirmModal"/>
+                <!-- confirm modal -->
+                <!-- Modal -->
+                <div class="modal fade" id="confirmModal" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <!--button type="button" class="close" data-dismiss="modal">&times;</button-->
+                                <h3 class="modal-title">Delete Project</h3>
+                            </div>
+                            <div class="modal-body">
+                                <h5 class="text-center">Are you sure you want to delete this project?</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" data-dismiss="modal" type="button"
+                                        ng-click="proInfoCtrl.delete()">Yes
+                                </button>
+                                <button class="btn btn-warning" type="button" data-dismiss="modal">No</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- -->
+        </div>
+    </div>
+    <div class="col-xs-5"></div>
+</div>
+</div>
+<!-- /projectInformation - view mode-->
+
+
+<!-- projectInformation - edit mode-->
+<div ng-show="!proInfoCtrl.isViewMode">
+    <form class="form-horizontal" name="projectInfo" ng-submit="proInfoCtrl.updateProjectInfoSubmit()" novalidate>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Project Name
+                            </div>
+                            <div class="col-xs-8">
+                                <input type="text" name="name" id="name" class="form-control"
+                                       ng-model="proInfoCtrl.projectInfoUpdate.project_name"
+                                       placeholder="Enter project name" required minlength="1" maxlength="100">
+                                <div class="errorMsg">
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.name.$dirty && projectInfo.name.$error.required">This field is required.</span>
+                                    <span class="errorMsg" ng-if="proInfoCtrl.isProjectNameExist">Project name already exist.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Project Type
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="type"
+                                        ng-model="proInfoCtrl.projectInfoUpdate.project_type" required>
+                                    <option value="1">Fixed Price</option>
+                                    <option value="2">ODC</option>
+                                    <option value="3">Time & Material</option>
+                                </select>
+                                <!--Validate status-->
+                                <div class="errorMsg">
+                                    <!--Show message error-->
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.type.$dirty && projectInfo.type.$error.required">This is a required field.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Project Status
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="status"
+                                        ng-change="proInfoCtrl.project_status_change()"
+                                        ng-model="proInfoCtrl.projectInfoUpdate.project_status" required>
+                                    <option value="1">Cancelled</option>
+                                    <option value="2">Closed</option>
+                                    <option value="3">Pending</option>
+                                    <option value="4">Running</option>
+                                </select>
+                                <!--Validate status-->
+                                <div class="errorMsg">
+                                    <!--Show message error-->
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.status.$dirty && projectInfo.status.$error.required">This is a required field.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Start Date
+                            </div>
+                            <div class="col-xs-8">
+                                <p class="input-group">
+                                    <input id="start" style="cursor:default" type="text" class="form-control"
+                                           uib-datepicker-popup="dd-MMM-yyyy"
+                                           ng-change="proInfoCtrl.start_date_change()"
+                                           ng-model="proInfoCtrl.projectInfoUpdate.project_start_date"
+                                           is-open="proInfoCtrl.popup1.opened"
+                                           datepicker-options="proInfoCtrl.dateOptions1"
+                                           ng-required="true" close-text="Close"
+                                           alt-input-formats="proInfoCtrl.altInputFormats" show-button-bar="false"
+                                           name="startdate"/>
+                                    <span class="input-group-btn">
+                                    <button id="startDateButton" type="button" class="btn btn-default"
+                                            ng-click="proInfoCtrl.open1()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                                <div class="errorMsg">
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.startdate.$dirty && projectInfo.startdate.$error.required">This is a required field.</span>
+                                    <span class="errorMsg" ng-if="proInfoCtrl.isStartDateInvalid">The start date cannot be greater than end date.</span>
+                                </div>
+                                </p>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit">
+                                End Date
+                            </div>
+                            <div class="col-xs-8">
+                                <p class="input-group">
+                                    <input id="end" style="cursor:default" type="text" class="form-control"
+                                           ng-change="proInfoCtrl.end_date_change()" uib-datepicker-popup="dd-MMM-yyyy"
+                                           ng-model="proInfoCtrl.projectInfoUpdate.project_end_date"
+                                           is-open="proInfoCtrl.popup2.opened"
+                                           datepicker-options="proInfoCtrl.dateOptions2"
+                                           close-text="Close" alt-input-formats="proInfoCtrl.altInputFormats"
+                                           show-button-bar="true" name="enddate"/>
+                                    <span class="input-group-btn">
+                                    <button id="endDateButton" type="button" class="btn btn-default"
+                                            ng-click="proInfoCtrl.open2()"><i
+                                            class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                                <div class="errorMsg">
+                                    <span class="errorMsg" ng-if="proInfoCtrl.isEndDateInvalid">The end date cannot be less than start date.</span>
+                                </div>
+                                </p>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Size&thinsp;(days)
+                            </div>
+                            <div class="col-xs-8">
+                                <input type="number" name="size" id="size" class="form-control"
+                                       ng-model="proInfoCtrl.projectInfoUpdate.project_size_days"
+                                       placeholder="Enter size" required min="1" max="1000000"
+                                       onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0)'
+                                       onkeyup="(this.value < 1)?this.value =1:this.value =this.value;(this.value > 1000000)?this.value =1000000:this.value =this.value">
+                                <div class="errorMsg">
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.size.$dirty && projectInfo.size.$error.required">This field is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit">
+                                Location
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="location"
+                                        ng-model="proInfoCtrl.projectInfoUpdate.project_location">
+                                    <option ng-repeat="l in proInfoCtrl.locations" value="{{l.id}}">{{l.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Project Manager
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="manager"
+                                        ng-model="proInfoCtrl.projectInfoUpdate.project_pm_manager" required>
+                                    <option ng-repeat="pm in proInfoCtrl.pm" value="{{pm.id}}">{{pm.first_name + ' ' +
+                                        pm.last_name}}
+                                    </option>
+                                </select>
+                                <div class="errorMsg">
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.manager.$dirty && projectInfo.manager.$error.required">This field is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Delivery/Program Manager
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="deliverymanager"
+                                        ng-model="proInfoCtrl.projectInfoUpdate.project_program_manager" required>
+                                    <option ng-repeat="sm in proInfoCtrl.sm" value="{{sm.id}}">{{sm.first_name + ' ' +
+                                        sm.last_name}}
+                                    </option>
+                                </select>
+                                <div class="errorMsg">
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.deliverymanager.$dirty && projectInfo.deliverymanager.$error.required">This field is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Engagement Manager
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="engagementmanager"
+                                        ng-model="proInfoCtrl.projectInfoUpdate.project_engagement_manager">
+                                    <option ng-repeat="sm in proInfoCtrl.sm" value="{{sm.id}}">{{sm.first_name + ' ' +
+                                        sm.last_name}}
+                                    </option>
+                                </select>
+                                <div class="errorMsg">
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.engagementmanager.$dirty && projectInfo.engagementmanager.$error.required">This field is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Short Description
+                            </div>
+                            <div class="col-xs-8">
+                                <textarea class="form-control" rows="3" name="shortdescription"
+                                          ng-model="proInfoCtrl.projectInfoUpdate.project_short_description" required
+                                          placeholder="Enter short description" minlength="1"
+                                          ng-pattern="proInfoCtrl.nameRegex" maxlength="1000"></textarea>
+                                <div class="errorMsg">
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.shortdescription.$dirty && projectInfo.shortdescription.$error.required">This is a required field.</span>
+                                    <span class="errorMsg" ng-if="projectInfo.shortdescription.$error.pattern">The description has only characters.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Long Description
+                            </div>
+                            <div class="col-xs-8">
+                                <textarea class="form-control" rows="5" name="longdescription"
+                                          ng-model="proInfoCtrl.projectInfoUpdate.project_long_description" required
+                                          placeholder="Enter short description" minlength="0"
+                                          ng-pattern="proInfoCtrl.nameRegex" maxlength="4000"></textarea>
+                                <div class="errorMsg">
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.longdescription.$dirty && projectInfo.longdescription.$error.required">This is a required field.</span>
+                                    <span class="errorMsg" ng-if="projectInfo.longdescription.$error.pattern">The description has only characters.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Technologies
+                            </div>
+                            <div class="col-xs-8">
+                                <textarea class="form-control" rows="5" name="technologies"
+                                          ng-model="proInfoCtrl.projectInfoUpdate.project_technologies" required
+                                          ng-pattern="proInfoCtrl.nameRegex" placeholder="Enter technologies"
+                                          minlength="1" maxlength="4000"></textarea>
+                                <div class="errorMsg">
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.technologies.$dirty && projectInfo.technologies.$error.required">This is a required field.</span>
+                                    <span class="errorMsg" ng-if="projectInfo.technologies.$error.pattern">The technologies has only characters.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit required">
+                                Client Name
+                            </div>
+                            <div class="col-xs-8">
+                                <input type="text" name="clientname" id="clientname" class="form-control"
+                                       ng-model="proInfoCtrl.projectInfoUpdate.project_client_name"
+                                       placeholder="Enter client name" required minlength="1" maxlength="200">
+                                <div class="errorMsg">
+                                    <span class="errorMsg"
+                                          ng-if="projectInfo.clientname.$dirty && projectInfo.clientname.$error.required">This field is required.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit">
+                                Industry
+                            </div>
+                            <div class="col-xs-8">
+                                <select class="form-control" name="clientindustry"
+                                        ng-model="proInfoCtrl.projectInfoUpdate.project_industry">
+                                    <option value="">Select an Industry/Sector</option>
+                                    <option value="1">Energy</option>
+                                    <option value="2">Financial Services</option>
+                                    <option value="3">Health Care</option>
+                                    <option value="4">Manufacturing</option>
+                                    <option value="5">Public Sector</option>
+                                    <option value="6">Retail</option>
+                                    <option value="7">Technology</option>
+                                    <option value="8">Telecommunication</option>
+                                    <option value="9">Others</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-4 align-right-edit">
+                                Client Description
+                            </div>
+                            <div class="col-xs-8">
+                                <textarea class="form-control" rows="5" name="client_description"
+                                          ng-pattern="proInfoCtrl.nameRegex"
+                                          ng-model="proInfoCtrl.projectInfoUpdate.project_client_description"
+                                          placeholder="Enter client description" minlength="0"
+                                          maxlength="4000"></textarea>
+                                <div class="errorMsg">
+                                    <span class="errorMsg" ng-show="projectInfo.client_description.$error.pattern">The description has only characters.</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-xs-5">
+            </div>
+            <div class="col-xs-2">
+                <div class="col-xs-6">
+                    <input ng-show="!proInfoCtrl.isViewMode" ng-disabled="!projectInfo.$dirty || projectInfo.$invalid"
+                           class="btn btn-primary" type="submit" value="&thinsp;&thinsp;Save&thinsp;&thinsp;"/> &ensp;
+                </div>
+                <div class="col-xs-6">
+                    <input ng-show="!proInfoCtrl.isViewMode" class="btn btn-warning" type="button" value="Cancel"
+                           ng-click="proInfoCtrl.cancel()"/>
+                </div>
+            </div>
+            <div class="col-xs-5"></div>
+        </div>
+        <br/><br/>
+    </form>
+</div>
+
+<!-- /projectInformation - edit mode-->
+
+<!--Jquery block input date of birth and company join date-->
+<script>
+    $('#start').focus(function (e) {
+        $('#start').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#start').click(function (e) {
+        $('#startDateButton').click();
+    });
+    $('#end').focus(function (e) {
+        $('#end').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#end').click(function (e) {
+        $('#endDateButton').click();
+    })
+</script>

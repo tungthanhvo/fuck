@@ -1,0 +1,324 @@
+<!-- personal information tab -->
+<div id="employeeProfileTab" class="tab-pane fade in active">
+    <div class="row">
+        <div class="col-xs-3" id="panel-left" style="text-align: center">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-12 my-cursor" ng-show="!empProfileCtrl.isViewMode">
+                            <div ng-show="editEmpCtrl.isHasImageAvatar">
+                                <img ng-src="{{empProfileCtrl.api_server}}/images/{{editEmpCtrl.imageUrl}}" class="img-circle" width="250px" height="250px" alt="no images available" data-toggle="modal" data-target="#myModal">
+                            </div>
+                            <div ng-show="!editEmpCtrl.isHasImageAvatar">
+                                <img ng-src="images/noimage.png" class="img-circle" width="250px" height="250px" alt="no images available" data-toggle="modal" data-target="#myModal">
+                            </div>
+                            <!--<input style="display: none" id="updateImageUpload" type="file" accept="image/*"/>-->
+                            <!-- Modal for uplaod new profile picture-->
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" ng-click="update_image_cancel()" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Upload image</h4>
+                                        </div>
+                                        <div class="modal-body">
+
+
+                                            <form name="uploadImageForm">
+                                                <div class="row">
+                                                    <div class="col-xs-8">
+                                                        <div style="height: 150px;border-style: dashed;text-align: center" ngf-drop="" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="1MB">
+                                                            <label style="margin-top: 60px">+ Select or drop your
+                                                                images</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <img ngf-thumbnail="file || temp_file || '/images/noimage.png'" height="150px" width="150px" />
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div style="font-style: italic; text-align: left;color: red">
+                                                            *Only support image file size
+                                                            <=1 MB </div>
+                                                        </div>
+                                                    </div>
+                                                    <br/><br/>
+                                                    <div class="row">
+                                                        <div class="col-xs-4"></div>
+                                                        <div class="col-xs-4">
+                                                            <div class="col-xs-6">
+                                                                <button type="submit" ng-disabled="!file" class="btn btn-primary" ng-click="submit()">&thinsp;&thinsp;Save&thinsp;&thinsp;
+                                                            </button>
+                                                            </div>
+                                                            <div class="col-xs-6">
+                                                                <button type="button" ng-click="update_image_cancel()" class="btn btn-warning" data-dismiss="modal">&thinsp;Close&thinsp;
+                                                            </button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xs-4"></div>
+                                                    </div>
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 my-cursor" ng-show="empProfileCtrl.isViewMode">
+                                <div ng-show="editEmpCtrl.isHasImageAvatar">
+                                    <img ng-src="{{empProfileCtrl.api_server}}/images/{{editEmpCtrl.imageUrl}}" class="img-circle" width="250px" height="250px" alt="no images available">
+                                </div>
+                                <div ng-show="!editEmpCtrl.isHasImageAvatar">
+                                    <img ng-src="images/noimage.png" class="img-circle" width="250px" height="250px" alt="no images available">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="text-align: center">
+                            <div class="col-xs-1">
+                            </div>
+                            <div style="text-align: left" class="col-xs-10 emp-profile-header word-wrap">
+                                {{editEmpCtrl.full_name}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-1">
+                            </div>
+                            <div style="text-align: left" class="col-xs-10 emp-profile word-wrap">
+                                {{editEmpCtrl.job_title_name}}
+                            </div>
+                        </div>
+                        <!--<div class="row">-->
+                        <!--<div class="col-xs-1">-->
+                        <!--</div>-->
+                        <!--<div style="text-align: left" class="col-xs-10">-->
+                        <!--<div ng-if="editEmpCtrl.married_status == '1'" class="emp-profile">Married</div>-->
+                        <!--<div ng-if="editEmpCtrl.married_status == '0'" class="emp-profile">Single</div>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <div class="row">
+                            <div class="col-xs-1">
+                            </div>
+                            <div style="text-align: left" class="col-xs-10 emp-profile word-wrap">
+                                {{editEmpCtrl.company_email}}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-1">
+                            </div>
+                            <div style="text-align: left" class="col-xs-10 emp-profile word-wrap">
+                                Staff code: {{editEmpCtrl.staff_code}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--main-- tab-->
+            <div class="col-xs-7" id="panel-main">
+                <br/>
+                <div class="row">
+                    <div class="col-xs-2 common">
+                        Background
+                    </div>
+                    <div class="col-xs-8">
+                    </div>
+                    <div class="col-xs-2">
+                        <button ng-click="empProfileCtrl.switchMode()" type="button" class="btn btn-default">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        {{empProfileCtrl.btnViewOrEditMode}}
+                    </button>
+                    </div>
+                </div>
+                <hr/>
+                <div>
+                    <personal-information></personal-information>
+                    <company-information></company-information>
+                    <technical-skill></technical-skill>
+                    <education-section></education-section>
+                    <course-section></course-section>
+                    <employee-history-section></employee-history-section>
+                    <addition-information-section></addition-information-section>
+                </div>
+
+            </div>
+            <!--SHOCURT-->
+            <div class="col-xs-2" id="panel-right">
+                <br/>
+                <h5 class="">Recommended for you</h5>
+                <hr/>
+                <!-- personalInfo shorcut -->
+                <div class="panel panel-default" ng-click="editEmpCtrl.changePersonalCollapse()" data-toggle="collapse" href="#personalInfoView" ng-if="empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/personal-information.png" width="30px"
+                                 height="30px"/>
+                            <label class="label-shortcut">Personal Information</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <div class="panel panel-default" data-toggle="collapse" href="#personalInfoEdit" ng-if="!empProfileCtrl.isShortcutViewMode" ng-click="editEmpCtrl.changePersonalCollapseEdit()">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/personal-information.png" width="30px"
+                                 height="30px"/>
+                            <label class="label-shortcut">Personal Information</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <!-- /personalInfo shorcut -->
+
+                <!-- companyInfo shorcut -->
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeCompanyCollapse()" data-toggle="collapse" href="#companyInfoView" ng-if="empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/company-information.png" width="30px"
+                                 height="30px"/>
+                            <label class="label-shortcut">Company Information</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeCompanyCollapseEdit()" data-toggle="collapse" href="#companyInfoEdit" ng-if="!empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/company-information.png" width="30px"
+                                 height="30px"/>
+                            <label class="label-shortcut">Company Information</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <!-- /companyInfo shorcut -->
+
+                <!-- technicalSkill shorcut -->
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeTechnicalCollapse()" data-toggle="collapse" href="#technicalSkillView" ng-if="empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/technicalskill.png" width="30px"
+                                 height="30px"/>
+                            <label class="label-shortcut">Technical Skill</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeTechnicalCollapseEdit()" data-toggle="collapse" href="#technicalSkillInfoEdit" ng-if="!empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/technicalskill.png" width="30px"
+                                 height="30px"/>
+                            <label class="label-shortcut">Technical Skill</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <!-- /technicalSkill shorcut -->
+
+                <!-- education shorcut -->
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeEducationCollapse()" data-toggle="collapse" href="#education-qualification-achievement-view" ng-if="empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/education.png" width="30px" height="30px"/>
+                            <label class="label-shortcut">Education</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeEducationCollapseEdit()" data-toggle="collapse" href="#education-qualification-achievement-edit" ng-if="!empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/education.png" width="30px" height="30px"/>
+                            <label class="label-shortcut">Education</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <!-- /education shorcut -->
+
+                <!-- course shorcut -->
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeCourseCollapse()" data-toggle="collapse" href="#course-certificate-view" ng-if="empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/course.png" width="30px" height="30px"/>
+                            <label class="label-shortcut">Courses/Certifications</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeCourseCollapseEdit()" data-toggle="collapse" href="#course-certificate-edit" ng-if="!empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/course.png" width="30px" height="30px"/>
+                            <label class="label-shortcut">Courses/Certifications</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <!-- /course shorcut -->
+
+                <!-- employee history shorcut -->
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeHistoryCollapse()" data-toggle="collapse" href="#employee-history-view" ng-if="empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/employee-history.png" width="30px"
+                                 height="30px"/>
+                            <label class="label-shortcut">Employments History</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeHistoryCollapseEdit()" data-toggle="collapse" href="#employee-history-edit" ng-if="!empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/employee-history.png" width="30px"
+                                 height="30px"/>
+                            <label class="label-shortcut">Employments History</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <!-- /employee history shorcut -->
+                <!-- addition information shorcut -->
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeAdditionalCollapse()" data-toggle="collapse" href="#additional-info-view" ng-if="empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/additional-information.png" width="30px"
+                                 height="30px"/>
+                            <label class="label-shortcut">Additional Information</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <div class="panel panel-default" ng-click="editEmpCtrl.changeAdditionalCollapseEdit()" data-toggle="collapse" href="#additional-info-edit" ng-if="!empProfileCtrl.isShortcutViewMode">
+                    <div class="panel-heading my-cursor">
+                        <h4 class="panel-title">
+                        <div class="row">
+                            <img class="margin-left" src="images/update-cv/additional-information.png" width="30px" height="30px"/>
+                            <label class="label-shortcut">Additional Information</label>
+                        </div>
+                    </h4>
+                    </div>
+                </div>
+                <!-- /addition information shorcut -->
+            </div>
+        </div>
+    </div>
+    <a class="scrollToTop" ng-click="editEmpCtrl.scrollToTop();">
+        <span class="glyphicon glyphicon-chevron-up" id="scroll-top">
+        </span>
+    </a>

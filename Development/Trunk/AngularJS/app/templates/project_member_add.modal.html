@@ -1,0 +1,94 @@
+ <div class="modal-header">
+    <h3 class="modal-title">Add Member To Project</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" name="addMemberProject" novalidate>
+        <div class="form-group">
+            <label class="control-label col-xs-4 required" for="fullname">Full Name</label>
+            <div class="col-xs-6">
+                <select select-other class="form-control" name="fullname" ng-model="addMember.member.name" required ng-change="addMember.checkJoinDate()">
+                    <option value="">Please select member</option>
+                    <option ng-repeat="proMember in addMember.fn.userArray" value="{{proMember.id}}">{{proMember.first_name + ' ' + proMember.last_name + ' (' + proMember.username + ')'}}</option>
+                
+                </select>
+                <div class="error">
+                    <!--Show message error-->
+                    <span class="error" ng-if="addMemberProject.fullname.$dirty && addMemberProject.fullname.$error.required">This field is required.</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-4 required" for="joineddate">Joined Date</label>
+            <div class="col-xs-6">
+                <p class="input-group">
+                    <input id="join" name="joindate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="addMember.member.dt" is-open="addMember.popup1.opened" datepicker-options="addMember.dateOptions1" ng-required="true" close-text="Close" show-button-bar="false" ng-change="addMember.checkJoinDate()"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="addMember.open1()" id="joinBtn"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                    <div class="error">
+                        <!--Show message error-->
+                        <span class="error" ng-if="addMemberProject.joindate.$dirty && addMemberProject.joindate.$error.required">This field is required.</span>
+                        <span class="error" ng-if="!addMember.check2Date">Join date must be less than release date</span>
+                        <span class="error" ng-if="!addMember.checkJoinDateWithProjectStartDate">Join date must be greater than or equal project start date</span>
+                        <span class="error" ng-if="!addMember.checkDate">Join date must be greater or equal company join date</span>
+                        <span class="error" ng-if="!addMember.checkjoinDateWithEndDate">Join date must be less than project end date</span>
+                    </div>
+                </p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-xs-4" for="releasedate">Release Date</label>
+            <div class="col-xs-6">
+                <p class="input-group">
+                    <input id="release" name="releasedate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="addMember.member.releasedate" is-open="addMember.popup2.opened" datepicker-options="addMember.dateOptions2" close-text="Close" ng-change="addMember.checkJoinDate()"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="addMember.open2()" id="releaseBtn"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                    <div class="error">
+                        <span ng-if="!addMember.checkReleaseDateWithEndDate">Release date must be less than or equal project end date</span>
+                    </div>
+                </p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-xs-4 required" for="roletitle">Role Title</label>
+            <div class="col-xs-6">
+                <select class="form-control" name="roletitle" ng-model="addMember.member.roletitle" required>
+                    <option value="">Please select role title</option>
+                    <option ng-repeat="role in addMember.role.rows" value="{{role.id}}">{{role.name}}</option>
+                </select>
+                <div class="error">
+                    <!--Show message error-->
+                    <span class="error" ng-if="addMemberProject.roletitle.$dirty && addMemberProject.roletitle.$error.required">This field is required.</span>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="addMember.add()">Add</button>
+    <button class="btn btn-warning" type="button" ng-click="addMember.cancel()">Cancel</button>
+</div>
+
+<script>
+    $('#join').focus(function(e) {
+        $('#join').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#join').click(function(e){
+        $('#joinBtn').click();
+    });
+     $('#release').focus(function(e) {
+        $('#release').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#release').click(function(e){
+        $('#releaseBtn').click();
+    });
+</script>

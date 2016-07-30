@@ -1,0 +1,55 @@
+a[ng-click]{
+    cursor: pointer;
+}
+
+#search-body {
+    padding: 20px;
+}
+
+#search-panel {
+    padding: 10px;
+}
+
+#search-panel #search-btn-group {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#search-panel .search-remove {
+    line-height: 34px;
+    padding-left: 0px;
+}
+
+#search-panel #reset {
+    margin-left: -10px;
+}
+
+#search-panel a {
+    cursor: pointer;
+}
+
+#search-panel li {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#search-panel li a{
+    padding-left: 6px;
+}
+
+#search-panel .search-remove span {
+    cursor: pointer;;
+}
+
+#search-panel .item-check {
+    width: 14px;
+    display: inline-block;
+}
+
+button.glyphicon {
+    margin-top: -1px;
+}
+
+#search-pager {
+    margin-top: 5px;
+}

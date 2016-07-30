@@ -1,0 +1,56 @@
+<script scr="lib/jquery/dist/jquery.min.js">
+</script>
+<link rel="stylesheet" href="lib/select2/select2.css" />
+<script type="text/javascript" src="lib/select2/select2.js"></script>
+<div ng-init="smCtrl.init();" class="row" style="margin-top:5px;">
+    <div class="col-xs-9">
+        <div>
+            <select class="select2" ui-select2 id="skill-list" ng-model="smCtrl.select2val" ng-options="v.id as v.name group by v.parent_id for v in smCtrl.metadata_skillchildren | orderBy:['parent_id','name']">
+                <option value="" ng-if="!smCtrl.select2val" selected >Select Skill</option>
+            </select >
+            <button ng-click="smCtrl.addSkillMetric()" ng-if="smCtrl.select2val" class="btn btn-primary btn-sm">Add Skill Metrics</button>
+        </div>
+        <hr/>
+        <div ng-if="smCtrl.skill_metrics.length > 0">
+            <div ng-repeat="(key,value) in smCtrl.skill_metrics | groupBy: 'skill.parent_id'">
+                <fieldset class="group-border">
+                    <legend class="group-border">
+                        <h4>{{key}}</h4></legend>
+                   <skill-metric-child skillmetric="skillmetric"
+                     ng-repeat="skillmetric in value">
+                    </skill-metric-child>
+                </fieldset>
+            </div>
+        </div>
+        <div class="col-xs-4 col-xs-offset-4 row" ng-if="smCtrl.skill_metrics.length == 0">
+            <div id="message-box" class="panel panel-default">
+                <div class="panel-body">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                    <b>No Skill Metric available!</b>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-3">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>
+                    Expertise
+                </h4>
+                <ol>
+                    <li ng-repeat="item in smCtrl.metadata_expertise">{{item.description}}</li>
+                </ol>
+                <h4>
+                    Experience
+                </h4>
+                <ol start="0">
+                    <li ng-repeat="item in smCtrl.metadata_experience">{{item.description}}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="" ng-if="smCtrl.skill_metrics.length">
+    <button class="btn btn-primary" ng-click="smCtrl.save()">Save</button>
+    <button class="btn btn-warning" ng-click="smCtrl.cancel()">Cancel</button>
+</div>

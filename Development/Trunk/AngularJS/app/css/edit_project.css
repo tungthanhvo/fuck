@@ -1,0 +1,16 @@
+.field-required {
+    color: red;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-right-edit {
+    text-align: right;
+    font-weight: bold;
+}
+
+.text-bold {
+    font-weight: bold;
+}

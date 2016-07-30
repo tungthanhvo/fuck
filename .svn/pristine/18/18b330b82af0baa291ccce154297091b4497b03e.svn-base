@@ -1,0 +1,240 @@
+<div class="modal-header">
+    <h3 class="modal-title">Create Project</h3>
+</div>
+<div class="modal-body">
+    <div class="container">
+        <form class="form-horizontal" name="projectInfo" novalidate>
+            <!--Project infomation project name-->
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="projectname">Project Name</label>
+                <div class="col-md-6">
+                    <input type="text" name="name" id="name" class="form-control" ng-model="project.project.name" placeholder="Enter project name" required maxlength="100">
+                    <div class="error">
+                        <span class="error" ng-if="projectInfo.name.$dirty && projectInfo.name.$error.required">This field is required.</span>
+                        <span class="error" ng-if="project.checkName">Project name has already existed</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="type">Project Type</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="type" ng-model="project.project.type" required>
+                        <option value="">Please select project type</option>
+                        <option value="1">Fixed Price</option>
+                        <option value="2">ODC</option>
+                        <option value="3">Time & Material</option>
+                    </select>
+                    <!--Validate status-->
+                    <div class="error">
+                        <!--Show message error-->
+                        <span class="error" ng-if="projectInfo.type.$dirty && projectInfo.type.$error.required">This field is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="status">Project Status</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="status" ng-model="project.project.status" required>
+                        <option value="">Please select project status</option>
+                        <option value="1">Cancelled</option>
+                        <option value="2">Closed</option>
+                        <option value="3">Pending</option>
+                        <option value="4">Running</option>
+                    </select>
+                    <!--Validate status-->
+                    <div class="error">
+                        <!--Show message error-->
+                        <span class="error" ng-if="projectInfo.status.$dirty && projectInfo.status.$error.required">This field is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="startdate">Start Date</label>
+                <div class="col-md-6">
+                    <p class="input-group">
+                        <input id="start" style="cursor:default" type="text" class="form-control" uib-datepicker-popup="dd-MMM-yyyy" ng-model="project.project.dt" is-open="project.popup1.opened" datepicker-options="project.dateOptions1" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" ng-blur="project.check2Date()"
+                        show-button-bar="false" name="startdate" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="project.open1()" id="startDateBtn"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                        <!--Validate start date-->
+                        <div class="error">
+                            <!--Show message error-->
+                            <span class="error" ng-if="projectInfo.startdate.$dirty && projectInfo.startdate.$error.required">This field is required.</span>
+                            <span class="error" ng-if="!project.checkDate">Start date must be less than end date</span>
+                        </div>
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4" for="enddate">End Date</label>
+                <div class="col-md-6">
+                    <p class="input-group">
+                        <input id="end" style="cursor:default" type="text" class="form-control" uib-datepicker-popup="dd-MMM-yyyy" ng-model="project.project.enddate" is-open="project.popup2.opened" datepicker-options="project.dateOptions2" close-text="Close" alt-input-formats="altInputFormats"
+                        show-button-bar="true" name="enddate" ng-blur="project.check2Date()"/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="project.open2()" id="endDateBtn"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="size">Size (days)</label>
+                <div class="col-md-6">
+                    <input type="text" name="size" id="size" class="form-control" ng-model="project.project.size" placeholder="Enter size" required onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0)' ng-blur="validateSize()">
+                    <!--Validate project name-->
+                    <div class="error">
+                        <!--Show message error-->
+                        <span class="error" ng-if="projectInfo.size.$dirty && projectInfo.size.$error.required">This field is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4" for="location">Location</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="location" ng-model="project.project.location" ng-options="item.id as item.name for item in project.metadata.locations">         
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="manager">Project Manager</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="manager" ng-model="project.project.manager" required>
+                        <option value="" selected>Please select project manager</option>
+                        <option ng-repeat="pm in project.pm" value="{{pm.id}}">{{pm.first_name + ' ' + pm.last_name + ' (' + pm.username + ')'}}</option>
+                    </select>
+                     <div class="error">
+                        <!--Show message error-->
+                        <span class="error" ng-if="projectInfo.manager.$dirty && projectInfo.manager.$error.required">This field is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="deliverymanager">Delivery/ Program Manager</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="deliverymanager" ng-model="project.project.deliverymanager" required>
+                        <option value="" selected>Please select delivery/ program manager</option>
+                        <option ng-repeat="sm in project.sm" value="{{sm.id}}">{{sm.first_name + ' ' + sm.last_name + ' (' + sm.username + ')'}}</option>
+                    </select>
+                    <div class="error">
+                        <!--Show message error-->
+                        <span class="error" ng-if="projectInfo.deliverymanager.$dirty && projectInfo.deliverymanager.$error.required">This field is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="engagementmanager">Engagement Manager</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="engagementmanager" ng-model="project.project.engagementmanager" required>
+                        <option value="">Please select engagement manager</option>
+                        <option ng-repeat="sm in project.sm" value="{{sm.id}}">{{sm.first_name + ' ' + sm.last_name + ' (' + sm.username + ')'}}</option>
+                    </select>
+                    <div class="error">
+                        <!--Show message error-->
+                        <span class="error" ng-if="projectInfo.engagementmanager.$dirty && projectInfo.engagementmanager.$error.required">This field is required.</span>
+                    </div>
+                </div>
+            </div>
+           
+           <div class="form-group">
+                <label class="control-label col-md-4 required" for="shortdescription">Short Description</label>
+                <div class="col-md-6">
+                    <textarea class="form-control" rows="3" name="shortdescription" ng-model="project.project.shortdescription" required placeholder="Enter short description" maxlength="1000"></textarea>
+                    <div class="error">
+                        <span class="error" ng-if="projectInfo.shortdescription.$dirty && projectInfo.shortdescription.$error.required">This field is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="longdescription">Long Description</label>
+                <div class="col-md-6">
+                    <textarea class="form-control" rows="5" name="longdescription" ng-model="project.project.longdescription" required placeholder="Enter short description" maxlength="4000"></textarea>
+                    <div class="error">
+                        <span class="error" ng-if="projectInfo.longdescription.$dirty && projectInfo.longdescription.$error.required">This field is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="technologies">Technologies</label>
+                <div class="col-md-6">
+                    <textarea class="form-control" rows="5" name="technologies" ng-model="project.project.technologies" required placeholder="Enter technologies" maxlength="4000"></textarea>
+                    <div class="error">
+                        <span class="error" ng-if="projectInfo.technologies.$dirty && projectInfo.technologies.$error.required">This field is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4 required" for="clientname">Client Name</label>
+                <div class="col-md-6">
+                    <input type="text" name="clientname" id="clientname" class="form-control" ng-model="project.project.clientname" placeholder="Enter client name" required maxlength="200">
+                    <div class="error">
+                        <span class="error" ng-if="projectInfo.clientname.$dirty && projectInfo.clientname.$error.required">This field is required.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4" for="clientindustry">Client Industry/Sector</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="clientindustry" ng-model="project.project.clientindustry">
+                        <option value="">Select an Industry/Sector</option>
+                        <option value="1">Energy</option>
+                        <option value="2">Financial Services</option>
+                        <option value="3">Health Care</option>
+                        <option value="4">Manufacturing</option>
+                        <option value="5">Public Sector</option>
+                        <option value="6">Retail</option>
+                        <option value="7">Technology</option>
+                        <option value="8">Telecommunication</option>
+                        <option value="9">Others</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-4" for="clientdescription">Client Description</label>
+                <div class="col-md-6">
+                    <textarea class="form-control" rows="5" name="clientdescription" ng-model="project.project.clientdescription" placeholder="Enter client description" maxlength="4000"></textarea>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<div class="modal-footer ">
+    <!--Button create project-->
+    <button class="btn btn-primary " type="button " ng-click="project.create()" name="createbtn">Create</button>
+    <!--Button cancel project-->
+    <button class="btn btn-warning " type="button " ng-click="project.cancel()">Cancel</button>
+</div>
+
+<script>
+    $('#start').focus(function(e) {
+        $('#start').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#start').click(function(e){
+        $('#startDateBtn').click();
+    });
+    $('#end').focus(function(e) {
+        $('#end').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#end').click(function(e){
+        $('#endDateBtn').click();
+    });
+</script>

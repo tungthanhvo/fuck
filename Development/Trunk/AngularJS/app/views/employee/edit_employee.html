@@ -1,0 +1,42 @@
+<br/>
+<!-- container -->
+<div class="container">
+    <div class="dropdown pull-right " ng-hide="editEmpCtrl.disableAnotherTab">
+        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i
+                class="glyphicon glyphicon-download-alt"></i> Export CV
+            <span class="caret "></span></button>
+        <ul class="dropdown-menu ">
+            <li><a href="{{editEmpCtrl.export_url + 'pdf'}}">PDF</a></li>
+            <li><a href="{{editEmpCtrl.export_url + 'word'}}">WORD</a></li>
+        </ul>
+    </div>
+    <!-- nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#employeeProfileTab">Employee Profile</a></li>
+        <li ng-show="editEmpCtrl.disableAnotherTab" class="disabled"><a data-toggle="tooltip"
+                                                                        title="You're now in edit mode.">Assignment</a>
+        </li>
+        <li ng-show="editEmpCtrl.disableAnotherTab" class="disabled"><a data-toggle="tooltip"
+                                                                        title="You're now in edit mode.">Skill
+            Metric</a></li>
+        <li ng-show="!editEmpCtrl.disableAnotherTab"><a data-toggle="tab" href="#assignmentTab">Assignment</a></li>
+        <li ng-show="!editEmpCtrl.disableAnotherTab"><a data-toggle="tab" href="#skillMetricTab">Skill Metric</a></li>
+    </ul>
+    <div class="container ">
+    </div>
+    <!-- tab contents -->
+    <div class="tab-content">
+        <div id="employeeProfileTab" class="tab-pane fade in active">
+            <employee-profile></employee-profile>
+        </div>
+        <div id="assignmentTab" class="tab-pane fade in">
+            <assignment></assignment>
+        </div>
+        <div id="skillMetricTab" class="tab-pane fade in">
+            <skill-metric></skill-metric>
+        </div>
+    </div>
+    <!-- /tab contents -->
+
+</div>
+<!-- /container -->

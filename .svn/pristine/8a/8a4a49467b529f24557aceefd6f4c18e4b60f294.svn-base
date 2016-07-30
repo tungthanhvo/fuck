@@ -1,0 +1,25 @@
+<form name="courseForm">
+    <div class="modal-header">
+        <h3 class="modal-title">Add Course</h3>
+    </div>
+    <div class="modal-body row">
+        <select-year fromyear="course.from_year" toyear="course.to_year"></select-year>
+        <div class="form-group col-xs-12">
+            <label for="course_name" class="required">Course Name</label>
+            <input type="text" placeholder="Enter your course name" name="course_name" ng-model="course.course_name" class="form-control" required maxlength="200" />
+            <span class="error" ng-show="courseForm.course_name.$error.required && courseForm.course_name.$dirty">This field is required.</span>
+        </div>
+        <div class="form-group col-xs-12">
+            <label for="course_description">Course Description</label>
+            <textarea rows="2" placeholder="Enter your course description" name="course_description" ng-model="course.course_description" class="form-control" maxlength="1000"></textarea>
+        </div>
+        <div class="form-group col-xs-12">
+            <label for="achievement">Achievement</label>
+            <input type="text" placeholder="Enter your achievement" name="achievement" ng-model="course.achievement" class="form-control" maxlength="1000" />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="add();" ng-disabled="!isAdd">Add</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel();">Cancel</button>
+    </div>
+</form>

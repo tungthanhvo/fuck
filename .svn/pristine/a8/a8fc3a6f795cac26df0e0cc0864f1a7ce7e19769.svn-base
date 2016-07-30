@@ -1,0 +1,513 @@
+<div class="modal-header">
+    <h3 class="modal-title">Create Employee</h3>
+</div>
+<div class="modal-body">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="!#home" id="personaltab">Personal Information</a></li>
+        <li><a data-toggle="tab" href="!#menu1" id="companytab">Company Information</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <!--Personal infomation tab-->
+        <div id="home" class="tab-pane fade in active"><br/>
+            <div class="container">
+                <form class="form-horizontal" name="personalinfo" novalidate>
+
+                    <!--Personal infomation username-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="username">Username</label>
+                        <div class="col-md-6">
+                            <input type="text" name="username" id="username" class="form-control"
+                                   ng-model="emp.user.username" placeholder="Enter username"
+                                   ng-change="emp.validateUser()" required maxlength="50" ng-pattern="/^[a-zA-Z0-9]+$/"
+                                   ng-trim="false">
+                            <!--Validate username-->
+                            <div class="error">
+                                <!--Show message required and maxlength error-->
+                                <span class="error"
+                                      ng-if="personalinfo.username.$dirty && personalinfo.username.$error.required">This field is required.</span>
+                                <span class="error" ng-if="emp.checkListUser">Username has already existed</span>
+                                <span class="error" ng-if="personalinfo.username.$error.pattern">Username doesn't has special characters</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation password-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="password">Password</label>
+                        <div class="col-md-6">
+                            <label class="control-label col-md-1" name="password">{{emp.user.password}}</label>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation staffcode-->
+                    <input type="hidden" name="staffcode" class="form-control" disabled style="cursor:default"
+                           ng-model="emp.user.staffcode">
+
+                    <!--Personal infomation avatar-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="avatar">Avatar</label>
+                        <div class="col-md-6">
+                            <label class="custom-file-upload">
+                                <input type="file" name="uploadedImage" accept="image/*" image-model="uploadedImage">
+                            </label>
+                            <!--Validate avatar-->
+                            <div class="error">
+                                <!--Show message type error-->
+                                <span class="error"
+                                      ng-if="imageTypeErrorMessage">Only support: .jpg, .png, .bmp, .jpeg</span>
+                                <!--Show message size error-->
+                                <span class="error" ng-if="imageSizeErrorMessage">Please upload image which has size less than or equal to 1MB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation first name-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="firstname">First Name</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="firstname" ng-model="emp.user.firstname"
+                                   placeholder="Enter first name" required maxlength="100" ng-pattern="nameRegex"
+                                   >
+                            <!--Validate first name-->
+                            <div class="error">
+                                <!--Show message required and maxlength error-->
+                                <span class="error"
+                                      ng-if="personalinfo.firstname.$dirty && personalinfo.firstname.$error.required">This field is required.</span>
+                                <span class="error"
+                                      ng-if="personalinfo.firstname.$dirty && personalinfo.firstname.$error.pattern">First name has not special characters</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation last name-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="lastname">Last Name</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="lastname" ng-model="emp.user.lastname"
+                                   placeholder="Enter last name" required maxlength="100" ng-pattern="nameRegex"
+                                   >
+                            <!--Validate last name-->
+                            <div class="error">
+                                <!--Show message required and maxlength error-->
+                                <span class="error"
+                                      ng-if="personalinfo.lastname.$dirty && personalinfo.lastname.$error.required">This field is required.</span>
+                                <span class="error"
+                                      ng-if="personalinfo.lastname.$dirty && personalinfo.lastname.$error.pattern">Last name has not special characters</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation nick name-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="nickname">Nick Name</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="nickname" placeholder="Enter nick name"
+                                   ng-model="emp.user.nickname" maxlength="50" ng-pattern="/^[a-zA-Z ]+$/">
+                            <div class="error">
+                                <!--Show message required and maxlength error-->
+                                <span class="error"
+                                      ng-if="personalinfo.nickname.$dirty && personalinfo.nickname.$error.pattern">Nick name has only alphabetical characters</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation date of birth-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="dateofbirth">Date of birth</label>
+                        <div class="col-md-6">
+                            <p class="input-group">
+                                <input id="dob" style="cursor:default" type="text" class="form-control test"
+                                       uib-datepicker-popup="dd-MMM-yyyy" ng-model="emp.user.dt"
+                                       is-open="emp.popup1.opened" datepicker-options="emp.dateOptions1"
+                                       ng-required="true" close-text="Close" alt-input-formats="altInputFormats"
+                                       ng-blur="emp.check2Date()" show-button-bar="false" name="dateofbirth"/>
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="emp.open1()" id="dobBtn"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                                <!--Validate personal date of birth-->
+                            <div class="error">
+                                <!--Show message verify age-->
+                                <span class="error" ng-if="!emp.checkAge">Invalid birthday, employee age must be greater than 18 years old.</span>
+                                <span class="error"
+                                      ng-if="personalinfo.dateofbirth.$dirty && personalinfo.dateofbirth.$error.required">This field is required.</span>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation gender-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="gender">Gender</label>
+                        <div class="col-md-6">
+                            <label class="radio-inline"><input type="radio" name="gender" value="1" checked
+                                                               ng-model="emp.user.gender"
+                                                               ng-required="true">Male</label>
+                            <label class="radio-inline"><input type="radio" name="gender" value="0"
+                                                               ng-model="emp.user.gender"
+                                                               ng-required="true">Female</label>
+                            <!--Validate gender personal-->
+                            <div class="error">
+                                <!--Show message required gender-->
+                                <span class="error"
+                                      ng-if="personalinfo.gender.$dirty && personalinfo.gender.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation status-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="status">Status</label>
+                        <div class="col-md-6">
+                            <select class="form-control" name="status" ng-model="emp.user.status" required>
+                                <option value="">Please select marital status</option>
+                                <option value="0">Single</option>
+                                <option value="1">Married</option>
+                            </select>
+                            <!--Validate status-->
+                            <div class="error">
+                                <!--Show message required error-->
+                                <span class="error"
+                                      ng-if="personalinfo.status.$dirty && personalinfo.status.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation address-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="address">Address</label>
+                        <div class="col-md-6">
+                            <textarea class="form-control" rows="5" name="address" ng-model="emp.user.address" required
+                                      placeholder="Enter address" maxlength="1000"></textarea>
+                            <!--Validate address-->
+                            <div class="error">
+                                <!--Show message required error-->
+                                <span class="error"
+                                      ng-if="personalinfo.address.$dirty && personalinfo.address.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation country/region-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="country">Country/Region</label>
+                        <div class="col-md-6">
+                            <select class="form-control" name="country" ng-model="emp.user.country" required>
+                                <option value=""></option>
+                                <option ng-repeat="count in emp.country" value="{{count.name}}">{{count.name}}</option>
+                            </select>
+                            <!--Validate country/region-->
+                            <div class="error">
+                                <!--Show message required error-->
+                                <span class="error"
+                                      ng-if="personalinfo.country.$dirty && personalinfo.country.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation nationality-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="nationality">Nationality</label>
+                        <div class="col-md-6">
+                            <select class="form-control" name="nationality" ng-model="emp.user.nationality" required>
+                                <option value=""></option>
+                                <option ng-repeat="nation in emp.nationality" value="{{nation.name}}">{{nation.name}}
+                                </option>
+                            </select>
+                            <!--Validate nationality-->
+                            <div class="error">
+                                <!--Show message required error-->
+                                <span class="error"
+                                      ng-if="personalinfo.nationality.$dirty && personalinfo.nationality.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation ext-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="ext">Ext</label>
+                        <div class="col-md-6">
+                            <input type="text" name="ext" class="form-control" ng-model="emp.user.ext"
+                                   ng-pattern="/^[0-9]+$/" placeholder="Enter ext (only number)" maxlength="5">
+                            <div class="error">
+                                <span class="error" ng-if="personalinfo.ext.$error.pattern">Ext has only number</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation mobile-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="mobile">Mobile</label>
+                        <div class="col-md-6">
+                            <input type="text" name="mobile" class="form-control" placeholder="e.g +84 123456789"
+                                   ng-model="emp.user.mobile" ng-pattern="/^(\+\d{2})(\ )([0-9])+$/" maxlength="30">
+                            <!--Validate mobile-->
+                            <div class="error">
+                                <!--Show message pattern error-->
+                                <span class="error"
+                                      ng-if="personalinfo.mobile.$dirty && personalinfo.mobile.$error.pattern">Mobile must follow this format: +84 123456789</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation email-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="personalemail">Personal Email</label>
+                        <div class="col-md-6">
+                            <input type="email" class="form-control" name="personalemail"
+                                   ng-model="emp.user.personalemail" placeholder="e.g abc@gmail.com" maxlength="50"
+                                   ng-pattern="/^[A-Za-z0-9]+(\.[A-Za-z0-9]+|\_[A-Za-z0-9]+)*\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/"
+                                   ng-trim="false">
+                            <!--Validate personal email-->
+                            <div class="error">
+                                <!--Show message invalid format error-->
+                                <span class="error"
+                                      ng-if="personalinfo.personalemail.$dirty && personalinfo.personalemail.$error.pattern">Invalid email format</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation quote-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="personalquote">Personal Quote</label>
+                        <div class="col-md-6">
+                            <textarea class="form-control" id="personalquote" name="personalquote" rows="5" ng-model="emp.user.personalquote"
+                                      placeholder="e.g Communication - the human connection - is the key to personal and career success."
+                                      maxlength="1000"></textarea>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation hobby-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="hobby">Hobby</label>
+                        <div class="col-md-6">
+                            <textarea class="form-control" id="hobby" name="hobby" rows="5" ng-model="emp.user.hobby"
+                                      placeholder="e.g Dance, fashion, cooking, fishing, swimming..."
+                                      maxlength="1000"></textarea>
+                        </div>
+                    </div>
+
+                    <!--Personal infomation personal statement-->
+                    <div class="form-group ">
+                        <label class="control-label col-md-4 " for="personalstatement">Personal Statement</label>
+                        <div class="col-md-6 ">
+                            <textarea class="form-control" id="personalstatement" name="personalstatement" rows="5"
+                                      ng-model="emp.user.personalstatement" maxlength="1000"
+                                      placeholder="Enter personal statement"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Company infomation tab-->
+        <div id="menu1" class="tab-pane fade"><br/>
+            <div class="container">
+                <form class="form-horizontal" name="companyinfo">
+                    <!--Company infomation join date-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="companyjoindate">Company Join Date</label>
+                        <div class="col-md-7">
+                            <p class="input-group">
+                                <input id='joindate' style="cursor:default" type="text" class="form-control"
+                                       uib-datepicker-popup="dd-MMM-yyyy" ng-model="emp.user.joindate"
+                                       is-open="emp.popup2.opened" datepicker-options="emp.dateOptions2"
+                                       ng-required="true" close-text="Close" alt-input-formats="altInputFormats"
+                                       ng-blur="emp.check2Date()" show-button-bar="false"/>
+                                <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="emp.open2()" id="joinDateBtn"><i
+                                        class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                            <div class="error">
+                                <span class="error"
+                                      ng-if="!emp.checkDate">The company join date must be after birthday</span>
+                                <span class="error" ng-if="!emp.checkJoinDateWithBirthDate">Employee's age must be greater than 18 when joining Company.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Company infomation email-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="companyemail">Company Email</label>
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-6 no-padding-right">
+                                    <input type="text" class="form-control" name="companyemail" ng-trim="false"
+                                           ng-model="emp.user.companyemail" required maxlength="{{company_max}}"
+                                           ng-change="emp.validateEmail()"
+                                           ng-pattern="/^[A-Za-z0-9]+(\.[A-Za-z0-9]+|\_[A-Za-z0-9]+)*$/"
+                                           placeholder="e.g phat.trantan">
+                                    <!--Validate company email-->
+                                    <div class="error">
+                                        <!--Show message invalid format error-->
+                                        <span class="error" ng-if="companyinfo.companyemail.$error.pattern">Invalid email format</span>
+                                        <!--Show message required error-->
+                                        <span class="error"
+                                              ng-if="companyinfo.companyemail.$dirty && companyinfo.companyemail.$error.required">This field is required.</span>
+                                        <span class="error" ng-if="!emp.checkCompanyEmail">Company email has already existed.</span>
+                                        <span class="error" ng-if="emp.isCompanyDate">Company email length does not exceed 50 characters.</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 no-padding">
+                                    <select class="form-control" name="mailextension" ng-model="emp.mailExtension"
+                                            ng-blur="emp.checkExistEmail()" ng-change="emp.suffixEmail()">
+                                        <option value="@nashtechglobal.com" selected>@nashtechglobal.com</option>
+                                        <option value="@harveynash.vn">@harveynash.vn</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Company infomation department-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="department">Department</label>
+                        <div class="col-md-7">
+                            <select class="form-control" name="department" ng-model="emp.user.department"
+                                    ng-change="emp.getCompetenceList(emp.user.department); emp.generateStaffCode(emp.user.department); emp.user.competence = ''"
+                                    required>
+                                <option value="">Please select employee’s department</option>
+                                <option ng-repeat="dp in emp.department" value="{{dp.id}}">{{dp.code}} - {{dp.name}}
+                                </option>
+                            </select>
+                            <!--Validate company department-->
+                            <div class="error">
+                                <!--Show message required error-->
+                                <span class="error"
+                                      ng-if="companyinfo.department.$dirty && companyinfo.department.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Company infomation competence-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="competence">Competence</label>
+                        <div class="col-md-7">
+                            <select class="form-control" name="competence" ng-model="emp.user.competence" required
+                                    ng-change="emp.getJobtitleList(emp.user.competence); emp.user.jobtitle = ''">
+                                <option value="">Please select employee’s competence</option>
+                                <option ng-repeat="ct in emp.competence" value="{{ct.id}}">{{ct.name}}</option>
+                            </select>
+                            <!--Validate company competence-->
+                            <div class="error">
+                                <!--Show message required error-->
+                                <span class="error"
+                                      ng-if="companyinfo.competence.$dirty && companyinfo.competence.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Company infomation job title-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="jobtitle">Job Title</label>
+                        <div class="col-md-7">
+                            <select class="form-control" name="jobtitle" ng-model="emp.user.jobtitle" required>
+                                <option value="">Please select employee’s job title</option>
+                                <option ng-repeat="jt in emp.jobtitle" value="{{jt.id}}">{{jt.name}}</option>
+                            </select>
+                            <!--Validate company job title-->
+                            <div class="error">
+                                <!--Show message required error-->
+                                <span class="error"
+                                      ng-if="companyinfo.jobtitle.$dirty && companyinfo.jobtitle.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Company infomation level-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="level">Level</label>
+                        <div class="col-md-7">
+                            <select class="form-control" name="level" ng-model="emp.user.level" required>
+                                <option value="">Please select employee’s level</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                            <!--Validate status-->
+                            <div class="error">
+                                <!--Show message required error-->
+                                <span class="error"
+                                      ng-if="companyinfo.level.$dirty && companyinfo.level.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Company infomation line manager-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="linemanager">Line Manager</label>
+                        <div class="col-md-7">
+                            <select class="form-control" name="linemanager" ng-model="emp.user.linemanager" required>
+                                <option value="">Please select employee’s line manager</option>
+                                <option ng-repeat="lm in emp.linemanager" value="{{lm.id}}">{{lm.first_name}}
+                                    {{lm.last_name}}
+                                </option>
+                            </select>
+                            <!--Validate line manager-->
+                            <div class="error">
+                                <!--Show message required error-->
+                                <span class="error"
+                                      ng-if="companyinfo.linemanager.$dirty && companyinfo.linemanager.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Company infomation assign-->
+                    <div class="form-group">
+                        <label class="control-label col-md-4 required" for="assign">Assign</label>
+                        <div class="col-md-7">
+                            <select class="form-control " name="assign" ng-model="emp.user.assign" required>
+                                <option value="">Please select employee’s assign</option>
+                                <option value="2">Administrator</option>
+                                <option value="5">EgM/LM</option>
+                                <option value="1">Employee</option>
+                                <option value="4">Project Manager</option>
+                                <option value="3">Senior Manager</option>
+                            </select>
+                            <!--Validate assign-->
+                            <div class="error">
+                                <!--Show message required error-->
+                                <span class="error"
+                                      ng-if="companyinfo.assign.$dirty && companyinfo.assign.$error.required">This field is required.</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer ">
+    <!--Button create employee-->
+    <button class="btn btn-primary " type="button " ng-click="emp.create()" name="createbtn">Create</button>
+    <!--Button cancel employee-->
+    <button class="btn btn-warning " type="button " ng-click="emp.cancel()">Cancel</button>
+</div>
+
+<!--Jquery block input date of birth and company join date-->
+<script>
+    $('#dob').focus(function (e) {
+        $('#dob').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#dob').click(function(e){
+        $('#dobBtn').click();
+    });
+    $('#joindate').focus(function (e) {
+        $('#joindate').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#joindate').click(function(e){
+        $('#joinDateBtn').click();
+    });
+</script>

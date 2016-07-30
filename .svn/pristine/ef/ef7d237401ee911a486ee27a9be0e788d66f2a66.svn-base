@@ -1,0 +1,249 @@
+define(['./module', 'config', 'underscore', 'domReady!', 'lang', 'select2'], function(module, config, _, document, lang) {
+    module.controller('searchController', ['$http', '$scope', 'pagingService', 'smoothScroll', 'searchService', 'metadataService', '$rootScope', 'stringService', 
+        function(http, scope, pagingService, smoothScroll, searchService, metadata, rootScope, stringService) {
+        var vm                           = this;
+        vm.metadata                      = metadata.Search;
+        vm.searchType                    = rootScope.searchType || 'Employee';        
+        vm.toolTip                       = {};
+        vm.showEmployeeForm              = true;
+        vm.show                          = {};
+        vm.show.employee                 = {};
+        vm.show.employee.job_title       = true;
+        vm.show.employee.technical_skill = true;
+        vm.show.employee.skill_metric    = true;
+        vm.show.project                  = {};
+        vm.show.project.location         = true;
+        vm.show.project.project_name     = true;
+        vm.show.project.project_type     = true;
+        vm.form                          = {};        
+        vm.form.employee                 = {};
+        vm.form.employee.first_name      = '';
+        vm.form.employee.last_name       = '';
+        vm.form.project                  = {};
+        vm.form.project.project_name     = '';
+        vm.pager                         = {};
+        vm.titles                        = [];
+        vm.totalItem                     = 0;
+        vm.showSearchResult              = false;
+        vm.showMsg                       = false;
+        vm.msg                           = lang.UC15;
+        vm.instantSearch                 = {};
+        vm.instantSearch.first_name      = '';
+        vm.instantSearch.last_name       = '';
+        vm.instantSearch.project_name    = '';
+        var searchType                   = {};
+        var searchData                   = {};
+        var scrollOption                 = {};
+        scrollOption.duration            = 400;
+
+        var showNoResult = function() {
+            vm.showSearchResult = false;
+            vm.showMsg2         = false;
+            vm.showMsg1         = true;
+            vm.showMsg          = true;
+        };     
+
+        var hideMsg = function() {
+            vm.showMsg  = false;
+            vm.showMsg1 = false;
+            vm.showMsg2 = false;
+        };
+
+        showNoResult();        
+                
+        var setPage = function(total, page) {
+            if(page < 1 || page > vm.pager.totalPages) {
+                return;
+            }
+            // get pager object from service
+            vm.pager = pagingService.GetPager(total, page, 15);
+            vm.pager.isFirst = vm.pager.currentPage === 1;
+            vm.pager.isLast = vm.pager.currentPage === vm.pager.totalPages;
+        };
+
+        vm.showEmployeeItem = function(name) {
+            vm.show.employee[name] = !vm.show.employee[name];
+        };
+
+        vm.showProjectItem = function(name) {
+            vm.show.project[name] = !vm.show.project[name];
+        };
+
+        vm.quickSearch = function() {
+            if((vm.searchType === 'Employee' && (vm.instantSearch.first_name !== vm.form.employee.first_name || vm.instantSearch.last_name !== vm.form.employee.last_name))
+                || (vm.searchType === 'Project' && vm.instantSearch.project_name !== vm.form.project.project_name)) {
+                vm.instantSearch.first_name = vm.form.employee.first_name;
+                vm.instantSearch.last_name = vm.form.employee.last_name;
+                vm.instantSearch.project_name = vm.form.project.project_name;
+                vm.search(true, false);
+            }            
+        };
+
+        vm.search = function(reset, scroll, page) {
+            if(reset) {
+                searchType                    = vm.searchType;
+                vm.instantSearch.first_name   = vm.form.employee.first_name;
+                vm.instantSearch.last_name    = vm.form.employee.last_name;
+                vm.instantSearch.project_name = vm.form.project.project_name;
+                searchData                    = mapData();                
+            } 
+            if(reset && searchType === 'Employee' && !isFormValid()) { 
+                showInvalid();
+                return;
+            } 
+            hideMsg();
+            searchData.pagenum = page || 1;
+            sendData().then(function(response) {               
+                showResult(response);
+                if(scroll) { 
+                    scrollTop();
+                }
+            });            
+        }
+
+        var sendData = function() {
+            if(searchType === 'Employee') {                
+                return searchService.searchEmployee(searchData);                 
+            } else {                                
+                return searchService.searchProject(searchData);                
+            }
+        };
+
+        var mapData = function() {            
+            var data = {};            
+            if(searchType === 'Employee') {
+                data.first_name = vm.form.employee.first_name;
+                data.last_name = vm.form.employee.last_name;
+                if(vm.show.employee.expertise_level) {
+                    data.expertise_level_from = vm.form.employee.expertise_level_from;
+                    data.expertise_level_to = vm.form.employee.expertise_level_to;
+                }               
+                Object.keys(vm.show.employee).forEach(function(item) {                    
+                    if(vm.show.employee[item] && vm.form.employee[item]) {                        
+                        if (typeof vm.form.employee[item] === 'string') {
+                            data[item] = vm.form.employee[item].trim();
+                        } else {
+                            data[item] = vm.form.employee[item];
+                        }
+                    }
+                });
+            } else {
+                Object.keys(vm.show.project).forEach(function(item) {
+                    if(vm.show.project[item] && vm.form.project[item]) {
+                        data[item] = (typeof vm.form.project[item] === 'string') ? vm.form.project[item].trim() : vm.form.project[item];                        
+                    }
+                });
+            }            
+            return data;                
+        }
+
+        var showResult = function(response) {
+            if(response.data[0] === 0) {
+                showNoResult();
+                return;
+            }
+            hideMsg();
+            setPage(response.data[0], searchData.pagenum);            
+            if(searchType === 'Employee') {
+                vm.employees = response.data[1];
+            } else {
+                vm.projects = response.data[1];
+            }
+            vm.totalItem         = response.data[0];
+            vm.showEmployeeTable = (searchType === 'Employee');
+            vm.showProjectTable  = (searchType === 'Project');
+            vm.showSearchResult  = true;            
+        };
+
+        vm.checkForm = function() {
+            if(!isFormValid()) {
+                showInvalid();                
+            } else {
+                hideInvalid();
+            }
+        };
+
+        vm.changeType = function() {
+            showNoResult();
+            vm.resetFields();
+            setTimeout(function() {
+                $('select#dropbox-search-type').val(vm.searchType).trigger('change');
+            });
+            scope.$emit('setTitle', {text:"Search " + vm.searchType});
+            rootScope.searchType = vm.searchType;
+        };
+
+        var showInvalid = function() {
+            vm.showMsg2 = false; 
+            setTimeout(function() {
+                vm.showMsg2 = true; 
+                scope.$apply();
+            }, 0);
+        };
+
+        var hideInvalid = function() {
+            vm.showMsg2 = false;
+        }
+
+        var isFormValid = function() {              
+            var from     = vm.form.employee.expertise_level_from;
+            var to       = vm.form.employee.expertise_level_to;
+            var selected = vm.show.employee.expertise_level;
+            if(!selected || !from || !to ) {
+                return true;
+            }
+            return from <= to;
+        };        
+
+        vm.resetFields = function() {  
+            scrollTop();
+            hideInvalid();
+            Object.keys(vm.toolTip).forEach(function(item) {
+                vm.toolTip[item] = 'All';
+            });
+            if(vm.searchType === 'Employee') {                        
+                vm.form.employee            = {};
+                vm.form.employee.first_name = '';
+                vm.form.employee.last_name  = '';
+            } else {
+                vm.form.project              = {};
+                vm.form.project.project_name = '';
+            }
+            setTimeout(function() {
+                $("select.select-search, select.select-normal").val("").trigger('change');
+            },0);
+        };
+
+        var scrollTop = function() {
+            var element = document.getElementById('top-page');
+            smoothScroll(element, scrollOption);            
+        };
+
+        vm.changeType();
+
+        var searchInstance = function(text) {
+            var searchData = stringService.splitName(text);
+            vm.searchType = 'Employee';
+            vm.changeType();
+            vm.form.employee.first_name = searchData.first_name;
+            vm.instantSearch.first_name = searchData.first_name;
+            vm.form.employee.last_name  = searchData.last_name;
+            vm.instantSearch.last_name  = searchData.last_name;
+            vm.search(true);
+        }
+
+        if(scope.$parent.homeCtrl.isSearch) {
+            scope.$parent.homeCtrl.isSearch = false;            
+            searchInstance(scope.$parent.homeCtrl.searchText);
+        };
+
+        scope.$on('onSearch', function(event, obj) {            
+            searchInstance(obj.text);
+        });
+
+        scope.$on('changeSearch', function(event, obj) {
+            vm.searchType = obj.type;
+            vm.changeType();
+        });
+    }]);
+});

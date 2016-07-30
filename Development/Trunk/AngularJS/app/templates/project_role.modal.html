@@ -1,0 +1,38 @@
+<div class="tab-content">
+    <form name="proRoleForm">
+        <div class="modal-header">
+            <h3 class="modal-title">Add Role to Project</h3>
+        </div>
+        <div class="modal-body row">
+            <!-- Role Name -->
+            <div class="form-group">
+
+                <label class="control-label col-md-3 required" style="padding-top:5px;padding-left:20px;" for="country">Role Name</label>
+                <div class="col-md-6">
+                    <select class="form-control" name="roleName" ng-model="proRoleCrtl.role.roleName" required>
+                                <option value=""></option>
+                                <option ng-repeat="count in emp.country" value="{{count.name}}">{{count.name}}</option>
+                            </select>
+                    <!--Validate country/region-->
+                    <div class="has-error">
+                        <!--Show message required error-->
+                        <span class="help-block" ng-if="personalinfo.country.$dirty && personalinfo.country.$error.required">This is a required field.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body row">
+            <!-- Role Description -->
+            <div class="form-group">
+                <label class="control-label col-md-3 " style="padding-top:5px;padding-left:20px;" for="roleDescription">Role Description</label>
+                <div class="col-md-6">
+                    <textarea id="roleDescription" name="roleDescription" style="width:270px;" rows="5" ng-model="proRoleCrtl.role.roleDescription" placeholder="Role description." maxlength="1000"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="add();" ng-disabled="!isAdd">Add</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel();">Cancel</button>
+        </div>
+    </form>
+</div>

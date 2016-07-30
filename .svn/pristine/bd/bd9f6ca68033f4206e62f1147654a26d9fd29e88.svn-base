@@ -1,0 +1,38 @@
+{
+    "Employee": [""],
+    "Admin": [
+        "^get\/api\/employees\/linemanagers$",
+        "^get\/api\/admin\/[0-9]*$",
+        "^get\/api\/employees\/[0-9]*$",
+        "^put\/api\/employees\/[0-9]*\/personal_information\/[0-9]*$",
+        "^post\/api\/employees$",
+
+        "^get\/api\/employees\/[0-9]*\/educations$",
+        "^post\/api/employees\/[0-9]*\/educations$",
+        "^put\/api\/employees\/[0-9]*\/educations\/[0-9]*$",
+        "^delete\/api\/employees\/[0-9]*\/educations\/[0-9]*$",
+
+        "^get\/api\/employees\/[0-9]*\/courses$",
+        "^post\/api/employees\/[0-9]*\/courses$",
+        "^put\/api\/employees\/[0-9]*\/courses\/[0-9]*$",
+        "^delete\/api\/employees\/[0-9]*\/courses\/[0-9]*$",
+
+        "^get\/api\/employees\/[0-9]*\/employeehistories$",
+        "^post\/api/employees\/[0-9]*\/employeehistories$",
+        "^put\/api\/employees\/[0-9]*\/employeehistories\/[0-9]*$",
+        "^delete\/api\/employees\/[0-9]*\/employeehistories\/[0-9]*$",
+
+        "^get\/api\/employees\/[0-9]*\/additioninformation$",
+        "^put\/api\/employees\/[0-9]*\/additioninformation$",
+
+        "^get\/api\/misc\/employees\/departments$",
+        "^get\/api\/misc\/employees\/linemanagers$",
+        "^get\/api\/misc\/departments\/[0-9]*\/competence$",
+        "^get\/api\/misc\/departments\/[0-9]*\/employees\/count$",
+        "^get\/api\/misc\/competence\/[0-9]*\/job_title$",
+        "^get\/api\/misc\/employees\/check\/$"
+
+
+
+    ]
+}

@@ -1,0 +1,55 @@
+<div class="background-skill col-xs-12 row" ng-init="smchildCtrl.init()">
+    <div class="verified-status">
+        <button class="btn btn-sm btn-primary" ng-if="!smchildCtrl.skillmetric.status.issave">
+            <span class="glyphicon glyphicon-plus-sign"> </span>&nbspNew
+        </button>
+        <button class="btn btn-sm btn-warning" ng-show="!smchildCtrl.skillmetric.is_verified && smchildCtrl.skillmetric.status.issave">
+            <span class="glyphicon glyphicon-exclamation-sign"></span>&nbspUnverified
+        </button>
+        <button class="btn btn-sm btn-success" ng-show="smchildCtrl.skillmetric.is_verified">
+            <span class="glyphicon glyphicon-ok-circle"></span>&nbspVerified
+        </button>
+    </div>
+    <div class="col-xs-2 text-center">
+        <img ng-src="images/update-cv/technicalskill.png" />
+        <caption>
+            <h5 ng-bind="smchildCtrl.skillmetric.skill.name"></h5>
+        </caption>
+    </div>
+    <div class="col-xs-10">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="col-xs-2 lable-skillmetric" for="">Expertise</label>
+                <div class="col-xs-4">
+                    <ul class="rating">
+                        <li ng-repeat="rate in smchildCtrl.metadata_expertise track by rate.level" ng-click="smchildCtrl.rate(rate)">
+                            <a ng-class="rate.level > smchildCtrl.skillmetric.expertise.level ? '' :'hover'" ng-click="smchildCtrl.chooseExpertise(rate.level)">{{rate.level}}</a>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="col-xs-5">
+                    <label class="error lable-skillmetric" style="font-weight: 500" ng-show="!smchildCtrl.skillmetric.status.isexpertise && smchildCtrl.skillmetric.expertise.description.length==0 ">This field is required</label>
+                    <label class="lable-skillmetric " style="color: #337ab7; font-weight: 500 ">{{smchildCtrl.skillmetric.expertise.description}}</label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <label class="col-xs-2 lable-skillmetric " for=" ">Experience</label>
+                <div class="col-xs-3 ">
+                    <select class="form-control " ng-change="smchildCtrl.changeExperience(); " ng-model="smchildCtrl.skillmetric.experience_id " ng-options="entry.id as entry.description for entry in smchildCtrl.metadata_experience ">
+                        <option value=" ">Select</option>
+                    </select>
+                    <span class="error " ng-show="!smchildCtrl.skillmetric.status.isexperience ">This field is required</span>
+                </div>
+                <label class="col-xs-3 lable-skillmetric " for=" ">&nbsp &nbsp &nbsp &nbsp Last year used</label>
+                <div class="col-xs-2 ">
+                    <select class="form-control " ng-change="smchildCtrl.changeLastYearUsed(); " ng-model="smchildCtrl.skillmetric.last_year_used " ng-options="year for year in smchildCtrl.lastyearsused ">
+                        <option value=" ">Select</option>
+                    </select>
+                    <span class="error " ng-show="!smchildCtrl.skillmetric.status.islastyearused ">This field is required</span>
+                </div>
+                <a class="glyphicon glyphicon-trash col-xs-2 lable-skillmetric " ng-click="smchildCtrl.removeSkillMetric(); "><span class="font-arial">Remove</span></a>
+            </div>
+        </form>
+    </div>
+</div>

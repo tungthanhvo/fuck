@@ -1,0 +1,21 @@
+<form name="empHistoryForm">
+    <div class="modal-header">
+        <h3 class="modal-title">Add Employee History</h3>
+    </div>
+    <div class="modal-body row">
+        <select-year fromyear="employee_history.from_year" toyear="employee_history.to_year"></select-year>
+        <div class="form-group col-lg-12">
+            <label for="company_name" class="required">Company Name</label>
+            <input type="text" placeholder="Enter a company name" name="company_name" ng-model="employee_history.company_name" class="form-control" required maxlength="200" />
+            <span class="error" ng-show="empHistoryForm.company_name.$error.required && empHistoryForm.company_name.$dirty">This field is required.</span>
+        </div>
+        <div class="form-group col-lg-12">
+            <label for="position">Position</label>
+            <input type="text" placeholder="Enter your position" name="position" ng-model="employee_history.position" class="form-control" maxlength="100" />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="add();" ng-disabled="!isAdd">&thinsp;&thinsp;Add&thinsp;&thinsp;</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel();">Cancel</button>
+    </div>
+</form>

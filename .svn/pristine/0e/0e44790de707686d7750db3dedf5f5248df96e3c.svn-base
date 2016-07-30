@@ -1,0 +1,41 @@
+<br/>
+<!-- container -->
+<div class="container">
+
+    <div class="dropdown pull-right ">
+        <button ng-click="editProCtrl.switchMode()" type="button" class="btn btn-default ng-binding">
+            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit
+        </button>
+        <button class="btn btn-default dropdown-toggle" type="button">
+            <span class="glyphicon glyphicon-download-alt"></span> Export
+        </button>
+    </div>
+    <!-- nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#projectInfomationTab">Project Information</a></li>
+        <li ng-show="editProCtrl.disableAnotherTab" class="disabled"><a>Project Role</a></li>
+        <li ng-show="editProCtrl.disableAnotherTab" class="disabled"><a>Project Member</a>
+        </li>
+        <li ng-show="!editProCtrl.disableAnotherTab"><a data-toggle="tab" href="#projectRoleTab">Project Role</a></li>
+        <li ng-show="!editProCtrl.disableAnotherTab"><a data-toggle="tab" href="#projectMemberTab">Project Member</a>
+        </li>
+    </ul>
+    <div class="container ">
+    </div>
+    <!-- tab contents -->
+    <div class="tab-content">
+        <div id="projectInfomationTab" class="tab-pane fade in active">
+            <project-information></project-information>
+        </div>
+        <div id="projectRoleTab" class="tab-pane fade in">
+            <div>Under construction</div>
+            <project-role></project-role>
+        </div>
+        <div id="projectMemberTab" class="tab-pane fade in">
+            <div>Under construction</div>
+        </div>
+    </div>
+    <!-- /tab contents -->
+
+</div>
+<!-- /container -->

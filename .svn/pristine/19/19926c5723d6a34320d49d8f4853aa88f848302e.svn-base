@@ -1,0 +1,67 @@
+<!-- Project's Roles  tab -->
+<br/>
+<div ng-init="proRoleCtrl.init()">
+    <div class="button-text">
+        <button type="button" class="btn btn-primary" ng-click="proRoleCtrl.openAddRole()">Add Role</button>
+    </div>
+    <div class="col-xs-12">
+        <div ng-if="proRoleCtrl.currentRoles.length!==0">
+            <h4>Total Role(s): {{proRoleCtrl.currentRoles.length}}</h4>
+            <!-- table -->
+            <div class="row" ng-model="proRoleCtrl.currentRoles.length" ng-change="proRoleCtrl.init();">
+                <div id="page-controll">
+                    <div class="col-xs-3 label-total">
+                        <!--<h5>Total page(s): {{proRoleCtrl.pager.totalPages}}</h5>-->
+                    </div>
+                    <div class="col-xs-9">
+                        <ul class="pagination pagination-sm pull-right" id="search-pager">
+                            <li class="page-item" ng-class="{disabled: proRoleCtrl.pager.currentPage === 1}">
+                                <a class="page-link" ng-click="proRoleCtrl.seach(1)" ng-disabled="true">First</a>
+                            </li>
+                            <li class="page-item" ng-class="{disabled: proRoleCtrl.pager.currentPage == 1}">
+                                <a class="page-link" ng-click="proRoleCtrl.seach(proRoleCtrl.pager.currentPage-1)">Previous</a>
+                            </li>
+                            <li class="page-item" ng-repeat="page in proRoleCtrl.pager.pages" ng-class="{active:proRoleCtrl.pager.currentPage === page}">
+                                <a class="page-link" ng-click="proRoleCtrl.seach(page)">{{page}}</a>
+                            </li>
+                            <li class="page-item" ng-class="{disabled: proRoleCtrl.pager.currentPage === proRoleCtrl.pager.endPage}">
+                                <a class="page-link" ng-click="proRoleCtrl.seach(proRoleCtrl.pager.currentPage+1)">Next</a>
+                            </li>
+                            <li class="page-item" ng-class="{disabled: proRoleCtrl.pager.currentPage === proRoleCtrl.pager.endPage}">
+                                <a class="page-link" ng-click="proRoleCtrl.seach(proRoleCtrl.pager.endPage)">Last</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-xs-3">Role Name</th>
+                    <th class="col-xs-7">Role Desciption</th>
+                    <th class="col-xs-2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="currentRole in proRoleCtrl.currentRoles_shown | orderBy:'roleName'">
+                    <td class="col-xs-3"><a ng-click="proRoleCtrl.openEditRole(currentRole)">
+                {{currentRole.roleName}}</a></td>
+                    <td class="col-xs-7 word-wrap ">{{currentRole.roleDescription}}</td>
+                    <td class="col-xs-2">
+                        <button type="button" class="btn btn-danger" aria-hidden="true" ng-click="proRoleCtrl.deleteRole(currentRole)"><span class="glyphicon glyphicon-trash "></span></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-xs-3"></td>
+                    <td class="col-xs-7"></td>
+                    <td class="col-xs-2"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-if="proRoleCtrl.currentRoles.length===0" class="col-xs-12">
+           <p class="message-no-available">No Role available!</p>
+        </div>
+    </div>
+</div>
+<!-- /Project's Roles tab-->

@@ -1,0 +1,23 @@
+<form name="educationForm">
+    <div class="modal-header">
+        <h3 class="modal-title">Add Education</h3>
+    </div>
+    <div class="modal-body row">
+        <select-year fromyear="education.from_year" toyear="education.to_year"></select-year>
+        <div class="form-group col-lg-12">
+            <label for="university_college_name" class="required">University/College Name</label>
+            <input type="text" placeholder="Enter a university/college name" name="university_college_name" ng-model="education.university_college_name" class="form-control" required maxlength="255" />
+            <span class="error" ng-show="educationForm.university_college_name.$error.required && educationForm.university_college_name.$dirty">This field is required.</span>
+        </div>
+        <div class="form-group col-lg-12">
+            <label for="major" class="required">Major</label>
+            <input type="text" placeholder="Enter your major" name="major" ng-model="education.major" class="form-control" required maxlength="255" />
+            <span class="error" ng-show="(educationForm.major.$error.required&&educationForm.major.$dirty)
+            || educationForm.major.$error.pattern">This field is required.</span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="add();" ng-disabled="!isAdd">Add</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel();">Cancel</button>
+    </div>
+</form>

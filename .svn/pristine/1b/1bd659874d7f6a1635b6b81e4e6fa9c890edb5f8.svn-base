@@ -1,0 +1,317 @@
+var Sequelize = require('sequelize');
+module.exports = function(sequelize, DataTypes) {
+    //var emailRegex = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+    var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var user = sequelize.define('user', {
+        staff_code: {
+            type: DataTypes.STRING(20),
+            unique: true,
+            validate: {
+                fn: function(str) {
+                    str = str.trim();
+                    var dept_codes = ['BD', 'FA', 'HR', 'IT', 'MARKETING', 'SD'];
+                    var containDeptCode = false;
+                    if (isNaN(str.substring(str.length - 3))) throw new Error(`Invalid Staff Code ${str}: Id is not numeric`)
+                    for (var i = 0; i < dept_codes.length; i++) {
+                        if (str.indexOf(dept_codes[i]) == 0) {
+                            containDeptCode = true;
+                            break;
+                        }
+                    }
+                    if (!containDeptCode) throw new Error(`Invalid Staff Code ${str}: Does not begin with department code`);
+                }
+            },
+
+            // sequelize2.query('SELECT code FROM department', {
+            //     type: Sequelize.QueryTypes.SELECT
+            // }).then(function(data) {
+            //     console.log(data);
+            //     dept_codes = data;
+            //     var containDeptCode = false;
+            //     for (var i = 0; i < dept_codes.length; i++) {
+            //         if (str.indexOf(dept_codes[i].code) == 0) {
+            //             containDeptCode = true;
+            //             break;
+            //         }
+            //     }
+            //     if (!containDeptCode) throw new Error("Invalid Staff Code");
+            // }).catch(function(err) {
+            //     console.log(err);
+            //     throw new Error('Problem querying database');
+            // });
+
+            //}
+            //},
+            allowNull: false
+        },
+        first_name: {
+            type: DataTypes.STRING(100),
+            allowNull: false
+        },
+        last_name: {
+            type: DataTypes.STRING(100),
+            allowNull: false
+        },
+        dob: {
+            type: DataTypes.DATE,
+            validate: {
+                fn: function(dob) {
+                    var under_year = 1950;
+                    var datenow = new Date();
+                    var curr_year = datenow.getFullYear();
+                    if (dob.getFullYear() > curr_year || dob.getFullYear() < under_year) throw new Error("Year is unvalid.");
+                }
+
+            },
+            allowNull: false
+        },
+        gender: {
+            type: DataTypes.INTEGER,
+            validate: {
+                fn: function(val) {
+                    if (val != 0 && val != 1) {
+                        throw new Error("Invalid gender code (must be 0 or 1)");
+                    }
+                }
+            },
+            allowNull: false
+        },
+        married_status: {
+            type: DataTypes.INTEGER,
+            validate: {
+                fn: function(val) {
+                    if (val != 0 && val != 1) {
+                        throw new Error("Invalid marital status code (must be 0 or 1)");
+                    }
+                }
+            },
+            allowNull: false
+        },
+        address: {
+            type: DataTypes.STRING(1000),
+            allowNull: false
+        },
+        country_code: {
+            type: DataTypes.STRING(50),
+            validate: {
+                fn: function(countryCode) {
+                    countryCode = countryCode.trim();
+                    //TODO: fetch JSON
+                }
+            },
+            allowNull: false
+        },
+        nationality_code: {
+            type: DataTypes.STRING(50),
+            validate: {
+                fn: function(nationalityCode) {
+                    nationalityCode = nationalityCode.trim();
+                    //TODO: fetch JSON
+                }
+            },
+            allowNull: false
+        },
+        ext: {
+            type: DataTypes.TEXT
+        },
+        mobile: {
+            type: DataTypes.STRING(30),
+            validate: {
+                fn: function(num) {
+                    num = num.trim();
+                    if (num.length != 0 && !/^[0-9+() -]+$/.test(num)) {
+                        throw new Error("Invalid mobile phone format");
+                    }
+                }
+            },
+        },
+        personal_email: {
+            type: DataTypes.STRING(100),
+            validate: {
+                fn: function(email) {
+                    email = email.trim();
+                    if (email.length != 0 && !emailRegex.test(email)) {
+                        throw new Error("Invalid email format");
+                    }
+                }
+            }
+        },
+        yahoo_id: {
+            type: DataTypes.STRING(50),
+            validate: {
+                fn: function(yahoo_id) {
+                    yahoo_id = yahoo_id.trim();
+                    var yahooRegex = /^([a-zA-Z0-9_.+-])+\@yahoo.com$/;
+                    if (yahoo_id.length != 0 && !yahooRegex.test(yahoo_id)) {
+                        throw new Error("yahoo_id email format");
+                    }
+                }
+            }
+        },
+        personal_quote: {
+            type: DataTypes.STRING(1000),
+            validate: {
+                fn: function(str) {
+                    if (str.length > 1000) throw new Error("Max length 1000 characters.");
+                }
+            }
+        },
+        hobby: {
+            type: DataTypes.STRING(1000),
+            validate: {
+                fn: function(str) {
+                    if (str.length > 1000) throw new Error("Max length 1000 characters.");
+                }
+            }
+        },
+        personal_statement: {
+            type: DataTypes.STRING(1000),
+            validate: {
+                fn: function(str) {
+                    if (str.length > 1000) throw new Error("Max length 1000 characters.");
+                }
+            }
+        },
+        avatar: {
+            type: DataTypes.STRING(1000),
+            validate: {
+                fn: function(str) {
+                    if (str.length > 1000) throw new Error("Max length 1000 characters.");
+                }
+            }
+        },
+        nickname: {
+            type: DataTypes.STRING(50),
+            validate: {
+                fn: function(str) {
+                    if (str.length > 50) throw new Error("Max length 50 characters.");
+                }
+            }
+        },
+        username: {
+            type: DataTypes.STRING(50),
+            validate: {
+                fn: function(str) {
+                    if (str.length > 50) throw new Error("Max length 50 characters.");
+                    if (!str.length) throw new Error("username Min length 1 character.")
+                }
+            },
+            allowNull: false,
+            unique: true
+        },
+        hash_password: {
+            type: DataTypes.STRING(256),
+            validate: {
+                fn: function(str) {
+                    if (str.length > 256) throw new Error("Max length 256 characters.");
+                    if (!str.length) throw new Error("hash_password Min length 1 character.")
+                }
+            },
+            allowNull: false
+        },
+        company_email: {
+            type: DataTypes.STRING(100),
+            validate: {
+                fn: function(email) {
+                    email = email.trim();
+                    if (!emailRegex.test(email)) {
+                        throw new Error("Invalid email format");
+                    } else {
+                        // if (email.split('@')[1] !== 'harveynash.vn' || email.split('@')[1] !== 'nashtech.com'){
+                        //     throw new Error('Invalid email extension');
+                        // }
+                    }
+                    if (email.length > 100) throw new Error("Max length 100 characters.");
+                    if (!email.length) throw new Error("company_email Min length 1 character.")
+                }
+            },
+            allowNull: false,
+            unique: true
+        },
+        company_join_date: {
+            type: DataTypes.DATE,
+            // validate: {
+            //     fn: function (joindate) {
+            //         var under_year = 1950;
+            //         var datenow = new Date();
+            //         var curr_year = datenow.getFullYear();
+            //         var dob = this.getDataValue('dob').getTime();
+            //         if (joindate.getFullYear() > curr_year || joindate.getFullYear() < under_year) throw new Error("Year is invalid. Input year ${joindate.getFullYear()}. Current year: ${curr_year}");
+            //         if ((joindate.getTime() - dob) < 0) {
+            //             throw new Error("Company join date is lower than date of birth");
+            //         }
+            //     }
+            // },
+            allowNull: false
+        },
+        level: {
+            type: DataTypes.INTEGER(1),
+            allowNull: false
+        },
+        line_manager_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        is_activated: {
+            type: DataTypes.INTEGER(1),
+            allowNull: false,
+            defaultValue: 0
+        }
+    }, {
+        underscored: true,
+        freezeTableName: true,
+        classMethods: {
+            associate: function(models) {
+                user.hasMany(models.course, {
+                    foreignKey: {
+                        name: 'user_id',
+                        allowNull: false
+                    }
+                });
+                user.hasMany(models.skill_metric, {
+                    foreignKey: {
+                        name: 'user_id',
+                        allowNull: false
+                    }
+                });
+                user.hasMany(models.employee_history, {
+                    foreignKey: {
+                        name: 'user_id',
+                        allowNull: false
+                    }
+                });
+                user.hasMany(models.education, {
+                    foreignKey: {
+                        name: 'user_id',
+                        allowNull: true
+                    }
+                });
+                user.belongsTo(models.role, {
+                    foreignKey: {
+                        name: 'role_id',
+                        allowNull: false
+                    }
+                });
+                user.hasMany(models.project_user, {
+                    foreignKey: {
+                        name: 'user_id',
+                        allowNull: true
+                    }
+                });
+                user.hasMany(models.user_technical_skill, {
+                    foreignKey: {
+                        name: 'user_id',
+                        allowNull: false
+                    }
+                });
+                user.belongsTo(models.competence_job_title, {
+                    foreignKey: {
+                        name: 'competence_job_title_id',
+                        allowNull: false
+                    }
+                });
+            }
+        }
+    });
+    return user;
+};

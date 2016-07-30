@@ -1,0 +1,199 @@
+define(['./module'], function(controllers) {
+    'use strict';
+    controllers.controller('skillMetricController', ['$scope', '$http', '$routeParams', 'metadataService', '$uibModal', 'skillmetricsService', '$rootScope', 'toastr', function($scope, $http, $routeParams, metadataService, $uibModal, skillmetricsService, $rootScope, toastr) {
+        var self = this;
+        self.user_id = $scope.editEmpCtrl.user_id;
+
+        self.alerts = {
+            "unchoice": function() {
+                toastr.warning('Please select Skill Metric.', 'TMS');
+            },
+            "exist": function() {
+                toastr.warning('The Skill Metric is already exist.', 'TMS');
+            },
+            "delete": function() {
+                toastr.success('Skill Metric has been deleted.', 'TMS');
+            },
+            "save": function() {
+                toastr.success('Skill Metric has been saved.', 'TMS');
+            }
+        };
+
+        function callAlert(alert) {
+            self.alerts[alert]();
+        }
+
+        self.metadata_skillchildren = [];
+        self.metadata_expertise = [];
+        self.metadata_experience = [];
+        self.metadata_skillparents = [];
+        self.select2val = null;
+        self.skill_metrics = [];
+        self.copy_skill_metrics = [];
+        self.init = function() {
+            self.metadata_skillchildren = metadataService.skillMetric.skillChildren;
+            self.metadata_expertise = metadataService.skillMetric.expertise;
+            self.metadata_experience = metadataService.skillMetric.experience;
+            self.metadata_skillparents = metadataService.skillMetric.skillParents;
+            skillmetricsService.getDOB(self.user_id).then(function(res) {
+                $rootScope.year_dayofbirth = (new Date(res.data.data.dob)).getFullYear();
+                skillmetricsService.retrieveAllByUser_Id(self.user_id).then(function(res) {
+                    angular.forEach(res.data.data, function(value, index) {
+                        var temp = {
+                            id: value.id,
+                            last_year_used: value.last_year_used,
+                            experience_id: value.experience_id,
+                            is_verified: value.is_verified,
+                            expertise: self.metadata_expertise[value.expertise_id - 1],
+                            skill: {
+                                id: value.skill.id,
+                                name: value.skill.name,
+                                parent_id: self.metadata_skillparents[value.skill.parent_id - 1].name,
+                            },
+                            status: {
+                                issave: true,
+                                isexpertise: true,
+                                isexperience: true,
+                                islastyearused: true
+                            },
+                            user_id: value.user_id
+                        };
+                        self.skill_metrics.push(temp);
+                    });
+                    self.copy_skill_metrics = angular.copy(self.skill_metrics);
+                });
+            })
+        }
+
+        self.addSkillMetric = function() {
+            if (self.select2val == null) {
+                callAlert("unchoice");
+                return;
+            }
+            var isexist = false;
+            angular.forEach(self.skill_metrics, function(value, index) {
+                if (value.skill.id === self.select2val) {
+                    isexist = true;
+                    return;
+                }
+            });
+            if (!isexist) {
+                var first_id = self.metadata_skillchildren[0].id;
+                var adding_skill_metric = self.metadata_skillchildren[self.select2val - first_id];
+                var temp = {
+                    last_year_used: "",
+                    experience_id: "",
+                    is_verified: false,
+                    expertise: {
+                        id: 0,
+                        level: 0,
+                        description: ""
+                    },
+                    skill: {
+                        id: adding_skill_metric.id,
+                        name: adding_skill_metric.name,
+                        parent_id: adding_skill_metric.parent_id,
+                    },
+                    status: {
+                        issave: false,
+                        isexpertise: true,
+                        isexperience: true,
+                        islastyearused: true
+                    },
+                    user_id: self.user_id
+                };
+                self.skill_metrics.push(temp);
+            } else {
+                callAlert("exist");
+            }
+
+        }
+
+        self.save = function() {
+            var issave = true;
+            angular.forEach(self.skill_metrics, function(value, index) {
+                if (!angular.isNumber(value.last_year_used)) {
+                    value.status.islastyearused = false;
+                    issave = false;
+                } else {
+                    value.status.islastyearused = true;
+                }
+
+                if (!angular.isNumber(value.experience_id)) {
+                    value.status.isexperience = false;
+                    issave = false;
+                } else {
+                    value.status.isexperience = true;
+                }
+
+                if (value.expertise.level == 0) {
+                    value.status.isexpertise = false;
+                    issave = false;
+                } else {
+                    value.status.isexpertise = true;
+                }
+            });
+            if (issave) {
+                skillmetricsService.createandupdate(self.user_id, self.skill_metrics).then(function(res) {
+                    if (res.data.code == 200) {
+                        self.skill_metrics = [];
+                        angular.forEach(res.data.data, function(value, index) {
+                            var temp = {
+                                id: value.id,
+                                last_year_used: value.last_year_used,
+                                experience_id: value.experience_id,
+                                is_verified: value.is_verified,
+                                expertise: self.metadata_expertise[value.expertise_id - 1],
+                                skill: {
+                                    id: value.skill.id,
+                                    name: value.skill.name,
+                                    parent_id: self.metadata_skillparents[value.skill.parent_id - 1].name,
+                                },
+                                status: {
+                                    issave: true,
+                                    isexpertise: true,
+                                    isexperience: true,
+                                    islastyearused: true
+                                },
+                                user_id: value.user_id
+                            };
+                            self.skill_metrics.push(temp);
+                        });
+                        callAlert("save");
+                        self.copy_skill_metrics = angular.copy(self.skill_metrics);
+                    }
+                })
+            }
+        }
+        $rootScope.$on('deletingskillmetric', function(event, data) {
+            if (!data.data.status.issave) {
+                angular.forEach(self.skill_metrics, function(value, index) {
+                    if (value.id == data.data.id) {
+                        self.skill_metrics.splice(index, 1);
+                        callAlert("delete");
+                        return;
+                    }
+                });
+            } else {
+                skillmetricsService.delete(data.data).then(function(res) {
+                    if (res.data.code == 200) {
+                        angular.forEach(self.skill_metrics, function(value, index) {
+                            if (value.id == data.data.id) {
+                                self.skill_metrics.splice(index, 1);
+                                callAlert("delete");
+                                self.copy_skill_metrics.splice(index, 1);
+                                return;
+                            }
+                        });
+
+                    }
+
+                });
+            }
+        });
+
+        self.cancel = function() {
+            self.skill_metrics = angular.copy(self.copy_skill_metrics);
+        }
+    }]);
+});

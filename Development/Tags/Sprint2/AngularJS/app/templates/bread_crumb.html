@@ -1,0 +1,10 @@
+<!-- breadcrumbs -->
+<div class="container" id="breadcrumb">
+    <ol class="breadcrumb " ng-if="isLogin">
+        <li><a href="#/search">TMS</a></li>
+        <li ng-repeat="item in brcbCtrl.breads">{{ item | filter: titleCase }}</li>
+        <p ng-show="brcbCtrl.showTitle" class="word-wrap"> {{ brcbCtrl.title }} </p>
+    </ol>
+    <!--p ng-show="brcbCtrl.showTitle" class="word-wrap" ng-if="isLogin"> {{ brcbCtrl.title }} </p-->
+</div>
+<!-- /breadcrumbs -->

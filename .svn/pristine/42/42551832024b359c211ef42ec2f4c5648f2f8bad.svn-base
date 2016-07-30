@@ -1,0 +1,90 @@
+<!-- Project's Members  tab -->
+<br/>
+<div>
+    <div class="button-text">
+        <button type="button" class="btn btn-primary" ng-click="open()">Add Member</button>
+    </div>
+    <div class="col-xs-12">
+        <div ng-if="proMemberCtrl.members.length > 3">
+            <h4>Total Member(s): {{proMemberCtrl.members.length}}</h4>
+            <!-- table -->
+            <div class="row" ng-model="proMemberCtrl.members.length" ng-change="proMemberCtrl.init();">
+                <div id="page-controll">
+                    <div class="col-xs-3 label-total">
+                        <!--<h5>Total page(s): {{proMemberCtrl.pager.totalPages}}</h5>-->
+                    </div>
+                    <div class="col-xs-offset-2 col-xs-7">
+                        <ul class="pagination pagination-sm pull-right" id="search-pager">
+                            <li class="page-item" ng-class="{disabled: proMemberCtrl.pager.currentPage === 1}">
+                                <a class="page-link" ng-click="proMemberCtrl.seach(1)" ng-disabled="true">First</a>
+                            </li>
+                            <li class="page-item" ng-class="{disabled: proMemberCtrl.pager.currentPage == 1}">
+                                <a class="page-link" ng-click="proMemberCtrl.seach(proMemberCtrl.pager.currentPage-1)">Previous</a>
+                            </li>
+                            <li class="page-item" ng-repeat="page in proMemberCtrl.pager.pages" ng-class="{active:proMemberCtrl.pager.currentPage === page}">
+                                <a class="page-link" ng-click="proMemberCtrl.seach(page)">{{page}}</a>
+                            </li>
+                            <li class="page-item" ng-class="{disabled: proMemberCtrl.pager.currentPage === proMemberCtrl.pager.endPage}">
+                                <a class="page-link" ng-click="proMemberCtrl.seach(proMemberCtrl.pager.currentPage+1)">Next</a>
+                            </li>
+                            <li class="page-item" ng-class="{disabled: proMemberCtrl.pager.currentPage === proMemberCtrl.pager.endPage}">
+                                <a class="page-link" ng-click="proMemberCtrl.seach(proMemberCtrl.pager.endPage)">Last</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-xs-2">Full Name</th>
+                    <th class="col-xs-2">Joined Date</th>
+                    <th class="col-xs-2">Release Date</th>
+                    <th class="col-xs-2">Role Title</th>
+                    <th class="col-xs-2">Approval Status</th>
+                    <th class="col-xs-2">Approved/Rejected By</th>
+                    <th class="col-xs-2">Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="member in proMemberCtrl.currentMembers_shown | orderBy:'user.first_name' | filter:searchText" ng-if="member.project_role != null">
+                    <td class="col-xs-2"><a ng-click="openEdit(member)">{{member.user.first_name + ' ' + member.user.last_name + ' (' + member.user.username + ')'}}</a></td>
+                    <td class="col-xs-2">{{member.join_date | date:'dd-MMM-yyyy'}}</td>
+                    <td class="col-xs-2">{{member.release_date | date:'dd-MMM-yyyy'}}</td>
+                    <td class="col-xs-2">{{member.project_role.name}}</td>
+                    <td class="col-xs-2">
+                        <label ng-if="member.approval_status.name=='New'" class="label label-primary">
+                            {{member.approval_status.name}}
+                        </label>
+                        <label ng-if="member.approval_status.name=='Waiting for approval'" class="label label-warning">
+                            {{member.approval_status.name}}
+                        </label>
+                        <label ng-if="member.approval_status.name=='Reject'" class="label label-danger">
+                             {{member.approval_status.name}}      
+                        </label>
+                        <label ng-if="member.approval_status.name=='Approved'" class="label label-success">
+                             {{member.approval_status.name}}
+                         </label>
+                    </td>
+                    <td class="col-xs-2">{{member.approverInfo.first_name + member.approverInfo.last_name}}</td>
+                    <td style="text-align:center" class="col-xs-2"><input type="checkbox" ng-disabled="member.approval_status.name == 'Approved'" ng-model="member.is_delete" ng-checked="member.is_delete" ng-click="proMemberCtrl.updateRemoveList(member.id)"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td style="text-align:center"><button type="button" ng-if="proMemberCtrl.members.length" ng-click="proMemberCtrl.deleteMembers()"
+                            class="btn btn-danger" aria-hidden="true"><span class="glyphicon glyphicon-trash "></span></button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-if="proMemberCtrl.members.length<=0" class="col-xs-12">
+            <p class="message-no-available">No Member available!</p>
+        </div>
+    </div>
+</div>
+<!-- /Project's Members tab-->

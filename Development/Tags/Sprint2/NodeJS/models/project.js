@@ -1,0 +1,82 @@
+module.exports = function(sequelize, DataTypes) {
+    var project = sequelize.define('project', {
+        name: {
+            type: DataTypes.STRING(100),
+            allowNull: false
+        },
+        start_date: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        end_date: {
+            type: DataTypes.DATE,
+            allowNull: true
+        },
+        size: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        short_description: {
+            type: DataTypes.STRING(1000),
+            allowNull: false
+        },
+        long_description: {
+            type: DataTypes.STRING(4000),
+            allowNull: false
+        },
+        technology: {
+            type: DataTypes.STRING(4000),
+            allowNull: false
+        },
+        client_name: {
+            type: DataTypes.STRING(4000),
+            allowNull: false
+        },
+        is_included: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
+        },
+        client_description: {
+            type: DataTypes.STRING(4000),
+            allowNull: true
+        }
+    }, {
+        underscored: true,
+        freezeTableName: true,
+        classMethods: {
+            associate: function(models) {
+                project.hasMany(models.project_user, {
+                    foreignKey: {
+                        name: 'project_id',
+                        allowNull: false
+                    }
+                });
+                project.belongsTo(models.client_industry, {
+                    foreignKey: {
+                        name: 'client_industry_id',
+                        allowNull: true
+                    }
+                });
+                project.belongsTo(models.type, {
+                    foreignKey: {
+                        name: 'type_id',
+                        allowNull: false
+                    }
+                });
+                project.belongsTo(models.status, {
+                    foreignKey: {
+                        name: 'status_id',
+                        allowNull: false
+                    }
+                });
+                project.belongsTo(models.location, {
+                    foreignKey: {
+                        name: 'location_id',
+                        allowNull: true
+                    }
+                });
+            }
+        }
+    });
+    return project;
+};

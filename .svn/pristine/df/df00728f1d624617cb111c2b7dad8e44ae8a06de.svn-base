@@ -1,0 +1,288 @@
+define(['./module'], function (controllers) {
+    'use strict';
+    controllers.controller('projectRoleController', ['$route', '$scope', '$http', '$routeParams', 'NgTableParams', '$uibModal', 'projectService', 'toastr', 'pagingService',
+        function ProjectRoleController($route, $scope, $http, $routeParams, NgTableParams, $uibModal, projectService, toastr, pagingService) {
+            var _this = this;
+            _this.alerts = {
+                "update": function (name) {
+                    toastr.success(name + ' has been updated.', 'TMS');
+                },
+                "delete": function (name) {
+                    toastr.success(name + ' has been removed.', 'TMS');
+                },
+                "deleteFail": function (name) {
+                    toastr.warning(name + ' is not allowed to delete, you must unassign the member in charged first!', 'TMS')
+                },
+                "add": function (name) {
+                    toastr.success(name + ' has been added.', 'TMS');
+                }
+            };
+
+            function callAlert(alert, name) {
+                _this.alerts[alert](name);
+            }
+            _this.projectInfo = {};
+            _this.currentRoles = [];
+            _this.pager = {};
+            _this.currentRoles_shown = [];
+
+            _this.currentRole = {
+                projectId: parseInt($route.current.params.project_id, 10),
+                roleId: '',
+                roleName: '',
+                roleDescription: ''
+            };
+
+            _this.newRole = {
+                projectId: parseInt($route.current.params.project_id, 10),
+                roleId: '',
+                roleName: '',
+                roleDescription: ''
+            };
+            var setPage = function (totalItems, currPage, pageSize) {
+                if (currPage < 1 || currPage > totalItems) {
+                    return;
+                }
+                // get pager object from service
+                _this.pager = pagingService.GetPager(totalItems, currPage, pageSize);
+            };
+            _this.init = function () {
+                projectService.getProjectRoles($route.current.params.project_id).then(function (data) {
+                    console.log(data);
+                    
+                    if (data.data.rows !== undefined) {
+                        // filter data for our own purpose
+                        for (var i = 0; i < data.data.rows.length; i++) {
+                            var roleObj = {
+                                projectId: parseInt($route.current.params.project_id, 10),
+                                roleId: data.data.rows[i].id,
+                                roleName: data.data.rows[i].name,
+                                roleDescription: data.data.rows[i].project_users[0].description
+                            }
+                            if (data.data.rows[i].is_selected === false) {
+                                _this.currentRoles.push(roleObj);
+                            }
+                        }
+                    }
+                    setPage(_this.currentRoles.length, 1, 15);
+                    _this.currentRoles_shown = _this.currentRoles.slice(0, _this.pager.pageSize);
+
+                }, function (err) {
+
+                });
+            };
+            _this.seach = function (page) {
+                if (page < 1 || page > _this.pager.endPage) {
+                    return;
+                }
+                _this.pager.currentPage = page;
+                _this.currentRoles_shown = [];
+                _this.currentRoles_shown = _this.currentRoles.slice(_this.pager.pageSize * (page - 1), _this.pager.pageSize * (page - 1) + _this.pager.pageSize);
+            }
+            // delete a role
+            _this.deleteRole = function (curRole) {
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: 'templates/delete.html',
+                    controller: 'deleteController',
+                    backdrop: 'static',
+                    resolve: {
+                        content_modal: function () {
+                            return {
+                                section_title: 'Delete Role',
+                                msg: 'Are you sure you want to delete this role: ' + curRole.roleName + '?'
+                            };
+                        }
+                    }
+                });
+                modalInstance.result.then(function () {
+                    projectService.deleteRoleInProject(curRole).then(function (res) {
+                        if (res.data.existed) {
+                            callAlert("deleteFail", curRole.roleName);
+                        } else {
+                            _this.currentRoles = [];
+                            for (var i = 0; i < res.data.data.rows.length; i++) {
+                                var roleObj = {
+                                    projectId: res.data.data.rows[i].project_users[0].project_id,
+                                    roleId: res.data.data.rows[i].id,
+                                    roleName: res.data.data.rows[i].name,
+                                    roleDescription: res.data.data.rows[i].project_users[0].description
+                                }
+                                if (res.data.data.rows[i].is_selected === false) {
+                                    _this.currentRoles.push(roleObj);
+                                }
+                            }
+                            setPage(_this.currentRoles.length, 1, 15);
+                            _this.currentRoles_shown = _this.currentRoles.slice(0, _this.pager.pageSize);
+                            callAlert("delete", curRole.roleName);
+                        }
+                    });
+                },
+                    function () { });
+            };
+            // open pop up to add a new role to current project
+            _this.openAddRole = function (size) {
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: 'templates/project_role_add.modal.html',
+                    controller: 'ModalProjectAddRoleInstanceCtrl',
+                    controllerAs: 'modalAddRole',
+                    size: size,
+                    backdrop: 'static',
+                    resolve: {
+                        role: function () {
+                            return angular.copy(_this.newRole);
+                        }
+                    }
+                });
+                modalInstance.result.then(function (data) {
+                    projectService.createRoleInProject(data).then(function (res) {
+                        if (res.status === 200) {
+                            _this.currentRoles = [];
+                            for (var i = 0; i < res.data.data.rows.length; i++) {
+                                var roleObj = {
+                                    projectId: res.data.data.rows[i].project_users[0].project_id,
+                                    roleId: res.data.data.rows[i].id,
+                                    roleName: res.data.data.rows[i].name,
+                                    roleDescription: res.data.data.rows[i].project_users[0].description
+                                };
+                                if (res.data.data.rows[i].is_selected === false) {
+                                    _this.currentRoles.push(roleObj);
+                                }
+                            }
+                            setPage(_this.currentRoles.length, 1, 15);
+                            _this.currentRoles_shown = _this.currentRoles.slice(0, _this.pager.pageSize);
+                            callAlert("add", data.roleName);
+                        }
+                    });
+
+                },
+                    function () { });
+            };
+            // open edit pop up to edit a role (role description)
+            _this.openEditRole = function (curRole, size) {
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: 'templates/project_role_edit.modal.html',
+                    controller: 'ModalProjectEditRoleInstanceCtrl',
+                    controllerAs: 'modalEditRole',
+                    size: size,
+                    backdrop: 'static',
+                    resolve: {
+                        role: function () {
+                            return angular.copy(curRole);
+                        }
+                    }
+                });
+                modalInstance.result.then(function (data) {
+                    projectService.updateRoleInProject(data).then(function (res) {
+                        if (res.data.code === 200) {
+                            _this.currentRoles = [];
+                            for (var i = 0; i < res.data.data.rows.length; i++) {
+                                var roleObj = {
+                                    projectId: res.data.data.rows[i].project_users[0].project_id,
+                                    roleId: res.data.data.rows[i].id,
+                                    roleName: res.data.data.rows[i].name,
+                                    roleDescription: res.data.data.rows[i].project_users[0].description
+                                }
+                                if (res.data.data.rows[i].is_selected === false) {
+                                    _this.currentRoles.push(roleObj);
+                                }
+                            }
+                            setPage(_this.currentRoles.length, 1, 15);
+                            _this.currentRoles_shown = _this.currentRoles.slice(0, _this.pager.pageSize);
+                            callAlert("update", data.roleName);
+                        }
+                    });
+
+                },
+                    function (err) { });
+            };
+        }
+    ]);
+    // AddController to control the Add pop up
+    controllers.controller('ModalProjectAddRoleInstanceCtrl', ['$route', '$scope', '$routeParams', '$uibModalInstance', 'metadataService', 'projectService', 'role',
+        function ($route, $scope, $routeParams, $uibModalInstance, metadataService, projectService, role) {
+            $scope.role = role;
+            $scope.isAdd = false;
+            $scope.err = "";
+            $scope.selectedName = '';
+            $scope.metadata = metadataService.createProject;
+
+            $scope.checkProjectRoleExist = function () {
+                projectService.checkProjectRoleId(parseInt($route.current.params.project_id, 10), role.roleId).then(function (data) {
+                    if (data.data.existed) {
+                        $scope.err = " Already exists!";
+                        $scope.isAdd = false;
+                    } else {
+                        $scope.err = "";
+                        $scope.isAdd = true;
+                    }
+                });
+
+            }
+            $scope.projectInfo = {};
+            projectService.getProjectInfo($route.current.params.project_id).then(function (data) {
+                $scope.projectInfo = data.data.data;
+            }, function (err) { });
+            $scope.$watch('role', function (newValue, oldValue) {
+                if (newValue !== undefined &&
+                    newValue.roleId !== undefined &&
+                    newValue.roleId !== '' &&
+                    newValue.roleDescription !== undefined &&
+                    newValue !== oldValue
+                ) {
+                    $scope.isAdd = true;
+                } else {
+                    $scope.isAdd = false;
+                }
+            }, true);
+            $scope.checkProjectRole = function () {
+                projectService.checkProjectRole($routeParams.id, _thisAdd.roleId);
+            };
+
+            $scope.add = function () {
+                angular.forEach($scope.proAddRoleForm.$error.required, function (field) {
+                    field.$setDirty();
+                });
+                if ($scope.isAdd) {
+                    $uibModalInstance.close($scope.role);
+                }
+            };
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+        }
+    ]);
+    // EditController to control the Edit pop up
+    controllers.controller('ModalProjectEditRoleInstanceCtrl', ['$scope', '$uibModalInstance', 'metadataService', 'projectService', 'role',
+        function ($scope, $uibModalInstance, metadataService, projectService, role) {
+            $scope.role = role;
+            $scope.isEdit = false;
+            $scope.$watch('role', function (newValue, oldValue) {
+                if (newValue !== undefined &&
+                    newValue.roleId !== undefined &&
+                    newValue.roleName !== undefined &&
+                    newValue.roleDescription !== undefined &&
+                    newValue !== oldValue
+                ) {
+                    $scope.isEdit = true;
+                } else {
+                    $scope.isEdit = false;
+                }
+            }, true);
+
+            $scope.save = function () {
+                angular.forEach($scope.proEditRoleForm.$error.required, function (field) {
+                    field.$setDirty();
+                });
+                if ($scope.isEdit) {
+                    $uibModalInstance.close($scope.role);
+                }
+            };
+            $scope.cancel = function () {
+                $uibModalInstance.dismiss('cancel');
+            };
+        }
+    ]);
+});

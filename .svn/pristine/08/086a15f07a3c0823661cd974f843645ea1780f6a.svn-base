@@ -1,0 +1,85 @@
+<!-- recent assignments -->
+<h3>Recent Assignments</h3>
+<div class="row" ng-init="recentAssignmentCtrl.init()" ng-show="recentAssignmentCtrl.recent_assignments_shown.length">
+    <div class="col-xs-3">
+        <h4>Total Recent Assignment(s): {{recentAssignmentCtrl.pager.totalItems}}</h4>
+    </div>
+    <div class="col-xs-9" id="page-controll">
+        <ul class="pagination pagination-sm pull-right" id="search-pager">
+            <li class="page-item" ng-class="{disabled: recentAssignmentCtrl.pager.currentPage === 1}">
+                <a class="page-link" ng-click="recentAssignmentCtrl.seach(1)" ng-disabled="true">First</a>
+            </li>
+            <li class="page-item" ng-class="{disabled: recentAssignmentCtrl.pager.currentPage == 1}">
+                <a class="page-link" ng-click="recentAssignmentCtrl.seach(recentAssignmentCtrl.pager.currentPage-1)">Previous</a>
+            </li>
+            <li class="page-item" ng-repeat="page in recentAssignmentCtrl.pager.pages" ng-class="{active:recentAssignmentCtrl.pager.currentPage === page}">
+                <a class="page-link" ng-click="recentAssignmentCtrl.seach(page)">{{page}}</a>
+            </li>
+            <li class="page-item" ng-class="{disabled: recentAssignmentCtrl.pager.currentPage === recentAssignmentCtrl.pager.endPage}">
+                <a class="page-link" ng-click="recentAssignmentCtrl.seach(recentAssignmentCtrl.pager.currentPage+1)">Next</a>
+            </li>
+            <li class="page-item" ng-class="{disabled: recentAssignmentCtrl.pager.currentPage === recentAssignmentCtrl.pager.endPage}">
+                <a class="page-link" ng-click="recentAssignmentCtrl.seach(recentAssignmentCtrl.pager.endPage)">Last</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<table class="table">
+    <colgroup>
+        <col width="20% " />
+        <col width="20% " />
+        <col width="10% " />
+        <col width="15% " />
+        <col width="15% " />
+        <col width="10% " />
+        <col width="10% " />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>Project Name</th>
+            <th>Duration</th>
+            <th>Size (days)</th>
+            <th>Role Title</th>
+            <th>Approval Status</th>
+            <th>Approver</th>
+            <th>Included In CV</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="text-center" ng-show="!recentAssignmentCtrl.recent_assignments_shown.length">
+            <td colspan="7">
+                No Recent Assignment available!
+            </td>
+        </tr>
+        <tr ng-repeat="recent_assignment in recentAssignmentCtrl.recent_assignments_shown | orderBy: 'name'" ng-show="recentAssignmentCtrl.recent_assignments_shown.length">
+            <td class="word-wrap"><a ng-click="recentAssignmentCtrl.openDetail(recent_assignment)">{{recent_assignment.project.name}}</a></td>
+            <td>
+
+                <span>{{ recent_assignment.project.start_date | date:"dd-MMM-yyyy"}}</span>
+                <span ng-if="recent_assignment.project.end_date"> - {{ recent_assignment.project.end_date | date:"dd-MMM-yyyy"}}</span>
+                <span ng-if="!recent_assignment.project.end_date"> - Current</span>
+            </td>
+            <td>{{recent_assignment.project.size}}</td>
+            <td>{{recent_assignment.project_role.name}}</td>
+            <td>
+                <span class="label label-primary" ng-show="recent_assignment.approval_status.id ===1">{{
+                    recent_assignment.approval_status.name
+                    }}</span>
+                <span class="label label-warning" ng-show="recent_assignment.approval_status.id ===2">{{
+                    recent_assignment.approval_status.name
+                    }}</span>
+                <span class="label label-danger" ng-show="recent_assignment.approval_status.id === 3">{{
+                    recent_assignment.approval_status.name
+                    }}</span>
+                <span class="label label-success" ng-show="recent_assignment.approval_status.id === 4">{{
+                    recent_assignment.approval_status.name
+                    }}</span>
+
+            </td>
+            <td>{{recent_assignment.user.first_name + " " + recent_assignment.user.last_name}}</td>
+            <td class="text-center"><input type="checkbox" ng-checked="recent_assignment.is_included" ng-model="recent_assignment.is_included" ng-click="recentAssignmentCtrl.checkExportInCV(recent_assignment)" ng-disabled="recent_assignment.approval_status.id !== 4" />
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- /recent assignments -->

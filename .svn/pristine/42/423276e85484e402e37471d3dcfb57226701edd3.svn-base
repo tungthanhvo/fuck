@@ -1,0 +1,430 @@
+var express = require('express');
+var project_router = express.Router();
+var project_service = require('../services/projects');
+var project_export_service = require('../services/project_export_service');
+var project_member_service = require('../services/project_member');
+var moment = require('moment');
+var pdf = require('../help/pdf_helper');
+var fs = require('fs');
+var path = require('path');
+var project = {};
+project_router.get('/:project_id', function (req, res, next) {
+    var get_project_service = new project_service();
+    get_project_service.retrieve(req.params.project_id,
+        function (data) {
+            data.dataValues.project_users.forEach(function (value) {
+                if (value.project_role_id === 1) {
+                    data.dataValues.program_manager = value;
+                } else {
+                    if (value.project_role_id === 13) {
+                        data.dataValues.project_manager = value;
+                    } else {
+                        if (value.project_role_id === 2) {
+                            data.dataValues.engagement_manager = value;
+                        }
+                    }
+                }
+
+            });
+            res.status(200).json({
+                code: 200,
+                message: 'Get a project info successfully',
+                data: data
+            }).end();
+        },
+        function (err) {
+            res.status(200).json({
+                code: 404,
+                message: 'Failed get a project info',
+                data: err
+            }).end();
+        });
+});
+
+
+project_router.post('/', function (req, res, next) {
+    var project = req.body;
+    if (!Boolean(project.enddate)) {
+        project.enddate = null;
+    }
+    if (!Boolean(project.clientindustry)) {
+        project.clientindustry = null;
+    }
+    var project_instance = new project_service();
+    project_instance.create(project, function (suc, project_id) {
+        res.status(201).send({
+            data: project_id,
+            message: 'Project has been created'
+        });
+    }, function (err, project_id) {
+        res.status(400).send(project_id);
+    });
+});
+
+project_router.put('/:project_id', function (req, res, next) {
+    var update_project_service = new project_service();
+    update_project_service.update(req.body, function (data) {
+        res.status(200).json({
+            code: 200,
+            message: 'Update a project info successfully',
+            data: data
+        }).end();
+    }, function (err) {
+        res.status(200).json({
+            code: 404,
+            message: 'Failed Update a project info',
+            data: err
+        }).end();
+    });
+});
+
+project_router.delete('/:project_id', function (req, res, next) {
+    var delete_project_service = new project_service();
+    delete_project_service.delete(req.params.project_id, function (flat, data) {
+        if (flat) {
+            res.status(200).json({
+                code: 200,
+                message: 'Delete a project info successfully',
+                data: data
+            }).end();
+        } else {
+            res.status(200).json({
+                code: 404,
+                message: 'Fail Delete a project info',
+                data: data
+            }).end();
+        }
+    });
+});
+
+project_router.get('/checkProject/:name', function (req, res, next) {
+    var project_instance = new project_service();
+    project_instance.checkExistProjectName(req.params.name, function (data) {
+        if (data) {
+            res.status(200).json({
+                existed: true
+            });
+        } else {
+            res.status(200).json({
+                existed: false
+            });
+        }
+    }, function (err) {
+        res.status(500).send(err);
+    });
+});
+
+project_router.get('/client-industry/:id', function (req, res, next) {
+    var service = new project_service();
+    var id = req.params.id;
+    service.getClientIndustry(id, req, res);
+});
+
+project_router.get('/project-location/:id', function (req, res, next) {
+    var service = new project_service();
+    var id = req.params.id;
+    service.getProjectLocation(id, req, res);
+});
+
+project_router.get('/project-status/:id', function (req, res, next) {
+    var service = new project_service();
+    var id = req.params.id;
+    service.getProjectStatus(id, req, res);
+});
+
+project_router.get('/project-type/:id', function (req, res, next) {
+    var service = new project_service();
+    var id = req.params.id;
+    service.getProjectType(id, req, res);
+});
+
+project_router.get('/export/:id', function (req, res, next) {
+    var export_instance = new project_export_service();
+    export_instance.getProjectInfo(req.params.id, function (data) {
+        data.dataValues.start_date = moment(data.dataValues.start_date).format('MMMM Do YYYY');
+        data.dataValues.end_date = moment(data.dataValues.end_date).format('MMMM Do YYYY');
+
+        //res.status(200).send(data);
+        project.projectInfo = data;
+        //res.json(project);
+        res.render('project', project);
+    });
+});
+
+project_router.get('/export/:id/pdf', function (req, res, next) {
+    var cookie = req.cookie;
+    var source = req.headers.host + '/apii/projects/export/' + req.params.id;
+    var destination = path.join(__dirname + '/../tmp/', new Date().getTime() + '.pdf'); /* Declare temporarily save folder. */
+    var options = {
+        source: source,
+        destination: destination,
+        cookie: cookie
+    }
+
+    var connected = true; // keep track of user connection.
+    req.on("close", function () { /* Fire when user disconnect (normally or force). */
+        connected = false;
+    });
+    var project_service_instance = new project_service();
+    project_service_instance.retrieve(req.params.id, function (data) {
+        pdf.savePDFfromHTML('http://' + source, destination, options, function (code, file) {
+            if (code === 0) { /* Convert HTML 2 PDF and save to disk successfully. */
+                if (connected) { /* If user still connected. */
+                    //res.header('content-type', 'application/pdf'); /* Set header so browser can display it as pdf.*/
+                    res.setHeader('Content-disposition', 'attachment; filename=' + data.name + '.pdf');
+                    var stream = fs.createReadStream(file); // Create stream for user to download.
+                    stream.on('error', function () { /*Something wrong when streaming.*/
+
+                    });
+                    stream.on('close', function () { /* User success to download. */
+
+                    });
+                    stream.pipe(res);
+                } else { /* If user disconnected when the file is being converted. */ }
+            } else { // Something wrong with HTML 2 PDF convert process.
+                res.render('error', {
+                    Title: "Maintenance",
+                    Code: "500",
+                    Content: "Sorry the download feature is under maintenance<br/ > please try again later. "
+                }); // Return maintenance page.
+            }
+        });
+    }, function (err) {
+    });
+});
+
+project_router.put('/:project_id/role/:role_id', function (req, res, next) {
+    var update_project_service = new project_service();
+    update_project_service.updateRole(req.body, function (data) {
+        update_project_service.loadRole(req.params.project_id).then(function (result) {
+            res.status(200).json({
+                code: 200,
+                message: 'Update a project role successfully',
+                data: result
+            }).end();
+        });
+    }, function (err) {
+        res.status(200).json({
+            code: 404,
+            message: 'Failed Update a project role',
+            data: err
+        }).end();
+    });
+});
+
+project_router.post('/:project_id/role', function (req, res, next) {
+    var project_role = req.body;
+    var project_instance = new project_service();
+    project_instance.createRole(project_role, function (suc, project_id) {
+        project_instance.loadRole(req.params.project_id).then(function (result) {
+            res.status(200).send({
+                data: result,
+                message: 'Project role has been created'
+            });
+        });
+    }, function (err, project_id) {
+        res.status(400).send(project_id);
+    });
+});
+
+project_router.get('/:project_id/checkProjectRole/role/:id', function (req, res, next) {
+    var project_instance = new project_service();
+    project_instance.checkExistProjectRole(req.params.project_id, req.params.id).then(function (data) {
+        if (data.rows.length > 0) {
+            res.status(200).json({
+                existed: true
+            });
+        } else {
+            res.status(200).json({
+                existed: false
+            });
+        }
+    }).catch(
+        function (err) {
+            res.status(500).send(err);
+        });
+});
+
+project_router.delete('/:project_id/role', function (req, res) {
+    var delete_role = new project_service();
+    var checkDeletable = false;
+    delete_role.checkRoleDeletable(req.params.project_id).then(function (result) {
+        for (var i = 0; i < result.rows.length; i++) {
+            if (result.rows[i].project_role_id === parseInt(req.query.role_id)) {
+                checkDeletable = true;
+                break;
+            }
+        }
+        if (checkDeletable === true) {
+            res.status(200).json({
+                existed: true
+            });
+        } else {
+            delete_role.deleteRole(req.params.project_id, req.query.role_id).then(function (result2) {
+                delete_role.loadRole(req.params.project_id).then(function (result3) {
+                    res.status(200).send({
+                        a: req.params.project_id,
+                        data: result3,
+                        message: 'Project role has been deleted'
+                    });
+                });
+
+            });
+        }
+    });
+});
+project_router.get('/:project_id/getAvailableMembers', function (req, res, next) {
+    var member_instance = new project_member_service();
+    member_instance.getAvailableMembers(req.params.project_id, function (data) {
+        res.json(data);
+    }, function (err) {
+        res.json(err);
+    });
+});
+
+project_router.get('/:project_id/getAvailableRoles', function (req, res, next) {
+    var member_instance = new project_member_service();
+    member_instance.getAvailableRoles(req.params.project_id, function (data) {
+        res.json(data);
+    }, function (err) {
+        res.json(err);
+    });
+});
+
+project_router.post('/:project_id/members', function (req, res, next) {
+    var member_instance = new project_member_service();
+    req.body.project_id = req.params.project_id;
+    member_instance.addMemberToProject(req.body, function () {
+        res.status(200).json({
+            message: 'Member has been added to project'
+        });
+    }, function (err) {
+        res.status(401).json({
+            message: 'There was an error when trying to add this member to project'
+        });
+    })
+});
+
+project_router.put('/:project_id/members', function (req, res, next) {
+    var member_instance = new project_member_service();
+    (req.body.releasedate === '' || req.body.releasedate === null) ? req.body.releasedate = null : req.body.releasedate = req.body.releasedate;
+    req.body.project_id = req.params.project_id;
+    member_instance.updateMemberOfProject(req.body, function () {
+        res.status(200).json({
+            message: 'Member has been updated to project'
+        });
+    }, function (err) {
+        res.status(401).json({
+            message: 'There was an error when trying to update this member information'
+        });
+    });
+});
+
+project_router.delete('/:project_id/members', function (req, res, next) {
+    var member_instance = new project_member_service();
+    req.body.project_id = req.params.project_id;
+    member_instance.deleteMemberOfProject(req.query, function () {
+        res.status(200).json({
+            message: 'Members has been deleted'
+        });
+    }, function () {
+        res.status(401).json({
+            message: 'There was an error when trying to delete this member from project'
+        });
+    });
+});
+
+project_router.get('/:project_id/members/', function (req, res, next) {
+    var member_instance = new project_member_service();
+    member_instance.getAllMemberInProject(req.params.project_id, function (data) {
+        res.status(200).json({
+            data: data
+        });
+    });
+});
+
+project_router.get('/:project_id/roles', function (req, res, next) {
+    var member_instance = new project_service();
+    member_instance.loadRole(req.params.project_id).then(function (result) {
+        res.json(result);
+    });
+});
+
+project_router.get('/:project_id/getrolepm', function (req, res, next) {
+    var employee = new project_member_service();
+    employee.loadPm().then(function (result) {
+        employee.getMemberOfProject(req.params.project_id).then(function (result2) {
+            console.log('aaaaaaaaaaaaaa');
+            var data = [];
+            for (var i = 0; i < result.rows.length; i++) {
+                for (var j = 0; j < result2.rows.length; j++) {
+                    if (result.rows[i].id === result2.rows[j].id && result2.rows[j].project_users[0].project_role_id !== 13 ) {                        
+                        result.rows[i].toS = true;
+                    }
+                }
+            }
+            for (i = 0; i < result.rows.length; i++) {
+                if (!result.rows[i].toS) {
+                    data.push(result.rows[i]);
+                }
+            }
+            res.json({
+                code: 200,
+                data: data
+            });
+        });
+    });
+});
+
+project_router.get('/:project_id/getrolesm', function (req, res, next) {
+    var employee = new project_member_service();
+    employee.loadSm().then(function (result) {
+        employee.getMemberOfProject(req.params.project_id).then(function (result2) {
+            var data = [];
+            for (var i = 0; i < result.rows.length; i++) {
+                for (var j = 0; j < result2.rows.length; j++) {
+                    if (result.rows[i].id === result2.rows[j].id && result2.rows[j].project_users[0].project_role_id !== 1 && result2.rows[j].project_users[0].project_role_id !== 2) {
+                        result.rows[i].toS = true;
+                    }
+                }
+            }
+            for (i = 0; i < result.rows.length; i++) {
+                if (!result.rows[i].toS) {
+                    data.push(result.rows[i]);
+                }
+            }
+            res.json({
+                code: 200,
+                data: data
+            });
+        });
+    });
+});
+
+project_router.get('/:project_id/membersinproject', function (req, res, next) {
+    var member_instance = new project_member_service();
+    member_instance.getAllMember().then(function (result) {
+        member_instance.getMemberOfProject(req.params.project_id).then(function (result3) {
+            var userArray = [];
+            for (var i = 0; i < result.rows.length; i++) {
+                for (var j = 0; j < result3.rows.length; j++) {
+                    if (result.rows[i].id === result3.rows[j].id) {
+                        result.rows[i].toS = true;
+                    }
+                }
+            }
+            for (i = 0; i < result.rows.length; i++) {
+                if (!result.rows[i].toS) {
+                    userArray.push(result.rows[i]);
+                }
+            }
+            res.json({
+                total: userArray.length,
+                userArray: userArray
+            });
+        });
+    });
+});
+
+
+module.exports = project_router;

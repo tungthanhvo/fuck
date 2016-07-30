@@ -1,0 +1,76 @@
+ <div class="modal-header">
+    <h3 class="modal-title">Edit Member To Project</h3>
+</div>
+<div class="modal-body">
+    <form class="form-horizontal" name="editMemberProject" novalidate>
+        <div class="form-group">
+            <label class="control-label col-xs-4 required" for="fullname">Full Name</label>
+            <label class="control-label col-xs-4" style="text-align:left">{{editMember.member.user.first_name + ' ' + editMember.member.user.last_name + ' (' + editMember.member.user.username + ')'}}</label>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-4 required" for="joineddate">Joined Date</label>
+            <div class="col-xs-6">
+                <p class="input-group">
+                    <input id="join" name="joindate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="editMember.dt"  is-open="editMember.popup1.opened" datepicker-options="editMember.dateOptions1" ng-required="true" close-text="Close" show-button-bar="false" ng-change="editMember.checkJoinDate()"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="editMember.open1()" id="joinBtn"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                    <div class="error">
+                        <!--Show message error-->
+                        <span class="error" ng-if="editMemberProject.joindate.$dirty && editMemberProject.joindate.$error.required">This field is required.</span>
+                        <span class="error" ng-if="!editMember.check2Date">Join date must be less than release date</span>
+                        <span class="error" ng-if="!editMember.checkJoinDateWithProjectStartDate">Join date must be greater than or equal project start date</span>
+                        <span class="error" ng-if="!editMember.checkDate">Join date must be greater than or equal company join date</span>
+                        <span class="error" ng-if="!editMember.checkjoinDateWithEndDate">Join date must be less than project end date</span>
+                    </div>
+                </p>
+                
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-xs-4" for="releasedate">Release Date</label>
+            <div class="col-xs-6">
+                <p class="input-group">
+                    <input id="release" name="releasedate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="editMember.releasedate" is-open="editMember.popup2.opened" datepicker-options="editMember.dateOptions2" close-text="Close" ng-change="editMember.checkJoinDate()"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="editMember.open2()" id="releaseBtn"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                     <div class="error">
+                        <span ng-if="!editMember.checkReleaseDateWithEndDate">Release date must be less than or equal project end date</span>
+                    </div>
+                </p>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label col-xs-4 required" for="roletitle">Role Title</label>
+            <label class="control-label col-xs-4" style="text-align:left">{{editMember.member.project_role.name}}</label>       
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-disabled="!editMemberProject.$dirty" ng-click="editMember.save()">Save</button>
+    <button class="btn btn-warning" type="button" ng-click="editMember.cancel()">Cancel</button>
+</div>
+
+<script>
+    $('#join').focus(function(e) {
+        $('#join').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#join').click(function(e){
+        $('#joinBtn').click();
+    });
+     $('#release').focus(function(e) {
+        $('#release').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#release').click(function(e){
+        $('#releaseBtn').click();
+    });
+</script>

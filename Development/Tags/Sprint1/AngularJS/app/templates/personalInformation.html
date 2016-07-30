@@ -1,0 +1,328 @@
+<!-- persionalInformation collapse - view mode -->
+<div class="panel-group" ng-show="editEmpCtrl.isViewMode">
+    <div class="panel panel-default">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="images/noimage.png" width="50px" height="50px"/>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="header-title" data-toggle="collapse" href="#persionalInfoView">
+                            Personal
+                            Information
+                        </div>
+                    </div>
+                </div>
+
+            </h4>
+        </div>
+        <div id="persionalInfoView" class="panel-collapse collapse">
+
+            <!-- personal deatils  -->
+            <br/>
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-4">
+                    <div class="fisrt-color">Last Name</div>
+                    <div class="second-color">{{perInfoCtrl.userInfo.first_name}}</div>
+                </div>
+                <div class="col-md-4">
+                    <div class="fisrt-color">First Name</div>
+                    <div class="second-color">{{perInfoCtrl.userInfo.last_name}}</div>
+                </div>
+            </div>
+
+            </br/>
+
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-4">
+                    <div class="fisrt-color">Nick name</div>
+                    <div class="second-color">{{perInfoCtrl.userInfo.nickname}}</div>
+                </div>
+                <div class="col-md-5">
+                    <div class="fisrt-color">Status</div>
+                    <div ng-if="perInfoCtrl.userInfo.married_status == '1'" class="second-color">Married</div>
+                    <div ng-if="perInfoCtrl.userInfo.married_status == '0'" class="second-color">Single</div>
+                </div>
+            </div>
+
+            </br/>
+
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-4">
+                    <div class="fisrt-color">Gender</div>
+                    <img ng-if="perInfoCtrl.userInfo.gender == '1'" class="second-color" ng-src="images/male.png" width="30px" height="30px" />
+                    <img ng-if="perInfoCtrl.userInfo.gender == '0'" class="second-color" ng-src="images/female.png" width="30px" height="30px" />
+                </div>
+                <div class="col-md-5">
+                    <div class="fisrt-color">Date of Birth</div>
+                    <div class="second-color">{{perInfoCtrl.userInfo.dob |date: "fullDate" }}</div>
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-4">
+                    <div class="fisrt-color">Country|Region</div>
+                    <div class="second-color">{{perInfoCtrl.userInfo.country_code}}</div>
+                </div>
+                <div class="col-md-5">
+                    <div class="fisrt-color">Nationality</div>
+                    <div class="second-color">{{perInfoCtrl.userInfo.nationality_code}}</div>
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-4">
+                    <div class="fisrt-color">Address</div>
+                    <div class="second-color">{{perInfoCtrl.userInfo.address}}</div>
+                </div>
+                <div class="col-md-5">
+                    <div class="fisrt-color">Mobile</div>
+                    <div class="second-color">{{perInfoCtrl.userInfo.mobile}}</div>
+                </div>
+            </div>
+
+            <br/>
+
+            <div class="row">
+                <div class="col-md-3">
+
+                </div>
+                <div class="col-md-4">
+                    <div class="fisrt-color">Personal Email</div>
+                    <div class="second-color">{{perInfoCtrl.userInfo.personal_email}}</div>
+                </div>
+                <div class="col-md-5">
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    <input type="button" class="form-control btn-danger" id="personalInfoViewClose" value="Close" data-toggle="collapse" href="#persionalInfoView" />
+                </div>
+            </div>
+
+            <!-- /personal details -->
+
+        </div>
+    </div>
+</div>
+<!-- /persionalInformation collapse - view mode -->
+
+<!-- persionalInformation collapse - edit mode -->
+<div class="panel-group" ng-hide="editEmpCtrl.isViewMode">
+    <div class="row">
+        <div class="col-md-2">
+            <img src="images/noimage.png" width="50px" height="50px" />
+        </div>
+        <div class="col-md-10 header-title">
+            <label>Personal Information</label>
+        </div>
+
+    </div>
+
+    <br/>
+    <div class="panel panel-default border-edit">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row" data-toggle="collapse" href="#persionalInfoEdit">
+                    <p class="common-edit">+ Edit Personal Information</p>
+                </div>
+            </h4>
+        </div>
+        <!-- ng-submit="perInfoCtrl.personalInfoSubmit()" -->
+        <form name="personalInfoForm" ng-submit="perInfoCtrl.personalInfoSubmit()">
+            <div id="persionalInfoEdit" class="panel-collapse collapse">
+
+                <!-- personal deatils  -->
+                <br/>
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fisrt-color label-align-left">Last Name</div>
+                        <input class="form-control second-color" type="text" name="lastName" ng-model="perInfoCtrl.lastName" size="15" minlength="1" maxlength="100" required/>
+                        <div class="errorMsg" ng-show="personalInfoForm.lastName.$touched && personalInfoForm.lastName.$error.required">
+                            This field is required.
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fisrt-color label-align-left">First Name</div>
+                        <input class="form-control second-color" type="text" name="firstName" ng-model="perInfoCtrl.firstName" size="15" minlength="1" maxlength="100" required/>
+                        <div class="errorMsg" ng-show="personalInfoForm.firstName.$touched && personalInfoForm.firstName.$error.required">
+                            This field is required.
+                        </div>
+                    </div>
+                </div>
+
+                </br/>
+
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fisrt-color label-align-left">Nick name</div>
+                        <input class="form-control second-color" type="text" ng-model="perInfoCtrl.nickName" size="15" />
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fisrt-color label-align-left">Status</div>
+                        <select class="form-control" name="status" ng-model="perInfoCtrl.status" ng-change="perInfoCtrl.statusChange()">
+                            <option ng-repeat="item in [{id: -1 , value: 'Select'},{id: 0 , value: 'Single'},{id: 1 , value: 'Married'}]" value="{{item.id}}" label="{{item.value}}">
+
+                            </option>
+                        </select>
+                        <div class="errorMsg" ng-hide="perInfoCtrl.isMarialSelected">
+                            This field is required.
+                        </div>
+                    </div>
+                </div>
+
+                </br/>
+
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="label-align-left">
+                            <div class="fisrt-color">Gender</div>
+                            <input type="radio" name="gender" value="1" ng-model="perInfoCtrl.gender"> Male<br>
+                            <input type="radio" name="gender" value="0" ng-model="perInfoCtrl.gender"> Female<br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fisrt-color label-align-left">Date of Birth</div>
+                        <input class="form-control" ng-model="perInfoCtrl.dob " type="date" size="15" />
+                        <div class="errorMsg" ng-hide="perInfoCtrl.isValidDOB">
+                            This field is required.
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fisrt-color label-align-left">Country|Region {{perInfoCtrl.country}} </div>
+                        <select class="form-control" name="country" ng-model="perInfoCtrl.country" ng-change="perInfoCtrl.countryChange()">
+                            <option ng-repeat="(key, value) in editEmpCtrl.countries"
+                                    value="{{value.name}}">{{value.name}}
+                            </option>
+                        </select>
+                        <div class="errorMsg" ng-hide="perInfoCtrl.isCountrySelected">
+                            This field is required.
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fisrt-color label-align-left">Nationality {{perInfoCtrl.nationality}}</div>
+                        <select class="form-control" name="nationality" ng-model="perInfoCtrl.nationality" ng-change="perInfoCtrl.nationalityChange()">
+                            <option ng-repeat="(key, value) in editEmpCtrl.nationality"
+                                    value="{{value.name}}">{{value.name}}
+                            </option>
+                        </select>
+                        <div class="errorMsg" ng-hide="perInfoCtrl.isNationalitySelected">
+                            This field is required.
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fisrt-color label-align-left">Address</div>
+                        <textarea class="form-control second-color" rows="3" cols="5" maxlength="1000" id="address" name="address" ng-model="perInfoCtrl.address" required></textarea>
+                        <div class="errorMsg" ng-show="personalInfoForm.address.$touched && personalInfoForm.address.$error.required">
+                            This field is required.
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fisrt-color label-align-left">Mobile</div>
+                        <input type="text" name="mobile" class="form-control" placeholder="e.g +84 123 456 789" ng-model="perInfoCtrl.mobile" ng-pattern="/^[0-9+() -]+$/" ng-maxlength="30">
+                        <div class="has-error">
+                            <span class="help-block errorMsg" ng-if="personalInfoForm.mobile.$error.pattern || personalInfoForm.mobile.$error.maxlength">Mobile can only contain numeric characters and '+', '-', ' ', '()'. Less than or equal 30 characters</span>
+                        </div>
+                    </div>
+                </div>
+
+                <br/>
+
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-4">
+                        <div class="fisrt-color label-align-left">Personal Email</div>
+                        <input class="form-control second-color" name="personal_email" ng-model="perInfoCtrl.personal_email" type="email" maxlength="50" />
+                        <div class="errorMsg" ng-show="personalInfoForm.personal_email.$error.email ">
+                            Invalid email format.
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+
+                    </div>
+                    <div class="col-md-8">
+                        <uib-alert class="alert shake" type="{{perInfoCtrl.alert.type}}" dismiss-on-timeout="2000" close="perInfoCtrl.closeAlert()" ng-if="perInfoCtrl.isshowalert">
+                            {{perInfoCtrl.alert.msg}}
+                        </uib-alert>
+                    </div>
+                    <div class="col-md-2">
+
+                    </div>
+                </div>
+
+                <br/>
+                <div class="row">
+                    <div class="col-md-2">
+                        <input type="submit" class="form-control btn-info" id="personalInfoSave" value="Save" />
+                    </div>
+                    <div class="col-md-8">
+
+                    </div>
+                    <div class="col-md-2">
+                        <input type="button" class="form-control btn-info" id="personalInfoCancel" value="Cancel" data-toggle="collapse" href="#persionalInfoEdit" />
+                    </div>
+                </div>
+
+                <!-- /personal details -->
+
+            </div>
+        </form>
+    </div>
+</div>
+<!-- /persionalInformation collapse - edit mode -->

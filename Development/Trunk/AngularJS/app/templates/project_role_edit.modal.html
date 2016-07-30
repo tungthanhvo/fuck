@@ -1,0 +1,32 @@
+<div class="tab-content">
+    <form name="proEditRoleForm">
+        <div class="modal-header">
+            <h3 class="modal-title">Edit Role Details</h3>
+        </div>
+        <div class="modal-body row">
+            <!-- Role Name -->
+            <div class="form-group">
+
+                <label class="control-label col-xs-3 role-text-add required " for="country">Role Name</label>
+                <div class="col-md-7" ng-model="role.roleName">
+                    {{role.roleName}}
+                </div>
+            </div>
+        </div>
+        <div class="modal-body row">
+            <!-- Role Description -->
+            <div class="form-group">
+                <label class="control-label col-xs-3 role-text-add"  for="roleDescription">Role Description</label>
+                <div class="col-md-7">
+                    <textarea class="form-control" id="roleDescription" name="roleDescription" rows="5" ng-model="role.roleDescription" placeholder="Role description." maxlength="500">
+                    {{role.roleDescription}}                        
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="save();" ng-disabled="!isEdit">Save</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel();">Cancel</button>
+        </div>
+    </form>
+</div>

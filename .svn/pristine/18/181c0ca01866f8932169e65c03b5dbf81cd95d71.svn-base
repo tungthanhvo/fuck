@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>One Page Resume</title>
+
+	<link type="text/css" href="styles.css" rel="stylesheet"/>        
+</head>
+
+<body>
+
+	<div id="page-wrap">
+
+		<img src="images/cthulu.png" alt="Photo of Cthulu" id="pic" />
+
+		<div id="contact-info" class="vcard">
+
+			<!-- Microformats! -->
+
+			<h1 class="fn">Personal Information</h1>
+			<p><span>Name: </span>Christ Rose</p>
+			<p><span>Job Title: </span>CVDB</p>
+			<p><span>Date of Birth: </span>05/10/1979</p>
+			<p><span>Gender: </span>Male</p>
+			<p><span>Nationality: </span>British</p>
+			<p><span>Country/Region: </span>Iraq</p>						
+		</div>		
+
+		<div class="clear"></div>
+
+		<dl>
+			<dd class="clear"></dd>
+			<div id="personal-satements" class="item">				
+				<dt>Personal Statements</dt>
+				<dd>
+					<ul>
+						<li>Inspired and won highest peasant death competition among servants</li>
+						<li>Helped coordinate managers to grow cult following</li>
+						<li>Provided untimely deaths to all who opposed</li>
+					</ul>
+				</dd>
+			</div>
+
+			<dd class="clear"></dd>
+
+			<div id="technical-skills" class="item">				
+				<dt>Technical Skills</dt>
+				<dd>				
+					<p><span>OS:</span> Linux, Mac OS, Windows 7</p>
+					<p><span>Languages:</span> English, Cantonese, French, Japanese</p>
+					<p><span>Databases:</span> Postgre SQL, MS SQL Server</p>
+					<p><span>Comms & networks:</span></p>
+					<p><span>Packages:</span></p>
+					<p><span>Methodologies & tools:</span></p>
+				</dd>
+			</div>
+
+			<dd class="clear"></dd>
+
+			<div id="education" class="item">				
+				<dt>Education</dt>
+				<dd>					
+					<p><span>2006 - 2011</span>HCM city University of Technology</p>
+					<p><span>2012 - present</span>Foreign Trade University</p>
+				</dd>
+			</div>	
+				
+			<dd class="clear"></dd>
+
+			<div id="certificates" class="item">				
+				<dt>Course/Certificates</dt>
+				<dd>
+					<table style="width:100%">
+						<tr>
+							<th>Duration</th>
+							<th>Course's Name</th> 
+							<th>Course</th>
+							<th>Achievements</th>
+						</tr>
+						<tr>
+							<td>10/2010-</td>
+							<td>MCTS</td> 
+							<td>MNO</td>
+							<td>B+</td>
+						</tr>
+						<tr>
+							<td>10/2010-</td>
+							<td>MCTS</td> 
+							<td>MNO</td>
+							<td>B+</td>
+						</tr>
+					</table>
+				</dd>
+			</div>
+
+			<dd class="clear"></dd>
+			<br>
+			<div id="employment" class="item">				
+				<dt>Employment History</dt>
+				<dd>
+					<table style="width:100%">
+						<tr>
+							<th>Duration</th>
+							<th>Company</th> 
+							<th>Position</th>
+						</tr>
+						<tr>
+							<td>2010 - 2012</td>
+							<td>Nam Con Son Pipeline</td> 
+							<td>Telecom Engineer</td>							
+						</tr>
+						<tr>
+							<td>11/2009 - 10/2011</td>
+							<td>Logigear</td> 
+							<td>Software Architect</td>
+						</tr>
+					</table>
+				</dd>
+			</div>
+
+				<dd class="clear"></dd>
+		</dl>
+
+			<div class="clear"></div>
+
+		</div>
+
+	</body>
+
+	</html>

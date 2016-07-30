@@ -1,0 +1,175 @@
+//- p TEST
+//- p Firstname: #{user.first_name}
+//- p Lastname: #{user.last_name}
+
+html
+  head
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js')
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+    link(rel='stylesheet', href='/stylesheets/cv.css')
+    
+  .container
+    .row
+      img.logo(src="/images/logo.png")
+    .row
+      .col-md-6
+        label
+          h3.personal-padding PERSONAL INFORMATION
+    .row
+      .col-xs-3
+        p Name
+        p Job Title
+        p Date of Birth
+        p Gender
+        p Nationality
+        p Country/Region
+      .col-xs-4
+        p #{user.first_name + ' ' + user.last_name}
+        p #{user.competence_job_title.job_title.name}
+        p #{user.dob}
+        if user.gender == 0
+            p Female
+        else
+            p Male 
+        p #{user.nationality_code}
+        p #{user.country_code}
+      .col-md-5
+        if user.avatar
+          img.pull-right(src='/images/#{"resized-" + user.avatar}')
+        else
+          img.pull-right(src='/images/resized-profile.png', style='position:relative; top: 20px;\
+          right: 0px; left:0px; width:200px')        
+    .row
+      .col-md-3
+        label.statement-padding Personal Statement
+    .panel.panel-default
+      .panel-body
+        p #{user.personal_statement}
+    .row
+      .col-md-3
+        label Technical Skill
+    table.table.table-bordered.page-break
+      thead
+        tr
+          th Skill Name
+          th Summary
+      tbody
+        each val in user.user_technical_skills
+            tr
+                td #{val.technical_skill.name}
+                td #{val.description}
+    .row
+      .col-md-8
+        label Education, Qualification & Special Achievement
+    table.table.table-bordered.page-break
+      thead
+        tr
+          th Duration
+          th University & College
+      tbody
+         each val in user.education
+            tr
+                td #{val.from_year + ' - ' + val.to_year}
+                td #{val.university_college_name}
+    .row
+      .col-md-8
+        label Courses/Certificates
+    table.table.table-bordered.page-break
+      thead
+        tr
+          th Duration
+          th Course's Name
+          th Description
+          th Achievement
+      tbody
+        each val in user.courses
+            tr
+                td #{val.from_year + ' - ' + val.to_year}
+                td #{val.course_name}
+                td #{val.course_description}
+                td #{val.achievement}
+    .row
+      .col-md-8
+        label Employment History
+    table.table.table-bordered.page-break
+      thead
+        tr
+          th Duration
+          th Company
+          th Position
+      tbody
+       each val in user.employee_histories
+            tr
+                td #{val.from_year + ' - ' + val.to_year}
+                td #{val.company_name}
+                td #{val.position}
+    //- .row
+    //-   .col-md-6
+    //-     label
+    //-       h3 ASSIGNMENTS
+    //- table.table.table-bordered
+    //-   thead
+    //-   tbody
+    //-     tr
+    //-       td Project Name
+    //-       td Doe
+    //-     tr
+    //-       td Duration
+    //-       td Doe
+    //-     tr
+    //-       td Size (Days)
+    //-       td Moe
+    //-     tr
+    //-       td Role Title
+    //-       td Moe
+    //-     tr
+    //-       td Project Description
+    //-       td Moe
+    //-     tr
+    //-       td My Responsibility
+    //-       td Moe
+    //-     tr
+    //-       td Technology
+    //-       td Moe
+    .row
+      .col-md-6
+        label
+          h3 SKILL METRICS
+    .row.page-break
+      .col-xs-6
+        .well
+          span
+            u Experience
+          ol(start='0')
+            li 0 month
+            li 1-6 months
+            li 6-12 months
+            li 1-2 years
+            li 2-5 years
+            li > 5 years
+      .col-xs-6
+        .well
+          span
+            u Expertise
+          ol
+            li Beginner
+            li Always have to use manuals
+            li Sometimes have to use manuals
+            li Can solve problems
+            li Expert
+            br
+    table.table.table-bordered.page-break
+      thead
+        tr
+          th Skill
+          th Last Year Used
+          th Expertise
+          th Experience
+      tbody
+        each val in user.skill_metrics
+            tr
+                td #{val.skill.name}
+                td #{val.last_year_used}
+                td #{val.expertise.level}
+                td #{val.experience.level}

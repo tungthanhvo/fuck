@@ -1,0 +1,743 @@
+<!-- assignment tab -->
+<br/>
+
+<recent-assignment></recent-assignment>
+<!-- historic assignments -->
+<h3>Working Histories</h3>
+<div class="row" ng-show="assignmentCtrl.workingHistories_Shown.length">
+    <div class="col-xs-3">
+        <h4>Total Working Histories: {{assignmentCtrl.pager.totalItems}}</h4>
+    </div>
+    <div class="col-xs-9" id="page-controll">
+        <ul class="pagination pagination-sm pull-right" id="search-pager">
+            <li class="page-item" ng-class="{disabled: assignmentCtrl.pager.currentPage === 1}">
+                <a class="page-link" ng-click="assignmentCtrl.seach(1)" ng-disabled="true">First</a>
+            </li>
+            <li class="page-item" ng-class="{disabled: assignmentCtrl.pager.currentPage == 1}">
+                <a class="page-link" ng-click="assignmentCtrl.seach(assignmentCtrl.pager.currentPage-1)">Previous</a>
+            </li>
+            <li class="page-item" ng-repeat="page in assignmentCtrl.pager.pages"
+                ng-class="{active:assignmentCtrl.pager.currentPage === page}">
+                <a class="page-link" ng-click="assignmentCtrl.seach(page)">{{page}}</a>
+            </li>
+            <li class="page-item"
+                ng-class="{disabled: assignmentCtrl.pager.currentPage === assignmentCtrl.pager.endPage}">
+                <a class="page-link" ng-click="assignmentCtrl.seach(assignmentCtrl.pager.currentPage+1)">Next</a>
+            </li>
+            <li class="page-item"
+                ng-class="{disabled: assignmentCtrl.pager.currentPage === assignmentCtrl.pager.endPage}">
+                <a class="page-link" ng-click="assignmentCtrl.seach(assignmentCtrl.pager.endPage)">Last</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<table class="table">
+    <colgroup>
+        <col width="30% "/>
+        <col width="30% "/>
+        <col width="10% "/>
+        <col width="15% "/>
+        <col width="10% "/>
+        <col width="5% "/>
+    </colgroup>
+    <thead>
+    <tr>
+        <th>Project Name</th>
+        <th>Duration</th>
+        <th>Size (days)</th>
+        <th>Role Title</th>
+        <th>Included In CV</th>
+        <th>Remove</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-show="assignmentCtrl.workingHistories_Shown.length == 0" class="text-center">
+        <td colspan="6">No Working History available!</td>
+    </tr>
+    <tr ng-repeat="history in assignmentCtrl.workingHistories_Shown">
+        <td><a ng-click="assignmentCtrl.working_history_detail(history)" data-toggle="modal"
+               data-target="#workingHistoryDetailModal">{{history.name}}</a></td>
+        <td>{{history.start_date| date: "MMM-yyyy"}} - {{history.end_date| date: "MMM-yyyy"}}</td>
+        <td>{{history.size}}</td>
+        <td>{{history.role_title}}</td>
+        <td class="text-center"><input type="checkbox" ng-checked="history.is_included" ng-model="history.is_included"
+                                       ng-click="assignmentCtrl.checkExportInCV(history)"/></td>
+        <td class="text-center">
+
+            <input type="checkbox" ng-click="assignmentCtrl.remove(history)" ng-checked="history.is_delete"
+                   ng-model="history.is_delete"/>
+        </td>
+    </tr>
+    </tbody>
+
+    <!-- modal view working history detail -->
+    <div class="modal fade" id="workingHistoryDetailModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div ng-show="assignmentCtrl.isViewMode">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                ng-click="assignmentCtrl.cancel()">&times;</button>
+                        <h4 class="modal-title">Working History</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-3 required align-right">
+                                Project Name
+                            </div>
+                            <div class="col-xs-8">
+                                <label>{{assignmentCtrl.workingHistoryDetail.name}}</label>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                Duration
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <label>{{assignmentCtrl.workingHistoryDetail.start_date| date :
+                                            "MMM-yyyy"}}</label>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <label>{{assignmentCtrl.workingHistoryDetail.end_date| date :
+                                            "MMM-yyyy"}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                                <div class="row">
+                                    <div class="col-xs-6"></div>
+                                    <div class="col-xs-6"></div>
+                                </div>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                Size (Days)
+                            </div>
+                            <div class="col-xs-8">
+                                <label>{{assignmentCtrl.workingHistoryDetail.size}}</label>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                Role Title
+                            </div>
+                            <div class="col-xs-8">
+                                <label>{{assignmentCtrl.workingHistoryDetail.role_title}}</label>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                Project Description
+                            </div>
+                            <div class="col-xs-8">
+                                <label>{{assignmentCtrl.workingHistoryDetail.description}}</label>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                My Responsibility
+                            </div>
+                            <div class="col-xs-8">
+                                <label>{{assignmentCtrl.workingHistoryDetail.my_responsibility}}</label>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                Technology
+                            </div>
+                            <div class="col-xs-8">
+                                <label>{{assignmentCtrl.workingHistoryDetail.technology}}</label>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-xs-8"></div>
+                            <div class="col-xs-4">
+                                <div class="row">
+                                    <div class="col-xs-6 no-padding-right">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-click="assignmentCtrl.edit()">&thinsp;&thinsp;&thinsp;Edit&thinsp;&thinsp;&thinsp;</button>
+                                    </div>
+                                    <div class="col-xs-6 no-padding">
+                                        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="!assignmentCtrl.isViewMode">
+                    <form name="workingHistoryUpdateForm" novalidate>
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal"
+                                    ng-click="assignmentCtrl.cancel()">&times;</button>
+                            <h4 class="modal-title">Working History</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-xs-3 required align-right">
+                                    Project Name
+                                </div>
+                                <div class="col-xs-8">
+                                    <input class="form-control" name="name"
+                                           ng-change="assignmentCtrl.project_name_change()"
+                                           ng-model="assignmentCtrl.workingHistoryDetail.name" type="text"
+                                           maxlength="200" required/>
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">
+                                </div>
+                                <div class="col-xs-8 errorMsg">
+                                    <span ng-show="assignmentCtrl.workingHistoryDetail.name === undefined"> This field is required.</span>
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-3 align-right">
+                                    Duration
+                                </div>
+                                <div class="col-xs-8">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <p class="input-group">
+                                                <input id="from_detail_update" style="cursor:default" type="text"
+                                                       class="form-control" uib-datepicker-popup="MMM-yyyy"
+                                                       ng-model="assignmentCtrl.workingHistoryDetail.start_date"
+                                                       is-open="assignmentCtrl.popup1.opened"
+                                                       datepicker-options="assignmentCtrl.dateOptions"
+                                                       close-text="Close"
+                                                       alt-input-formats="assignmentCtrl.altInputFormats"
+                                                       show-button-bar="false"
+                                                       ng-change="assignmentCtrl.project_from_change()"
+                                                       name="dateofbirth"/>
+                                                <span class="input-group-btn">
+                                                <button id="from_detail_update_shortcut" type="button"
+                                                        class="btn btn-default"
+                                                        ng-click="assignmentCtrl.open1()"><i
+                                                        class="glyphicon glyphicon-calendar"></i></button>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <p class="input-group">
+                                                <input id="to_detail_update" style="cursor:default" type="text"
+                                                       class="form-control" uib-datepicker-popup="MMM-yyyy"
+                                                       ng-model="assignmentCtrl.workingHistoryDetail.end_date"
+                                                       is-open="assignmentCtrl.popup2.opened"
+                                                       datepicker-options="assignmentCtrl.dateOptions"
+                                                       close-text="Close"
+                                                       alt-input-formats="assignmentCtrl.altInputFormats"
+                                                       show-button-bar="false"
+                                                       ng-change="assignmentCtrl.project_to_change()"
+                                                       name="dateofbirth"/>
+                                                <span class="input-group-btn">
+                                            <button id="to_detail_update_shortcut" type="button" class="btn btn-default"
+                                                    ng-click="assignmentCtrl.open2()"><i
+                                                    class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">
+                                </div>
+                                <div class="col-xs-8 errorMsg">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <span ng-show="assignmentCtrl.isStartDateInvalidWithEndate2">The start date not greater than end date.</span>
+                                        </div>
+                                        <div class="col-xs-6 errorMsg">
+                                            <span ng-show="assignmentCtrl.isEndDateInvalidWithStartDate2">The end date not greater than current.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-3 align-right">
+                                    Size (Days)
+                                </div>
+                                <div class="col-xs-8">
+                                    <input class="form-control" name="project_size"
+                                           ng-change="assignmentCtrl.project_name_change()"
+                                           onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0)'
+                                           onkeyup="(this.value < 1)?this.value =1:this.value =this.value;(this.value > 1000000)?this.value =1000000:this.value =this.value"
+                                           ng-model="assignmentCtrl.workingHistoryDetail.size" type="number"
+                                    />
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">
+                                </div>
+                                <div class="col-xs-8 errorMsg">
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-3 align-right">
+                                    Role Title
+                                </div>
+                                <div class="col-xs-8">
+                                    <input class="form-control" name="project_role"
+                                           ng-change="assignmentCtrl.project_name_change()"
+                                           ng-model="assignmentCtrl.workingHistoryDetail.role_title" type="text"
+                                           maxlength="255"/>
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">
+                                </div>
+                                <div class="col-xs-8 errorMsg">
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-3 align-right">
+                                    Project Description
+                                </div>
+                                <div class="col-xs-8">
+                                    <input class="form-control" name="project_size"
+                                           ng-change="assignmentCtrl.project_name_change()"
+                                           ng-model="assignmentCtrl.workingHistoryDetail.description" type="text"
+                                           maxlength="255"/>
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">
+                                </div>
+                                <div class="col-xs-8 errorMsg">
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-3 align-right">
+                                    My Responsibility
+                                </div>
+                                <div class="col-xs-8">
+                                    <input class="form-control" name="project_responsibility"
+                                           ng-change="assignmentCtrl.project_name_change()"
+                                           ng-model="assignmentCtrl.workingHistoryDetail.my_responsibility" type="text"
+                                           maxlength="1000"/>
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">
+                                </div>
+                                <div class="col-xs-8 errorMsg">
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-3 align-right">
+                                    Technology
+                                </div>
+                                <div class="col-xs-8">
+                                    <input class="form-control" name="project_technology"
+                                           ng-change="assignmentCtrl.project_name_change()"
+                                           ng-model="assignmentCtrl.workingHistoryDetail.technology" type="text"
+                                           maxlength="255"/>
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3">
+                                </div>
+                                <div class="col-xs-8 errorMsg">
+                                </div>
+                                <div class="col-xs-1"></div>
+                            </div>
+                            <br/>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-xs-8"></div>
+                                <div class="col-xs-4">
+                                    <div class="row">
+                                        <div class="col-xs-6 no-padding-right">
+                                            <button type="button" class="btn btn-primary"
+                                                    ng-click="assignmentCtrl.updateWorkingHistorySubmit()"
+                                                    ng-disabled="assignmentCtrl.workingHistoryDetail.name === undefined || !assignmentCtrl.isDataChanged || assignmentCtrl.isStartDateInvalidWithEndate2 || assignmentCtrl.isEndDateInvalidWithStartDate2"
+                                                    data-dismiss="modal">&thinsp;&thinsp;&thinsp;Save&thinsp;&thinsp;&thinsp;</button>
+                                        </div>
+                                        <div class="col-xs-6 no-padding">
+                                            <button type="button" class="btn btn-warning"
+                                                    ng-click="assignmentCtrl.cancel()" data-dismiss="modal">Cancel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</table>
+<!-- historic assignments -->
+<div class="row">
+    <div class="col-xs-4 my-cursor" ng-click="assignmentCtrl.add_more()" data-toggle="modal"
+         data-target="#workingHistoryModal">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add more
+    </div>
+    <!-- Modal add working history-->
+
+    <!-- Modal -->
+    <div class="modal fade" id="workingHistoryModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <form name="workingHistoryForm" novalidate>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"
+                                ng-click="assignmentCtrl.cancel()">&times;</button>
+                        <h4 class="modal-title">Working History</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-xs-3 required align-right">
+                                Project Name
+                            </div>
+                            <div class="col-xs-8">
+                                <input class="form-control" name="project_name"
+                                       ng-model="assignmentCtrl.workingHistory.project_name" type="text" maxlength="200"
+                                       required/>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                                <span ng-if="workingHistoryForm.project_name.$dirty && workingHistoryForm.project_name.$error.required"> This field is required.</span>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                Duration
+                            </div>
+                            <div class="col-xs-8">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <p class="input-group">
+                                            <input id="from" style="cursor:default" type="text" class="form-control"
+                                                   uib-datepicker-popup="MMM-yyyy" max-date="assignmentCtrl.dtmax"
+                                                   ng-model="assignmentCtrl.workingHistory.project_from"
+                                                   is-open="assignmentCtrl.popup1.opened"
+                                                   datepicker-options="assignmentCtrl.dateOptions"
+                                                   ng-required="true" close-text="Close"
+                                                   alt-input-formats="assignmentCtrl.altInputFormats"
+                                                   show-button-bar="false"
+                                                   ng-change="assignmentCtrl.start_date_change()" name="dateofbirth"/>
+                                            <span class="input-group-btn">
+                                                <button id='from_shortcut' type="button" class="btn btn-default"
+                                                        ng-click="assignmentCtrl.open1()"><i
+                                                        class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <p class="input-group">
+                                            <input id="to" style="cursor:default" type="text" class="form-control"
+                                                   uib-datepicker-popup="MMM-yyyy" max-date="assignmentCtrl.dtmax"
+                                                   ng-model="assignmentCtrl.workingHistory.project_to"
+                                                   is-open="assignmentCtrl.popup2.opened"
+                                                   datepicker-options="assignmentCtrl.dateOptions"
+                                                   ng-required="true" close-text="Close"
+                                                   alt-input-formats="assignmentCtrl.altInputFormats"
+                                                   show-button-bar="false" ng-change="assignmentCtrl.end_date_change()"
+                                                   name="dateofbirth"/>
+                                            <span class="input-group-btn">
+                                                <button id="to_shortcut" type="button" class="btn btn-default"
+                                                        ng-click="assignmentCtrl.open2()"><i
+                                                        class="glyphicon glyphicon-calendar"></i></button>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <span ng-show="assignmentCtrl.isStartDateInvalidWithEndate">The start date not greater than end date.</span>
+                                    </div>
+                                    <div class="col-xs-6 errorMsg">
+                                        <span ng-show="assignmentCtrl.isEndDateInvalidWithStartDate">The end date not greater than current.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                Size (Days)
+                            </div>
+                            <div class="col-xs-8">
+                                <input class="form-control" name="project_size"
+                                       onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || event.charCode == 0)'
+                                       onkeyup="(this.value < 1)?this.value =1:this.value =this.value;(this.value > 1000000)?this.value =1000000:this.value =this.value"
+                                       ng-model="assignmentCtrl.workingHistory.project_size" type="number"/>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                Role Title
+                            </div>
+                            <div class="col-xs-8">
+                                <input class="form-control" name="project_role"
+                                       ng-model="assignmentCtrl.workingHistory.project_role" type="text"
+                                       maxlength="255"/>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                Project Description
+                            </div>
+                            <div class="col-xs-8">
+                                <input class="form-control" name="project_size"
+                                       ng-model="assignmentCtrl.workingHistory.project_description" type="text"
+                                       maxlength="255"/>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                My Responsibility
+                            </div>
+                            <div class="col-xs-8">
+                                <input class="form-control" name="project_responsibility"
+                                       ng-model="assignmentCtrl.workingHistory.project_responsibility" type="text"
+                                       maxlength="1000"/>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-xs-3 align-right">
+                                Technology
+                            </div>
+                            <div class="col-xs-8">
+                                <input class="form-control" name="project_technology"
+                                       ng-model="assignmentCtrl.workingHistory.project_technology" type="text"
+                                       maxlength="255"/>
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3">
+                            </div>
+                            <div class="col-xs-8 errorMsg">
+                            </div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <br/>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-xs-8"></div>
+                            <div class="col-xs-4">
+                                <div class="row">
+                                    <div class="col-xs-6 no-padding-right">
+                                        <button type="button" class="btn btn-primary"
+                                                ng-click="assignmentCtrl.workingHistorySubmit()"
+                                                ng-disabled="!workingHistoryForm.$dirty || workingHistoryForm.project_name.$error.required || assignmentCtrl.isStartDateInvalidWithEndate || assignmentCtrl.isEndDateInvalidWithStartDate"
+                                                data-dismiss="modal">&thinsp;&thinsp;&thinsp;Add&thinsp;&thinsp;&thinsp;</button>
+                                    </div>
+                                    <div class="col-xs-6 no-padding">
+                                        <button type="button" class="btn btn-warning" ng-click="assignmentCtrl.cancel()"
+                                                data-dismiss="modal">Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- -->
+    <div class="col-xs-7"></div>
+    <div class="col-xs-1 text-center">
+        <button type="button" class="btn btn-danger" aria-hidden="true"
+                ng-click="assignmentCtrl.deleteWorkingHistorySubmit()"
+                ng-show="assignmentCtrl.workingHistories_Shown.length">
+            <span class="glyphicon glyphicon-trash "></span>
+        </button>
+    </div>
+</div>
+<br/><br/>
+
+<!-- /assignment tab -->
+
+<!--Jquery block input date of birth and company join date-->
+<script>
+    $('#from').focus(function (e) {
+        $('#from').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#to').focus(function (e) {
+        $('#to').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#from_detail_update').focus(function (e) {
+        $('#from_detail_update').blur();
+        e.preventDefault();
+        return false;
+    });
+    $('#to_detail_update').focus(function (e) {
+        $('#to_detail_update').blur();
+        e.preventDefault();
+        return false;
+    });
+
+    $('#from_detail_update').click(function (e) {
+        $('#from_detail_update_shortcut').click();
+    });
+
+    $('#to_detail_update').click(function (e) {
+        $('#to_detail_update_shortcut').click();
+    });
+
+    $('#from').click(function (e) {
+        $('#from_shortcut').click();
+    });
+
+    $('#to').click(function (e) {
+        $('#to_shortcut').click();
+    })
+</script>

@@ -1,0 +1,143 @@
+<!-- addtional-info collapse - view mode -->
+<div class="panel-group" ng-show="empProfileCtrl.isViewMode" id="additionalSmoothScrollView">
+    <div class="panel panel-default">
+        <div class="panel-heading my-cursor" data-toggle="collapse" href="#additional-info-view" ng-click="editEmpCtrl.changeAdditionalCollapse()">
+            <h4 class="panel-title">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <img src="images/update-cv/additional-information.png" width="50px" height="50px"/>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="header-title">
+                            Additional Information
+                        </div>
+                    </div>
+                    <div class="col-xs-1" ng-show="editEmpCtrl.isAdditionalCollapse" style="margin-top: 10px">
+                        <img ng-src="images/arrow-down.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                    <div class="col-xs-1" ng-show="!editEmpCtrl.isAdditionalCollapse" style="margin-top: 10px">
+                        <img ng-src="images/arrow-up.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                </div>
+            </h4>
+        </div>
+        <div id="additional-info-view" class="panel-collapse collapse">
+            <br/>
+            <div class="form-group row align-additional-information">
+                <label class="control-label col-xs-3 col-sm-offset-1 " for="yahoo_id ">Yahoo ID:</label>
+                <div class="col-xs-7 row align-additional-information-ext">
+                    <p class="addition-info-text">{{ additionInforCtrl.addition_information.yahoo_id != null && additionInforCtrl.addition_information.yahoo_id.length ? additionInforCtrl.addition_information.yahoo_id : "......................................................"}}
+                    </p>
+                </div>
+            </div>
+            <div class="form-group row align-additional-information">
+                <label class="control-label col-xs-3 col-sm-offset-1 " for="personal_quote ">Personal Quote:</label>
+                <div class="col-xs-7 row align-additional-information-ext">
+                    <p class="addition-info-text">{{ additionInforCtrl.addition_information.personal_quote != null && additionInforCtrl.addition_information.personal_quote.length ? additionInforCtrl.addition_information.personal_quote : "......................................................"}}
+                    </p>
+                </div>
+            </div>
+            <div class="form-group row align-additional-information">
+                <label class="control-label col-xs-3 col-sm-offset-1 " for="hobby ">Hobby:</label>
+                <div class="col-xs-7 row align-additional-information-ext">
+                    <p class="addition-info-text">{{ additionInforCtrl.addition_information.hobby != null && additionInforCtrl.addition_information.hobby.length ? additionInforCtrl.addition_information.hobby : "......................................................"}}
+                    </p>
+                </div>
+            </div>
+            <div class="form-group row align-additional-information">
+                <label class="control-label col-xs-3 col-sm-offset-1 " for="personal_statement ">Personal
+                    Statement:</label>
+                <div class="col-xs-7 row align-additional-information-ext">
+                    <p class="addition-info-text">{{ additionInforCtrl.addition_information.personal_statement != null && additionInforCtrl.addition_information.personal_statement.length ? additionInforCtrl.addition_information.personal_statement : "......................................................"}}
+                    </p>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-xs-10"></div>
+                <div class="col-xs-2">
+                    <a href="#additional-info-view" ng-click="editEmpCtrl.changeAdditionalCollapse()" data-toggle="collapse" class="btn-cls">Collapse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /addtional-info collapse - view mode -->
+
+<!-- addtional-info collapse - edit mode -->
+<div class="panel-group" ng-hide="empProfileCtrl.isViewMode" id="additionalSmoothScrollEdit">
+    <div class="row">
+        <img src="images/update-cv/additional-information.png" width="50px" height="50px" />
+        <label class="header-title-edit">Additional Information</label>
+    </div>
+    <br/>
+    <div class="panel panel-default border-edit">
+        <div class="panel-heading my-cursor" data-toggle="collapse" href="#additional-info-edit" ng-click="editEmpCtrl.changeAdditionalCollapseEdit()">
+            <h4 class="panel-title">
+                <div class="row">
+                    <br/>
+                    <div class="col-xs-1">&nbsp</div>
+                    <div class="col-xs-10">
+                        <p class="common-edit">+ Edit Additional Information</p>
+                    </div>
+                    <div class="col-xs-1" ng-show="editEmpCtrl.isAdditionalCollapseEdit">
+                        <img ng-src="images/arrow-down.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                    <div class="col-xs-1" ng-show="!editEmpCtrl.isAdditionalCollapseEdit">
+                        <img ng-src="images/arrow-up.png" width="30px" height="30px" alt="no images available!!"/>
+                    </div>
+                </div>
+            </h4>
+        </div>
+
+        <div id="additional-info-edit" class="panel-collapse collapse">
+            <br/>
+            <form role="form " name="additionInforForm" novalidate>
+                <div class="form-group row ">
+                    <label class="control-label col-xs-3 col-sm-offset-1 " for="yahoo_id ">Yahoo ID:</label>
+                    <div class="col-xs-7 " style="margin-left: 12px">
+                        <input name="yahoo_id " ng-model="additionInforCtrl.addition_information_update.yahoo_id " class="form-control " id="yahoo_id " placeholder="e.g xyz@yahoo.com " ng-pattern="/^([a-zA-Z0-9_.+-])+\@yahoo.com$/" maxlength="50" ng-trim="false" />
+                        <span class="error" ng-show="additionInforForm.yahoo_id.$error.pattern">Invalid Yahoo Id format.</span>
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <label class="control-label col-xs-3 col-sm-offset-1 " for="personal_quote ">Personal Quote:</label>
+                    <div class="col-xs-7 " style="margin-left: 12px">
+                        <textarea cols="3" name="personal_quote " ng-trim="true" ng-model="additionInforCtrl.addition_information_update.personal_quote " class="form-control " id="personal_quote " placeholder="Enter your personal quote " maxlength="1000" />
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <label class="control-label col-xs-3 col-sm-offset-1 " for="hobby ">Hobby:</label>
+                    <div class="col-xs-7 " style="margin-left: 12px">
+                        <textarea cols="3" name="hobby " ng-model="additionInforCtrl.addition_information_update.hobby " class="form-control " id="hobby " placeholder="Enter your hobby " maxlength="1000" />
+                    </div>
+                </div>
+                <div class="form-group row ">
+                    <label class="control-label col-xs-3 col-sm-offset-1 " for="personal_statement ">Personal
+                        Statement:</label>
+                    <div class="col-xs-7 " style="margin-left: 12px">
+                        <textarea cols="3" name="personal_statement " ng-model="additionInforCtrl.addition_information_update.personal_statement " class="form-control " id="personal_statement " placeholder="Enter your personal statement " maxlength="1000" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 ">
+
+                    </div>
+                    <div class="col-xs-4" style="margin-left: 12px">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <input type="button" class="btn btn-primary" ng-disabled="!additionInforForm.$dirty" ng-click="additionInforCtrl.save() " value="&emsp;Save&emsp;" />
+                            </div>
+                            <div class="col-xs-6">
+                                <input type="button" data-toggle="collapse" href="#additional-info-edit" class="btn btn-warning" ng-click="additionInforCtrl.cancel() " value="&thinsp;&thinsp;&thinsp;Cancel&thinsp;&thinsp;&thinsp;" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4"></div>
+                </div>
+                <br/>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /addtional-info collapse - edit mode -->

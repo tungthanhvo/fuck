@@ -1,0 +1,161 @@
+<!-- education-qualification-achievementt collapse - view mode -->
+<div class="panel-group" ng-show="editEmpCtrl.isViewMode">
+    <div class="panel panel-default">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="images/noimage.png" width="50px" height="50px"/>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="header-title" data-toggle="collapse"
+                             href="#education-qualification-achievement-view">
+                            Education, Qualifications & Special Achievements
+                        </div>
+                    </div>
+                </div>
+            </h4>
+        </div>
+        <div id="education-qualification-achievement-view" class="panel-collapse collapse">
+            <table ng-table="eduCtrl.tableEducation" class="table table-hover table-bordered ">
+                <colgroup>
+                    <col width="5% " />
+                    <col width="20% " />
+                    <col width="35% " />
+                    <col width="35% " />
+                </colgroup>
+                <tr class="text-center">
+                    <th>#</th>
+                    <th>Duration</th>
+                    <th>University/College Name</th>
+                    <th>Major</th>
+                </tr>
+                <tr ng-if="eduCtrl.educations.length == 0" class="text-center ">
+                    <td colspan="5">
+                        No education available!
+                    </td>
+                </tr>
+                <tr ng-repeat="education in $data track by $index " ng-if="eduCtrl.educations.length > 0">
+                    <td>
+                        <span class="text-center ">{{$index + 1}}</span>
+                    </td>
+                    <td>
+                        <span class="text-center " ng-if="!education.config.isedit ">{{education.data.from_year + ' - ' + education.data.to_year}}</span>
+                        <div ng-if="education.config.isedit ">
+                            <select-year fromyear="education.data.from_year" toyear="education.data.to_year"></select-year>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-center " ng-if="!education.config.isedit ">{{education.data.university_college_name}}</span>
+                        <div class="controls " ng-if="education.config.isedit ">
+                            <label for="edu_university_college_name " class="required ">University/College Name</label>
+                            <input ng-form="edu_university_college_name " type="text " id="edu_university_college_name " ng-model="education.data.university_college_name " class="editable-input form-control input-sm " required ng-maxlength="255" />
+                            <span class="error " ng-show="edu_university_college_name.$error.required ">This field is required.</span>
+                            <span class="error" ng-show="edu_university_college_name.$error.maxlength">The length must be less than 255 characters.</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="text-center " ng-if="!education.config.isedit ">{{education.data.major}}</span>
+                        <div class="controls " ng-if="education.config.isedit ">
+                            <label for="edu_major " class="required ">Major</label>
+                            <input ng-form="edu_major " id="edu_major " type="text " ng-model="education.data.major " class="editable-input form-control input-sm " required ng-maxlength="255" />
+                            <span class="error " ng-show="edu_major.$error.required ">This field is required.</span>
+                            <span class="error" ng-show="edu_major.$error.maxlength">The length must be less than 255 characters.</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- /education-qualification-achievementt collapse - view mode -->
+
+<!-- education-qualification-achievementt collapse - edit mode -->
+<div class="panel-group" ng-hide="editEmpCtrl.isViewMode">
+    <div class="row">
+        <div class="col-md-2">
+            <img src="images/noimage.png" width="50px" height="50px" />
+        </div>
+        <div class="col-md-10 header-title">
+            <div data-toggle="collapse" href="#education-qualification-achievement-view">
+                Education, Qualifications & Special Achievements
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="panel panel-default border-edit">
+        <div class="panel-heading my-cursor">
+            <h4 class="panel-title">
+                <div class="row" data-toggle="collapse"
+                     href="#education-qualification-achievement-edit">
+                    <p class="common-edit">+ Edit Education, Qualifications & Achievement</p>
+                </div>
+            </h4>
+        </div>
+        <div id="education-qualification-achievement-edit" class="panel-collapse collapse">
+            <div id="education-content">
+                <uib-alert class="alert shake" type="{{eduCtrl.alert.type}}" dismiss-on-timeout="2000" close="eduCtrl.closeAlert()" ng-if="eduCtrl.isshowalert">
+                    {{eduCtrl.alert.msg}}
+                </uib-alert>
+                <button ng-disabled="eduCtrl.isUpdateGridView" class="btn btn-primary btn-sm right-float-btn" ng-click="eduCtrl.open()"><span class="glyphicon glyphicon-plus"></span>Add more</button>
+                <table class="table table-hover table-bordered ">
+                    <colgroup>
+                        <col width="5% " />
+                        <col width="35% " />
+                        <col width="30% " />
+                        <col width="20% " />
+                        <col width="10% " />
+                    </colgroup>
+                    <tr class="text-center">
+                        <th>#</th>
+                        <th class="required ">Duration</th>
+                        <th class="required ">University/College Name</th>
+                        <th class="required ">Major</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr ng-if="eduCtrl.educations.length == 0" class="text-center ">
+                        <td colspan="5">
+                            No education available!
+                        </td>
+                    </tr>
+                    <tr ng-repeat="education in eduCtrl.educations track by $index " ng-if="eduCtrl.educations.length > 0">
+                        <td>
+                            <span class="text-center ">{{$index + 1}}</span>
+                        </td>
+                        <td>
+                            <span class="text-center " ng-if="!education.config.isedit ">{{education.data.from_year + ' - ' + education.data.to_year}}</span>
+                            <div ng-if="education.config.isedit ">
+                                <select-year fromyear="education.data.from_year" toyear="education.data.to_year"></select-year>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="text-center " ng-if="!education.config.isedit ">{{education.data.university_college_name}}</span>
+                            <div class="controls " ng-if="education.config.isedit ">
+                                <label for="edu_university_college_name ">&nbsp</label>
+                                <input ng-form="edu_university_college_name " type="text " id="edu_university_college_name" ng-model="education.data.university_college_name " class="editable-input form-control input-sm " required ng-maxlength="255" />
+                                <span class="error " ng-show="edu_university_college_name.$error.required ">This field is required.</span>
+                                <span class="error" ng-show="edu_university_college_name.$error.maxlength">The length must be less than 255 characters.</span>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="text-center " ng-if="!education.config.isedit ">{{education.data.major}}</span>
+                            <div class="controls " ng-if="education.config.isedit ">
+                                <label for="edu_major ">&nbsp</label>
+                                <input ng-form="edu_major " id="edu_major" type="text " ng-model="education.data.major " class="editable-input form-control input-sm " required ng-maxlength="255" />
+                                <span class="error " ng-show="edu_major.$error.required ">This field is required.</span>
+                                <span class="error" ng-show="edu_major.$error.maxlength">The length must be less than 255 characters.</span>
+                            </div>
+                        </td>
+                        <td class="text-center ">
+                            <button ng-disabled="!education.config.issave" class="btn btn-success btn-sm " ng-click="eduCtrl.save(education) " ng-if="education.config.isedit "><span class="glyphicon glyphicon-ok "></span></button>
+                            <button class="btn btn-warning btn-sm " ng-click="eduCtrl.cancel(education) " ng-if="education.config.isedit "><span class="glyphicon glyphicon-remove "></span></button>
+                            <button ng-disabled="education.config.isdisable " class="btn btn-default btn-sm " ng-click="eduCtrl.edit(education) " ng-if="!education.config.isedit "><span class="glyphicon glyphicon-pencil "></span></button>
+                            <button ng-disabled="education.config.isdisable " class="btn btn-danger btn-sm " ng-click="eduCtrl.del(education) " ng-if="!education.config.isedit "><span class="glyphicon glyphicon-trash "></span></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- education-qualification-achievementt collapse - edit mode -->
